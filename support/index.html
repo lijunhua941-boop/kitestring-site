@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-zh="Kitestring 技术支持" data-es="Soporte de Kitestring">Kitestring Support</title>
+<meta name="description" data-zh="Kitestring 技术支持：设置、Tailscale、远程登录、配对、文件夹访问、卸载与反馈。" data-es="Soporte de Kitestring: configuración, Tailscale, Sesión remota, vinculación, acceso a carpetas, desinstalación y comentarios." content="Kitestring support: setup, Tailscale, Remote Login, pairing, folder access, uninstalling and feedback.">
+<link rel="canonical" href="https://lijunhua941-boop.github.io/kitestring-site/support/">
+<link rel="stylesheet" href="../assets/site.css">
+<script>
+/* Language (the same script on every page; site/README.md「三语」). Order: the fragment #zh / #en / #es
+   or an anchor inside a section (#es-pairing; #zh-Hans, #es-419 work too), then ?lang=, then the
+   browser's preferred languages, then English. Sets <html lang> and data-lang (site.css then shows only
+   that language), the page title and description, and makes every link to another page of the site carry the language.
+   Nothing is stored. Without JavaScript site.css reads the fragment itself and shows English otherwise. */
+(function () {
+  var TAGS = { zh: "zh-Hans", en: "en", es: "es" }, root = document.documentElement, lang = "en";
+  function norm(s) { s = String(s || "").toLowerCase().split(/[-_;]/)[0]; return TAGS.hasOwnProperty(s) ? s : ""; }
+  function fromHash() { try { return norm(decodeURIComponent(location.hash.slice(1))); } catch (e) { return ""; } }
+  function fromQuery() { var m = /[?&]lang=([^&#]*)/.exec(location.search); return m ? norm(m[1]) : ""; }
+  function fromBrowser() {
+    var list = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language];
+    for (var i = 0; i < list.length; i++) { var l = norm(list[i]); if (l) return l; }
+    return "";
+  }
+  function relink() {
+    var links = document.querySelectorAll("a[href]");
+    for (var i = 0; i < links.length; i++) {
+      var a = links[i], href = a.getAttribute("data-href") || a.getAttribute("href");
+      var cut = href.indexOf("#"), path = cut < 0 ? href : href.slice(0, cut), frag = cut < 0 ? "" : href.slice(cut + 1);
+      if (cut === 0) {                                   // same-page link: mark the active language switch
+        if (a.parentNode && a.parentNode.className === "langs") {
+          if (frag === lang) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current");
+        }
+        continue;
+      }
+      // Only the site's own pages: relative ("./", "../", "download/", "../privacy/"), with no fragment
+      // or a bare language fragment. mailto:, https:, files (.md, .json, .dmg) and other anchors stay.
+      if (/^([a-z][a-z0-9+.-]*:|\/\/)/i.test(href) || !/\/$/.test(path) || (frag && !TAGS.hasOwnProperty(frag))) continue;
+      a.setAttribute("data-href", href);
+      a.setAttribute("href", path + "#" + lang);
+    }
+  }
+  function apply() {
+    lang = fromHash() || fromQuery() || fromBrowser() || "en";
+    root.setAttribute("data-lang", lang);
+    root.setAttribute("lang", TAGS[lang]);
+    var t = document.querySelector("title");
+    if (t) {
+      if (!t.hasAttribute("data-en")) t.setAttribute("data-en", t.textContent);
+      document.title = t.getAttribute("data-" + lang) || t.getAttribute("data-en");
+    }
+    // The description (and any og:/twitter: title or description) the same way: data-zh / data-es
+    // beside the English content, which stays in the page for readers without JavaScript.
+    var metas = document.querySelectorAll('meta[name="description"], meta[property^="og:"], meta[name^="twitter:"]');
+    for (var j = 0; j < metas.length; j++) {
+      var m = metas[j];
+      if (!m.hasAttribute("data-zh") && !m.hasAttribute("data-es")) continue;
+      if (!m.hasAttribute("data-en")) m.setAttribute("data-en", m.getAttribute("content"));
+      m.setAttribute("content", m.getAttribute("data-" + lang) || m.getAttribute("data-en"));
+    }
+    if (document.readyState !== "loading") relink();
+  }
+  apply();
+  document.addEventListener("DOMContentLoaded", relink);
+  window.addEventListener("hashchange", apply);
+})();
+</script>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="../">Kitestring</a>
+  <span class="langs"><a href="#zh" hreflang="zh-Hans" lang="zh-Hans">中文</a><a href="#en" hreflang="en" lang="en">English</a><a href="#es" hreflang="es" lang="es">Español</a></span>
+</div></header>
+<main class="wrap">
+
+<!-- ===== 简体中文（主稿） ===== -->
+<section class="lang" id="zh" lang="zh-Hans" data-l="zh">
+<nav class="pages"><a href="../#zh">首页</a><a href="../download/#zh">下载</a><a href="#zh">技术支持</a><a href="../privacy/#zh">隐私政策</a></nav>
+<h1>技术支持</h1>
+<p>找不到答案？写信到 <a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a>，附上 Mac 菜单栏「诊断」里复制的结果（不含会话内容）。</p>
+<p class="muted">目录：<a href="#zh-setup">装机卡住</a> · <a href="#zh-tailscale">Tailscale</a> · <a href="#zh-remote-login">远程登录</a> · <a href="#zh-pairing">配对失败</a> · <a href="#zh-folders">文件夹授权</a> · <a href="#zh-login">Claude Code 显示未登录</a> · <a href="#zh-awake">Mac 要保持唤醒</a> · <a href="#zh-no-sessions">没有会话</a> · <a href="#zh-no-devices">没有已配对的设备</a> · <a href="#zh-no-agents">没装 Claude Code / Codex</a> · <a href="#zh-lost">手机丢了</a> · <a href="#zh-uninstall">卸载</a> · <a href="#zh-feedback">反馈</a></p>
+
+<h2 id="zh-setup">装机卡在某一步怎么办？</h2>
+<p>Kitestring for Mac 的「设置向导」共六步（菜单栏「设置向导…」随时可再打开）。App 自动检查每一步，完成后标记为已完成。卡住时按对应的一步处理：</p>
+<ol>
+  <li><strong>Tailscale：</strong>没检测到就从 Tailscale 官网安装并登录；iPhone 也要装，并登录同一个账号。</li>
+  <li><strong>远程登录：</strong>设置向导会打开系统设置的共享页面，打开「远程登录」即可，见<a href="#zh-remote-login">下文</a>。</li>
+  <li><strong>安装助手：</strong>只写入你的用户目录，不需要管理员密码，设置向导会列出每一步做了什么。失败时把「诊断」结果发给我们。</li>
+  <li><strong>Claude Code / Codex：</strong>要用编程助手会话就至少装一个（只用终端会话可以跳过，见<a href="#zh-no-agents">下文</a>），按它们官方的安装说明操作；登录可以以后在 iPhone 上发起，登录过程在 Mac 上执行。</li>
+  <li><strong>授权常用文件夹：</strong>macOS 会询问 App 能否访问「文稿」「桌面」「下载」，点「允许」。见<a href="#zh-folders">文件夹授权</a>。</li>
+  <li><strong>配对 iPhone：</strong>见<a href="#zh-pairing">配对失败</a>。</li>
+</ol>
+
+<h2 id="zh-tailscale">Tailscale 要怎么设置？</h2>
+<ul>
+  <li>Mac 与 iPhone 登录同一个 Tailscale 账号，在两边的 Tailscale App 里确认是同一个网络（tailnet），设备都显示已连接、未过期。</li>
+  <li>Mac 上的 Tailscale 要允许入站连接：不要开启「阻止传入连接」（Block incoming connections / Shields Up）。</li>
+  <li>如果你的 tailnet 用了访问控制（ACL / Grants），要允许 iPhone 访问 Mac 的 TCP 22 端口。</li>
+  <li>不需要开启 Tailscale SSH。两端用不同的出口节点（Exit Node）也没问题。</li>
+</ul>
+
+<h2 id="zh-remote-login">远程登录要怎么打开？</h2>
+<p>系统设置 › 通用 › 共享 › 远程登录：打开；「允许访问」选「仅这些用户」，只保留运行 Claude Code / Codex 的账户。</p>
+<p>Kitestring 不修改 sshd 的全局配置，不开 root 登录，也不关闭密码登录。配对时生成的密钥只接受来自 Tailscale 地址的登录，并且只能进入受管会话。</p>
+
+<h2 id="zh-pairing">配对失败怎么办？</h2>
+<ul>
+  <li>二维码 10 分钟内有效、只能用一次。过期或已用过，就在 Mac 菜单栏重新点「配对 iPhone」。</li>
+  <li>配对链接里的 Mac 地址必须是 Tailscale 地址；iPhone 上的 Tailscale 没连接时会连不上，先在 iPhone 上打开 Tailscale。</li>
+  <li>从 App 以外打开的配对链接，App 会先显示 Mac 名称、地址与用户名，你确认后才配对。</li>
+  <li>App 提示「主机身份已改变」时不要随意信任：可能是有人冒充，也可能是 Mac 重装或换了主机密钥。确认是自己的 Mac 后，在 App 设置里点「重新验证主机身份」，或重新配对。</li>
+  <li>App 顶部的提示会分层说明问题出在哪：iPhone 的 Tailscale、Mac 睡眠或离线、远程登录没开、助手不存在、会话服务没运行。点「详情」可以看原始错误。</li>
+</ul>
+
+<h2 id="zh-folders">手机上的会话卡在启动画面，Mac 上弹出「想要访问文稿/桌面」？</h2>
+<p>会话服务所在的环境还没有这个文件夹的访问授权，macOS 正在等你回答。在 Mac 上点「允许」即可。如果之前点了「不允许」：打开系统设置 › 隐私与安全性 › 文件与文件夹，打开对应文件夹的开关，然后在菜单栏先点「停止服务」再点「启动服务」。菜单栏的「诊断」会显示哪个文件夹被阻塞。</p>
+
+<h2 id="zh-login">为什么 Claude Code 显示我没有登录？</h2>
+<p>如果你在 Mac 上已经登录，会话里的 Claude Code 却显示未登录：会话服务必须在你登录 Mac 的图形界面环境里启动，才能读取登录钥匙串里保存的登录凭证；从 SSH 启动的服务读不到。关闭全部会话后，在 Mac 菜单栏先点「停止服务」再点「启动服务」。我们不读取、不复制你的登录凭证，也不会替你解锁钥匙串。</p>
+
+<h2 id="zh-awake">Mac 需要一直开着吗？</h2>
+<p>Mac 需要保持通电、联网和唤醒，并登录你的账户。屏幕可以锁定或关闭显示器，但系统睡眠后就连不上了；Kitestring 不修改你的电源设置，请在系统设置的电池/节能里自行确认。Mac 重启或注销后，原来的会话进程不会继续存在。</p>
+
+<h2 id="zh-no-sessions">App 里显示「还没有会话」？</h2>
+<p>说明 iPhone 已经连上 Mac，只是 Mac 上还没有受管会话。点会话列表下方的「新建会话」，选 Claude Code、Codex 或终端：默认在 Mac 的主目录启动，也可以选最近用过的目录。在 Mac 上用 Kitestring 建的会话也会出现在列表里。Mac 菜单栏「会话」一栏里的「没有会话」也是同样的意思。</p>
+
+<h2 id="zh-no-devices">Mac 菜单栏显示「没有已配对的设备」？</h2>
+<p>这台 Mac 还没有配对任何 iPhone，或者配对过的 iPhone 都已撤销。在菜单栏点「配对 iPhone…」，用 iPhone App 扫码即可（见<a href="#zh-pairing">配对失败</a>）。iPhone 上原来的配对若已被撤销，App 就连不上这台 Mac，重新扫码配对即可。</p>
+
+<h2 id="zh-no-agents">Mac 上没装 Claude Code 或 Codex？</h2>
+<p>不装也能用：在 iPhone 上新建「终端」会话就是 Mac 上的普通 shell。要用编程助手会话，按 Claude Code 或 Codex 官方说明在这台 Mac 上安装其中一个（设置向导第 4 步会检测并给出链接），装好后再在 iPhone 上新建对应的会话；没装就新建，App 会提示这台 Mac 上找不到该程序。</p>
+
+<h2 id="zh-lost">手机丢了怎么办？</h2>
+<p>在 Mac 菜单栏「已配对设备」里撤销这部 iPhone。建议平时开启 App 的 Face ID 或设备密码锁：会话里的 Claude Code 与 Codex 以你的 macOS 账户权限运行，拿到解锁的 iPhone 和 App 的人就能向它们下指令。</p>
+
+<h2 id="zh-uninstall">如何卸载？</h2>
+<ol>
+  <li>在 Mac 菜单栏选「卸载」。仍有运行中的会话时会先列出来，请你确认。</li>
+  <li>卸载会撤销全部 iPhone 密钥（修改 <code>authorized_keys</code> 前先备份）、删除登录项与安装的文件；会话状态目录会保留，以便重装后恢复。不会删除 Claude Code / Codex 的凭证、你的项目代码或你自己的其他 tmux 会话。</li>
+  <li>把 Kitestring for Mac 拖进废纸篓。</li>
+  <li>在 iPhone 上删除 App。Tailscale 和远程登录保持你自己的设置，安装时没有改动它们。</li>
+</ol>
+
+<h2 id="zh-feedback">如何反馈问题？</h2>
+<ul>
+  <li>iPhone App：设置 › 反馈与诊断。反馈默认发到你自己的 Mac，在 Mac 菜单栏「收件箱与反馈」里查看。</li>
+  <li>想告诉我们：写信到 <a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a>，附上 App 版本、Mac 版本和菜单栏「诊断」的结果。请不要发送会话内容、密钥或凭证。</li>
+</ul>
+</section>
+
+<!-- ===== English ===== -->
+<section class="lang" id="en" lang="en" data-l="en">
+<nav class="pages"><a href="../#en">Home</a><a href="../download/#en">Download</a><a href="#en">Support</a><a href="../privacy/#en">Privacy</a></nav>
+<h1>Support</h1>
+<p>Can’t find an answer? Email <a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a> and include the results copied from “Diagnostics” in the Mac menu bar. They don’t include any session content.</p>
+<p class="muted">Contents: <a href="#en-setup">Setup Is Stuck</a> · <a href="#en-tailscale">Tailscale</a> · <a href="#en-remote-login">Remote Login</a> · <a href="#en-pairing">Pairing Fails</a> · <a href="#en-folders">Folder Access</a> · <a href="#en-login">Claude Code Says I’m Not Signed In</a> · <a href="#en-awake">Keep Your Mac Awake</a> · <a href="#en-no-sessions">No Sessions</a> · <a href="#en-no-devices">No Paired Devices</a> · <a href="#en-no-agents">No Claude Code or Codex</a> · <a href="#en-lost">Lost iPhone</a> · <a href="#en-uninstall">Uninstall</a> · <a href="#en-feedback">Feedback</a></p>
+
+<h2 id="en-setup">What If Setup Gets Stuck on a Step?</h2>
+<p>The Setup Assistant in Kitestring for Mac has six steps. You can reopen it at any time by choosing “Setup Assistant…” in the menu bar. The app checks each step automatically and marks it complete. If a step is stuck:</p>
+<ol>
+  <li><strong>Tailscale:</strong> If Tailscale isn’t found, install it from the Tailscale website and sign in. Your iPhone needs it too, signed in with the same account.</li>
+  <li><strong>Remote Login:</strong> The Setup Assistant opens Sharing in System Settings; turn on Remote Login. See <a href="#en-remote-login">below</a>.</li>
+  <li><strong>Install Helper:</strong> The helper is installed only in your home folder and doesn’t require an administrator password. The Setup Assistant lists everything it does. If installation fails, send us the “Diagnostics” results.</li>
+  <li><strong>Claude Code / Codex:</strong> To use coding-agent sessions, install at least one of them by following its official instructions. If you only use terminal sessions, you can skip this step (see <a href="#en-no-agents">below</a>). You can sign in later: start the sign-in from your iPhone, and it runs on your Mac.</li>
+  <li><strong>Allow Common Folders:</strong> macOS asks whether the app can access your Documents, Desktop, and Downloads folders; click Allow. See <a href="#en-folders">Folder Access</a>.</li>
+  <li><strong>Pair iPhone:</strong> See <a href="#en-pairing">Pairing Fails</a>.</li>
+</ol>
+
+<h2 id="en-tailscale">How Should I Set Up Tailscale?</h2>
+<ul>
+  <li>Sign in to the same Tailscale account on your Mac and your iPhone. In the Tailscale app on each device, check that both are on the same network (tailnet), connected, and not expired.</li>
+  <li>Tailscale on your Mac must accept incoming connections, so don’t turn on “Block incoming connections” (Shields Up).</li>
+  <li>If your tailnet uses access controls (ACLs or grants), allow your iPhone to reach TCP port 22 on your Mac.</li>
+  <li>You don’t need Tailscale SSH. Using different exit nodes on the two devices is fine.</li>
+</ul>
+
+<h2 id="en-remote-login">How Do I Turn On Remote Login?</h2>
+<p>Go to System Settings › General › Sharing and turn on Remote Login. Under “Allow access for,” choose “Only these users” and keep only the account that runs Claude Code or Codex.</p>
+<p>Kitestring doesn’t change the global sshd configuration, enable root login, or turn off password login. The key created during pairing accepts logins only from Tailscale addresses and can only open managed sessions.</p>
+
+<h2 id="en-pairing">What If Pairing Fails?</h2>
+<ul>
+  <li>The code is valid for 10 minutes and can be used only once. If it has expired or was already used, click “Pair iPhone” in the Mac menu bar again.</li>
+  <li>The Mac address in the pairing link must be a Tailscale address. If Tailscale isn’t connected on your iPhone, pairing can’t reach your Mac, so turn on Tailscale first.</li>
+  <li>If you open a pairing link from outside the app, the app first shows the Mac’s name, address, and username, and pairs only after you confirm.</li>
+  <li>If the app says the host identity has changed, don’t trust it blindly: someone may be impersonating your Mac, or the Mac may have been reinstalled or given a new host key. Once you’re sure it’s your Mac, tap “Re-verify Host Identity” in the app’s settings, or pair again.</li>
+  <li>The banner at the top of the app shows where the problem is: Tailscale on your iPhone, the Mac asleep or offline, Remote Login turned off, the helper missing, or the session service not running. Tap “Details” to see the original error.</li>
+</ul>
+
+<h2 id="en-folders">Why Is a Session Stuck Starting While My Mac Asks for Access to Documents or Desktop?</h2>
+<p>The session service doesn’t have access to that folder yet, and macOS is waiting for your answer. Click Allow on your Mac. If you clicked Don’t Allow earlier, open System Settings › Privacy &amp; Security › Files and Folders, turn on access to that folder, and then choose “Stop Service” and then “Start Service” in the menu bar. “Diagnostics” in the menu bar shows which folder is blocked.</p>
+
+<h2 id="en-login">Why Does Claude Code Say I’m Not Signed In?</h2>
+<p>If you’re signed in on your Mac but Claude Code says you aren’t in a session, the session service needs to start inside your signed-in desktop session to access the sign-in credentials stored in the login keychain. A service started over SSH can’t read them. Close all sessions, then choose “Stop Service” and then “Start Service” in the Mac menu bar. We never read or copy your credentials, and we never unlock the keychain for you.</p>
+
+<h2 id="en-awake">Does My Mac Need to Stay On?</h2>
+<p>Keep your Mac powered on, connected to the network, and awake, with your account signed in. The screen can be locked or the display turned off, but once your Mac goes to sleep, it can’t be reached. Kitestring doesn’t change your power settings; check them under Battery or Energy in System Settings. After your Mac restarts or you log out, the old session processes no longer exist.</p>
+
+<h2 id="en-no-sessions">Why Does the App Say “No Sessions Yet”?</h2>
+<p>Your iPhone is connected to your Mac, but there are no managed sessions on it yet. Tap “New Session” below the session list and choose Claude Code, Codex, or Terminal. The session starts in your Mac’s home folder, or you can choose a recent folder. Sessions created on your Mac with Kitestring also appear in the list. “No sessions” in the Sessions section of the Mac menu bar means the same thing.</p>
+
+<h2 id="en-no-devices">Why Does the Mac Menu Bar Say “No Paired Devices”?</h2>
+<p>No iPhone has been paired with this Mac yet, or every paired iPhone has been revoked. Choose “Pair iPhone…” in the menu bar and scan the code with the iPhone app (see <a href="#en-pairing">Pairing Fails</a>). If your iPhone’s pairing was revoked, the app can no longer connect to this Mac; scan a new code to pair again.</p>
+
+<h2 id="en-no-agents">What If Claude Code or Codex Isn’t Installed?</h2>
+<p>You can still use the app: a Terminal session started from your iPhone is a regular shell on your Mac. To use coding-agent sessions, install Claude Code or Codex on this Mac by following its official instructions (step 4 of the Setup Assistant checks for them and links to them). Then start that type of session on your iPhone. If you start one before installing it, the app tells you that the program wasn’t found on this Mac.</p>
+
+<h2 id="en-lost">What Should I Do If I Lose My iPhone?</h2>
+<p>In the Mac menu bar, revoke the iPhone under “Paired Devices.” Keep the app’s Face ID or passcode lock turned on: Claude Code and Codex run in your sessions with your macOS account’s permissions, so anyone with your unlocked iPhone and the app can give them instructions.</p>
+
+<h2 id="en-uninstall">How Do I Uninstall?</h2>
+<ol>
+  <li>Choose “Uninstall” in the Mac menu bar. If any sessions are still running, they’re listed first so you can confirm.</li>
+  <li>Uninstalling revokes every iPhone key (backing up <code>authorized_keys</code> before changing it) and removes the login item and the installed files. The session state folder is retained so it can be restored if you reinstall. Claude Code and Codex credentials, your project code, and your other tmux sessions aren’t touched.</li>
+  <li>Drag Kitestring for Mac to the Trash.</li>
+  <li>Delete the app from your iPhone. Tailscale and Remote Login keep your own settings; installation didn’t change them.</li>
+</ol>
+
+<h2 id="en-feedback">How Do I Report a Problem?</h2>
+<ul>
+  <li>In the iPhone app, go to Settings › Feedback &amp; Diagnostics. By default, feedback goes to your own Mac; read it under “Inbox &amp; Feedback” in the Mac menu bar.</li>
+  <li>To contact us, email <a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a> with the app version, the macOS version, and the “Diagnostics” results from the menu bar. Please don’t send session content, keys, or credentials.</li>
+</ul>
+</section>
+
+<!-- ===== Español ===== -->
+<section class="lang" id="es" lang="es" data-l="es">
+<nav class="pages"><a href="../#es">Inicio</a><a href="../download/#es">Descargar</a><a href="#es">Soporte</a><a href="../privacy/#es">Privacidad</a></nav>
+<h1>Soporte</h1>
+<p>¿No encuentras una respuesta? Escribe a <a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a> e incluye el resultado copiado de «Diagnóstico» en la barra de menús del Mac. No incluye contenido de las sesiones.</p>
+<p class="muted">Índice: <a href="#es-setup">La configuración no avanza</a> · <a href="#es-tailscale">Tailscale</a> · <a href="#es-remote-login">Sesión remota</a> · <a href="#es-pairing">Falla la vinculación</a> · <a href="#es-folders">Acceso a carpetas</a> · <a href="#es-login">Claude Code dice que no iniciaste sesión</a> · <a href="#es-awake">Mac activo</a> · <a href="#es-no-sessions">Sin sesiones</a> · <a href="#es-no-devices">Sin dispositivos vinculados</a> · <a href="#es-no-agents">Sin Claude Code ni Codex</a> · <a href="#es-lost">iPhone perdido</a> · <a href="#es-uninstall">Desinstalar</a> · <a href="#es-feedback">Comentarios</a></p>
+
+<h2 id="es-setup">¿Qué hago si la configuración no avanza en un paso?</h2>
+<p>El Asistente de configuración de Kitestring para Mac tiene seis pasos. Puedes volver a abrirlo cuando quieras con «Asistente de configuración…» en la barra de menús. La app comprueba cada paso automáticamente y lo marca como completado. Si un paso no avanza:</p>
+<ol>
+  <li><strong>Tailscale:</strong> si no se encuentra, instálalo desde el sitio web de Tailscale e inicia sesión. Tu iPhone también lo necesita, con la misma cuenta.</li>
+  <li><strong>Sesión remota:</strong> el Asistente de configuración abre Compartir en Ajustes del Sistema; activa Sesión remota. Consulta <a href="#es-remote-login">más abajo</a>.</li>
+  <li><strong>Instalar el asistente:</strong> el asistente del Mac se instala solo en tu carpeta de inicio y no pide contraseña de administrador. El Asistente de configuración muestra todo lo que hace. Si la instalación falla, envíanos el resultado de «Diagnóstico».</li>
+  <li><strong>Claude Code / Codex:</strong> para usar sesiones de agentes de programación, instala al menos uno siguiendo sus instrucciones oficiales. Si solo usas sesiones de terminal, puedes omitir este paso (consulta <a href="#es-no-agents">más abajo</a>). Puedes iniciar sesión más tarde: lo inicias desde tu iPhone y se ejecuta en tu Mac.</li>
+  <li><strong>Permitir las carpetas habituales:</strong> macOS pregunta si la app puede acceder a tus carpetas Documentos, Escritorio y Descargas; haz clic en Permitir. Consulta <a href="#es-folders">Acceso a carpetas</a>.</li>
+  <li><strong>Vincular iPhone:</strong> consulta <a href="#es-pairing">Falla la vinculación</a>.</li>
+</ol>
+
+<h2 id="es-tailscale">¿Cómo configuro Tailscale?</h2>
+<ul>
+  <li>Inicia sesión en la misma cuenta de Tailscale en tu Mac y en tu iPhone. En la app de Tailscale de cada dispositivo, comprueba que ambos estén en la misma red (tailnet), conectados y sin caducar.</li>
+  <li>Tailscale en tu Mac debe aceptar conexiones entrantes, así que no actives «Bloquear conexiones entrantes» (Block incoming connections / Shields Up).</li>
+  <li>Si tu tailnet usa controles de acceso (ACL o grants), permite que tu iPhone se conecte al puerto TCP 22 de tu Mac.</li>
+  <li>No necesitas Tailscale SSH. Usar nodos de salida (exit nodes) distintos en los dos dispositivos no es un problema.</li>
+</ul>
+
+<h2 id="es-remote-login">¿Cómo activo Sesión remota?</h2>
+<p>Ve a Ajustes del Sistema › General › Compartir y activa Sesión remota. En «Permitir acceso a», elige «Solo estos usuarios» y deja solo la cuenta que ejecuta Claude Code o Codex.</p>
+<p>Kitestring no cambia la configuración global de sshd, no habilita el inicio de sesión como root ni desactiva el inicio de sesión con contraseña. La clave creada durante la vinculación solo acepta conexiones desde direcciones de Tailscale y solo puede abrir sesiones gestionadas.</p>
+
+<h2 id="es-pairing">¿Qué hago si falla la vinculación?</h2>
+<ul>
+  <li>El código es válido durante 10 minutos y solo se puede usar una vez. Si caducó o ya se usó, vuelve a hacer clic en «Vincular iPhone» en la barra de menús del Mac.</li>
+  <li>La dirección del Mac en el enlace de vinculación debe ser una dirección de Tailscale. Si Tailscale no está conectado en tu iPhone, la vinculación no puede llegar a tu Mac, así que primero activa Tailscale.</li>
+  <li>Si abres un enlace de vinculación desde fuera de la app, la app primero muestra el nombre, la dirección y el nombre de usuario del Mac, y solo lo vincula cuando lo confirmas.</li>
+  <li>Si la app avisa que la identidad del host cambió, no confíes sin verificar: alguien podría estar suplantando a tu Mac, o quizá el Mac se reinstaló o recibió una clave de host nueva. Cuando estés seguro de que es tu Mac, toca «Volver a verificar la identidad del host» en los ajustes de la app o vuelve a vincularlo.</li>
+  <li>El aviso en la parte superior de la app indica dónde está el problema: Tailscale en tu iPhone, el Mac en reposo o sin conexión, Sesión remota desactivada, falta el asistente del Mac o el servicio de sesiones no está en ejecución. Toca «Detalles» para ver el error original.</li>
+</ul>
+
+<h2 id="es-folders">¿Por qué una sesión no termina de iniciar mientras el Mac pide acceso a Documentos o Escritorio?</h2>
+<p>El servicio de sesiones aún no tiene acceso a esa carpeta y macOS está esperando tu respuesta. Haz clic en Permitir en tu Mac. Si antes hiciste clic en No permitir, abre Ajustes del Sistema › Privacidad y seguridad › Archivos y carpetas, activa el acceso a esa carpeta y luego elige «Detener servicio» y después «Iniciar servicio» en la barra de menús. «Diagnóstico» en la barra de menús muestra qué carpeta está bloqueada.</p>
+
+<h2 id="es-login">¿Por qué Claude Code dice que no iniciaste sesión?</h2>
+<p>Si iniciaste sesión en tu Mac pero Claude Code dice lo contrario en una sesión, es porque el servicio de sesiones tiene que iniciarse dentro de tu sesión de escritorio para acceder a las credenciales de inicio de sesión guardadas en el llavero de inicio de sesión. Un servicio iniciado por SSH no puede leerlas. Cierra todas las sesiones y luego elige «Detener servicio» y después «Iniciar servicio» en la barra de menús del Mac. Nunca leemos ni copiamos tus credenciales, ni desbloqueamos el llavero por ti.</p>
+
+<h2 id="es-awake">¿Mi Mac tiene que estar siempre encendido?</h2>
+<p>Mantén tu Mac encendido, conectado a la red y activo, con tu cuenta iniciada. La pantalla puede estar bloqueada o apagada, pero cuando el Mac entra en reposo ya no se puede acceder a él. Kitestring no cambia tus ajustes de energía; revísalos en Batería o Energía, en Ajustes del Sistema. Cuando el Mac se reinicia o cierras sesión, los procesos de las sesiones anteriores dejan de existir.</p>
+
+<h2 id="es-no-sessions">¿Por qué la app dice «Aún no hay sesiones»?</h2>
+<p>Tu iPhone está conectado a tu Mac, pero todavía no hay sesiones gestionadas en él. Toca «Nueva sesión» debajo de la lista de sesiones y elige Claude Code, Codex o Terminal. La sesión se abre en la carpeta de inicio del Mac, o puedes elegir una carpeta reciente. Las sesiones creadas en el Mac con Kitestring también aparecen en la lista. «No hay sesiones» en la sección Sesiones de la barra de menús del Mac significa lo mismo.</p>
+
+<h2 id="es-no-devices">¿Por qué la barra de menús del Mac dice «No hay dispositivos vinculados»?</h2>
+<p>Todavía no se vinculó ningún iPhone con este Mac, o se revocaron todos los iPhone vinculados. Elige «Vincular iPhone…» en la barra de menús y escanea el código con la app del iPhone (consulta <a href="#es-pairing">Falla la vinculación</a>). Si se revocó la vinculación de tu iPhone, la app ya no puede conectarse a este Mac; escanea un código nuevo para volver a vincularlo.</p>
+
+<h2 id="es-no-agents">¿Qué hago si no tengo Claude Code ni Codex instalados?</h2>
+<p>Puedes usar la app igualmente: una sesión de Terminal iniciada desde tu iPhone es una shell normal en tu Mac. Para usar sesiones de agentes de programación, instala Claude Code o Codex en este Mac siguiendo sus instrucciones oficiales (el paso 4 del Asistente de configuración los detecta y te da los enlaces). Luego inicia ese tipo de sesión en tu iPhone. Si la inicias antes de instalarlo, la app te avisa que no encontró el programa en este Mac.</p>
+
+<h2 id="es-lost">¿Qué hago si pierdo mi iPhone?</h2>
+<p>En la barra de menús del Mac, revoca el iPhone en «Dispositivos vinculados». Mantén activado el bloqueo con Face ID o código de la app: Claude Code y Codex se ejecutan en tus sesiones con los permisos de tu cuenta de macOS, así que cualquier persona que tenga tu iPhone desbloqueado y la app puede darles instrucciones.</p>
+
+<h2 id="es-uninstall">¿Cómo desinstalo la app?</h2>
+<ol>
+  <li>Elige «Desinstalar» en la barra de menús del Mac. Si todavía hay sesiones en ejecución, primero se muestran para que lo confirmes.</li>
+  <li>Al desinstalar, se revocan todas las claves de iPhone (se hace una copia de <code>authorized_keys</code> antes de modificarlo) y se eliminan el elemento de inicio y los archivos instalados. La carpeta de estado de las sesiones se conserva para poder restaurarla si vuelves a instalar la app. No se tocan las credenciales de Claude Code ni de Codex, el código de tus proyectos ni tus otras sesiones de tmux.</li>
+  <li>Arrastra Kitestring para Mac a la Papelera.</li>
+  <li>Elimina la app de tu iPhone. Tailscale y Sesión remota conservan tu configuración; la instalación no los modificó.</li>
+</ol>
+
+<h2 id="es-feedback">¿Cómo reporto un problema?</h2>
+<ul>
+  <li>En la app del iPhone, ve a Ajustes › Comentarios y diagnóstico. De forma predeterminada, los comentarios se envían a tu propio Mac; léelos en «Bandeja y comentarios» en la barra de menús del Mac.</li>
+  <li>Para contactarnos, escribe a <a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a> con la versión de la app, la versión de macOS y el resultado de «Diagnóstico» de la barra de menús. No envíes contenido de sesiones, claves ni credenciales.</li>
+</ul>
+</section>
+
+</main>
+<footer><div class="wrap">
+  <div data-l="zh" lang="zh-Hans"><a href="../#zh">首页</a><a href="../privacy/#zh">隐私政策</a><a href="../download/#zh">下载</a><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a></div>
+  <div data-l="en" lang="en"><a href="../#en">Home</a><a href="../privacy/#en">Privacy Policy</a><a href="../download/#en">Download</a><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a></div>
+  <div data-l="es" lang="es"><a href="../#es">Inicio</a><a href="../privacy/#es">Política de privacidad</a><a href="../download/#es">Descargar</a><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a></div>
+</div></footer>
+</body>
+</html>

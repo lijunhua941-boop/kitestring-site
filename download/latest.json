@@ -1,0 +1,17 @@
+{
+  "v": 1,
+  "app": "Kitestring for Mac",
+  "version": "0.16.4",
+  "build": "11",
+  "released": "2026-11-09",
+  "min_macos": "14.0",
+  "dmg_url": "https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.4-11/Kitestring-0.16.4-11.dmg",
+  "dmg_sha256": "b6042ca66d5105fc09baa83e55097436bca79e20a1ab99c9b3144cd91e4485df",
+  "dmg_bytes": "87806506",
+  "bundle_id": "sh.kitestring.mac",
+  "release_notes_url": "https://lijunhua941-boop.github.io/kitestring-site/download/",
+  "agent_install_url": "https://lijunhua941-boop.github.io/kitestring-site/agent-install.md",
+  "homebrew_cask": "lijunhua941-boop/kitestring/kitestring",
+  "download_page": "https://lijunhua941-boop.github.io/kitestring-site/download/",
+  "support_page": "https://lijunhua941-boop.github.io/kitestring-site/support/"
+}

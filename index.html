@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kitestring</title>
+<meta name="description" data-zh="Kitestring：连接你自己 Mac 的 SSH 终端与编程助手会话管理，支持 Claude Code 和 Codex。" data-es="Kitestring: un terminal SSH y gestor de sesiones de agentes de programación para tu propio Mac. Funciona con Claude Code y Codex." content="Kitestring: an SSH terminal and coding-agent session manager for your own Mac. Works with Claude Code and Codex.">
+<link rel="canonical" href="https://lijunhua941-boop.github.io/kitestring-site/">
+<link rel="stylesheet" href="assets/site.css">
+<script>
+/* Language (the same script on every page; site/README.md「三语」). Order: the fragment #zh / #en / #es
+   or an anchor inside a section (#es-pairing; #zh-Hans, #es-419 work too), then ?lang=, then the
+   browser's preferred languages, then English. Sets <html lang> and data-lang (site.css then shows only
+   that language), the page title and description, and makes every link to another page of the site carry the language.
+   Nothing is stored. Without JavaScript site.css reads the fragment itself and shows English otherwise. */
+(function () {
+  var TAGS = { zh: "zh-Hans", en: "en", es: "es" }, root = document.documentElement, lang = "en";
+  function norm(s) { s = String(s || "").toLowerCase().split(/[-_;]/)[0]; return TAGS.hasOwnProperty(s) ? s : ""; }
+  function fromHash() { try { return norm(decodeURIComponent(location.hash.slice(1))); } catch (e) { return ""; } }
+  function fromQuery() { var m = /[?&]lang=([^&#]*)/.exec(location.search); return m ? norm(m[1]) : ""; }
+  function fromBrowser() {
+    var list = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language];
+    for (var i = 0; i < list.length; i++) { var l = norm(list[i]); if (l) return l; }
+    return "";
+  }
+  function relink() {
+    var links = document.querySelectorAll("a[href]");
+    for (var i = 0; i < links.length; i++) {
+      var a = links[i], href = a.getAttribute("data-href") || a.getAttribute("href");
+      var cut = href.indexOf("#"), path = cut < 0 ? href : href.slice(0, cut), frag = cut < 0 ? "" : href.slice(cut + 1);
+      if (cut === 0) {                                   // same-page link: mark the active language switch
+        if (a.parentNode && a.parentNode.className === "langs") {
+          if (frag === lang) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current");
+        }
+        continue;
+      }
+      // Only the site's own pages: relative ("./", "../", "download/", "../privacy/"), with no fragment
+      // or a bare language fragment. mailto:, https:, files (.md, .json, .dmg) and other anchors stay.
+      if (/^([a-z][a-z0-9+.-]*:|\/\/)/i.test(href) || !/\/$/.test(path) || (frag && !TAGS.hasOwnProperty(frag))) continue;
+      a.setAttribute("data-href", href);
+      a.setAttribute("href", path + "#" + lang);
+    }
+  }
+  function apply() {
+    lang = fromHash() || fromQuery() || fromBrowser() || "en";
+    root.setAttribute("data-lang", lang);
+    root.setAttribute("lang", TAGS[lang]);
+    var t = document.querySelector("title");
+    if (t) {
+      if (!t.hasAttribute("data-en")) t.setAttribute("data-en", t.textContent);
+      document.title = t.getAttribute("data-" + lang) || t.getAttribute("data-en");
+    }
+    // The description (and any og:/twitter: title or description) the same way: data-zh / data-es
+    // beside the English content, which stays in the page for readers without JavaScript.
+    var metas = document.querySelectorAll('meta[name="description"], meta[property^="og:"], meta[name^="twitter:"]');
+    for (var j = 0; j < metas.length; j++) {
+      var m = metas[j];
+      if (!m.hasAttribute("data-zh") && !m.hasAttribute("data-es")) continue;
+      if (!m.hasAttribute("data-en")) m.setAttribute("data-en", m.getAttribute("content"));
+      m.setAttribute("content", m.getAttribute("data-" + lang) || m.getAttribute("data-en"));
+    }
+    if (document.readyState !== "loading") relink();
+  }
+  apply();
+  document.addEventListener("DOMContentLoaded", relink);
+  window.addEventListener("hashchange", apply);
+})();
+</script>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="./">Kitestring</a>
+  <span class="langs"><a href="#zh" hreflang="zh-Hans" lang="zh-Hans">中文</a><a href="#en" hreflang="en" lang="en">English</a><a href="#es" hreflang="es" lang="es">Español</a></span>
+</div></header>
+<main class="wrap">
+
+<!-- ===== 简体中文（主稿） ===== -->
+<section class="lang" id="zh" lang="zh-Hans" data-l="zh">
+<nav class="pages"><a href="#zh">首页</a><a href="download/#zh">下载</a><a href="support/#zh">技术支持</a><a href="privacy/#zh">隐私政策</a></nav>
+<h1>在 iPhone 上使用你 Mac 上的编程助手</h1>
+<p class="lead">Kitestring 是连接你自己的 Mac 的 SSH 终端与编程助手会话管理器，配合 Claude Code 与 Codex 使用。和 Blink Shell、Termius 一样，它是 SSH 客户端：iPhone 显示会话、发送你的输入，程序都在你的 Mac 上运行。App 不会在 iPhone 上下载或执行代码。</p>
+<div class="actions">
+  <a class="button" href="download/#zh">下载 Kitestring for Mac（免费）</a>
+  <!-- App Store 徽章占位：上架后换成官方徽章图片（按徽章的使用规范），链接填 KITE_APP_STORE_URL。 -->
+  
+</div>
+
+<h2>三步上手</h2>
+<ol class="steps">
+  <li><strong>在 Mac 上下载 Kitestring for Mac。</strong>它的「设置向导」带你逐步完成：Tailscale、远程登录、安装助手、Claude Code 或 Codex、常用文件夹授权。App 自动检查每一步，完成后标记为已完成。</li>
+  <li><strong>两台设备都装 Tailscale，登录同一个账号。</strong>iPhone 和 Mac 之间的连接只走你自己的 Tailscale 网络。</li>
+  <li><strong>在 Mac 菜单栏点「配对 iPhone」，用 iPhone App 扫码。</strong>二维码 10 分钟内有效、只能用一次。配对会自动设置 Mac 的地址、用户名、主机身份和访问权限。</li>
+</ol>
+<p class="muted">还没有 Mac？打开 iPhone App，在欢迎页点「先看看演示（不需要 Mac）」，不需要连接任何设备。</p>
+
+<h2>能做什么</h2>
+<ul class="grid">
+  <li><strong>会话列表</strong><br>编号的 Claude Code、Codex 和终端会话；Mac 报告「等待你回应」「已完成」「运行中」，需要你处理的会话排在最前。</li>
+  <li><strong>对话视图</strong><br>在 iPhone 上原生显示 Claude Code 与 Codex 的对话，工具调用折叠成一行。</li>
+  <li><strong>原生终端</strong><br>标准 SSH 终端，工具条带 Esc、Tab、Ctrl、方向键；iPhone 和 Mac 可以同时连着同一个会话。</li>
+  <li><strong>远程文件</strong><br>在会话的工作目录和你授权的文件夹里浏览、预览、编辑文件；密钥、凭证、<code>.env</code> 文件等敏感文件无法访问。</li>
+  <li><strong>草稿与语音</strong><br>先在草稿里写好长提示词或用语音输入，再插入终端；也可以把照片和文件发到 Mac。</li>
+  <li><strong>模型与思考深度</strong><br>在 iPhone 上切换会话使用的模型和思考深度。</li>
+  <li><strong>离线对话</strong><br>连不上 Mac 时，可以阅读 iPhone 上缓存的最近对话（只读，明确标出不是实时内容）。</li>
+  <li><strong>多台 Mac</strong><br>一部 iPhone 可以配对多台 Mac，各自独立。</li>
+</ul>
+
+<h2>安全与隐私</h2>
+<ul>
+  <li>你的会话不经过我们的服务器：数据只在你的 iPhone 与你的 Mac 之间、经你自己的 Tailscale 网络端到端加密传输；无法直连时，Tailscale 可能经它的中继服务器转发加密后的流量，中继看不到内容。App 不收集任何数据。你不需要 Kitestring 账号，但需要你自己的 Tailscale 账号。</li>
+  <li>iPhone 的私钥在 iPhone 上生成，存在钥匙串里，不导出、不同步；Mac 的主机身份在配对时固定，变化即阻断连接。</li>
+  <li>配对时生成的密钥只能进入受管会话，并且只接受来自 Tailscale 地址的登录；不开放公网端口、不改 sshd 全局配置。</li>
+  <li>它不是沙箱：会话里的 Claude Code 与 Codex 以你的 macOS 账户权限运行。建议开启 App 的 Face ID 或设备密码锁。</li>
+</ul>
+<p><a href="privacy/#zh">阅读隐私政策</a></p>
+
+<h2>系统要求</h2>
+<table>
+  <tr><th>Mac</th><td>macOS 14 或更高；打开「远程登录」；安装并登录 Tailscale；装好 Claude Code 或 Codex 至少一个（只用终端会话可以不装）。Mac 需要保持通电、联网和唤醒，并登录你的账户（可以锁屏，不能睡眠）。</td></tr>
+  <tr><th>iPhone</th><td>iOS 17 或更高；安装 Tailscale 并登录与 Mac 相同的账号。</td></tr>
+</table>
+</section>
+
+<!-- ===== English ===== -->
+<section class="lang" id="en" lang="en" data-l="en">
+<nav class="pages"><a href="#en">Home</a><a href="download/#en">Download</a><a href="support/#en">Support</a><a href="privacy/#en">Privacy</a></nav>
+<h1>Use Your Mac’s Coding Agents from Your iPhone</h1>
+<p class="lead">Kitestring is an SSH terminal and coding-agent session manager for your own Mac, and it works with Claude Code and Codex. Like Blink Shell and Termius, it’s an SSH client: your iPhone displays the session and sends your input; the programs run on your Mac. The app never downloads or runs code on your iPhone.</p>
+<div class="actions">
+  <a class="button" href="download/#en">Download Kitestring for Mac (Free)</a>
+  <!-- App Store badge placeholder: replace with the official badge artwork after launch (follow its usage rules); link = KITE_APP_STORE_URL. -->
+  
+</div>
+
+<h2>Three Steps</h2>
+<ol class="steps">
+  <li><strong>Download Kitestring for Mac on your Mac.</strong> Its Setup Assistant walks you through Tailscale, Remote Login, installing the helper, Claude Code or Codex, and access to common folders. The app checks each step automatically and marks it complete.</li>
+  <li><strong>Install Tailscale on both devices and sign in with the same account.</strong> Your iPhone reaches your Mac only over your own Tailscale network.</li>
+  <li><strong>Click “Pair iPhone” in the Mac menu bar and scan the code with the iPhone app.</strong> The code is valid for 10 minutes and can be used only once. Pairing automatically configures the Mac’s address, username, host identity, and access permissions.</li>
+</ol>
+<p class="muted">Don’t have a Mac yet? Open the iPhone app and tap “Try the demo (no Mac needed)” on the welcome screen. No other device is needed.</p>
+
+<h2>What It Does</h2>
+<ul class="grid">
+  <li><strong>Session List</strong><br>Numbered Claude Code, Codex, and terminal sessions. The Mac reports whether each one is “Waiting for your response,” “Done,” or “Running.” Sessions that need your attention appear first.</li>
+  <li><strong>Conversation View</strong><br>Claude Code and Codex conversations, rendered natively on your iPhone, with tool calls collapsed into a single line.</li>
+  <li><strong>Native Terminal</strong><br>A standard SSH terminal with Esc, Tab, Ctrl, and arrow keys in the toolbar. Your iPhone and your Mac can be attached to the same session at the same time.</li>
+  <li><strong>Remote Files</strong><br>Browse, preview, and edit files in the session’s working folder and in folders you authorize. Access to keys, credentials, <code>.env</code> files, and other sensitive files is blocked.</li>
+  <li><strong>Drafts and Voice</strong><br>Write or dictate a long prompt in a draft, then insert it into the terminal. You can also send photos and files to your Mac.</li>
+  <li><strong>Model &amp; Reasoning Effort</strong><br>Switch a session’s model and reasoning effort from your iPhone.</li>
+  <li><strong>Offline Conversations</strong><br>When your Mac is unreachable, read recent conversations cached on your iPhone (read-only and clearly marked as not live).</li>
+  <li><strong>Multiple Macs</strong><br>Pair one iPhone with several Macs; each one is kept separate.</li>
+</ul>
+
+<h2>Security and Privacy</h2>
+<ul>
+  <li>Your sessions don’t pass through our servers. Data travels only between your iPhone and your Mac, end-to-end encrypted over your own Tailscale network. When a direct connection isn’t possible, Tailscale may forward the encrypted traffic through its relay servers, which can’t read it. The app collects no data. You don’t need a Kitestring account. You do need your own Tailscale account.</li>
+  <li>Your iPhone’s private key is created on the iPhone and stored in its keychain; it’s never exported or synced. The Mac’s host identity is pinned when you pair, and if it changes, the connection is blocked.</li>
+  <li>The key created during pairing can only open managed sessions, and only from Tailscale addresses. No public ports are opened, and the global sshd configuration isn’t changed.</li>
+  <li>It isn’t a sandbox: Claude Code and Codex run in your sessions with your macOS account’s permissions. We recommend turning on the app’s Face ID or passcode lock.</li>
+</ul>
+<p><a href="privacy/#en">Read the Privacy Policy</a></p>
+
+<h2>Requirements</h2>
+<table>
+  <tr><th>Mac</th><td>macOS 14 or later; Remote Login turned on; Tailscale installed and signed in; at least one of Claude Code or Codex installed (not needed for terminal-only sessions). Keep your Mac powered on, connected to the network, and awake, with your account signed in. It can be locked, but it can’t be asleep.</td></tr>
+  <tr><th>iPhone</th><td>iOS 17 or later; Tailscale installed and signed in with the same account as your Mac.</td></tr>
+</table>
+</section>
+
+<!-- ===== Español ===== -->
+<section class="lang" id="es" lang="es" data-l="es">
+<nav class="pages"><a href="#es">Inicio</a><a href="download/#es">Descargar</a><a href="support/#es">Soporte</a><a href="privacy/#es">Privacidad</a></nav>
+<h1>Usa los agentes de programación de tu Mac desde tu iPhone</h1>
+<p class="lead">Kitestring es un terminal SSH y un gestor de sesiones de agentes de programación para tu propio Mac, compatible con Claude Code y Codex. Como Blink Shell y Termius, es un cliente SSH: tu iPhone muestra la sesión y envía lo que escribes; los programas se ejecutan en tu Mac. La app nunca descarga ni ejecuta código en tu iPhone.</p>
+<div class="actions">
+  <a class="button" href="download/#es">Descargar Kitestring para Mac (gratis)</a>
+  <!-- Marcador de la insignia del App Store: sustituir por la insignia oficial tras el lanzamiento (según sus normas de uso); enlace = KITE_APP_STORE_URL. -->
+  
+</div>
+
+<h2>Tres pasos</h2>
+<ol class="steps">
+  <li><strong>Descarga Kitestring para Mac en tu Mac.</strong> Su Asistente de configuración te guía por Tailscale, Sesión remota, la instalación del asistente del Mac, Claude Code o Codex y el acceso a las carpetas habituales. La app comprueba cada paso automáticamente y lo marca como completado.</li>
+  <li><strong>Instala Tailscale en ambos dispositivos e inicia sesión con la misma cuenta.</strong> Tu iPhone se conecta a tu Mac solo a través de tu propia red de Tailscale.</li>
+  <li><strong>Haz clic en «Vincular iPhone» en la barra de menús del Mac y escanea el código con la app del iPhone.</strong> El código es válido durante 10 minutos y solo se puede usar una vez. La vinculación configura automáticamente la dirección del Mac, el nombre de usuario, la identidad del host y los permisos de acceso.</li>
+</ol>
+<p class="muted">¿Todavía no tienes un Mac? Abre la app del iPhone y toca «Prueba la demostración (sin Mac)» en la pantalla de bienvenida. No necesitas ningún otro dispositivo.</p>
+
+<h2>Qué hace</h2>
+<ul class="grid">
+  <li><strong>Lista de sesiones</strong><br>Sesiones numeradas de Claude Code, Codex y terminal. El Mac indica si cada una está «Esperando tu respuesta», «Completado» o «En curso». Las sesiones que necesitan tu atención aparecen primero.</li>
+  <li><strong>Vista de conversación</strong><br>Las conversaciones de Claude Code y Codex se muestran de forma nativa en tu iPhone, con las llamadas a herramientas plegadas en una sola línea.</li>
+  <li><strong>Terminal nativo</strong><br>Un terminal SSH estándar con Esc, Tab, Ctrl y flechas en la barra de herramientas. Tu iPhone y tu Mac pueden estar conectados a la misma sesión al mismo tiempo.</li>
+  <li><strong>Archivos remotos</strong><br>Explora, previsualiza y edita archivos en la carpeta de trabajo de la sesión y en las carpetas que autorices. El acceso a claves, credenciales, archivos <code>.env</code> y otros archivos sensibles está bloqueado.</li>
+  <li><strong>Borradores y voz</strong><br>Escribe o dicta un prompt largo en un borrador y luego insértalo en el terminal. También puedes enviar fotos y archivos a tu Mac.</li>
+  <li><strong>Modelo y nivel de razonamiento</strong><br>Cambia el modelo y el nivel de razonamiento de una sesión desde tu iPhone.</li>
+  <li><strong>Conversaciones sin conexión</strong><br>Cuando no puedas conectarte a tu Mac, lee las conversaciones recientes guardadas en tu iPhone (solo lectura y con una marca clara de que no están en vivo).</li>
+  <li><strong>Varios Mac</strong><br>Vincula un iPhone con varios Mac; cada uno se mantiene por separado.</li>
+</ul>
+
+<h2>Seguridad y privacidad</h2>
+<ul>
+  <li>Tus sesiones no pasan por nuestros servidores. Los datos solo viajan entre tu iPhone y tu Mac, cifrados de extremo a extremo por tu propia red de Tailscale. Si no es posible una conexión directa, Tailscale puede reenviar el tráfico cifrado por sus servidores de retransmisión, que no pueden leerlo. La app no recopila datos. No necesitas una cuenta de Kitestring, pero sí tu propia cuenta de Tailscale.</li>
+  <li>La clave privada de tu iPhone se crea en el iPhone y se guarda en su llavero; nunca se exporta ni se sincroniza. La identidad del host del Mac se fija al vincularlo y, si cambia, la conexión se bloquea.</li>
+  <li>La clave creada durante la vinculación solo puede abrir sesiones gestionadas, y solo desde direcciones de Tailscale. No se abren puertos públicos ni se cambia la configuración global de sshd.</li>
+  <li>No es un entorno aislado (sandbox): Claude Code y Codex se ejecutan en tus sesiones con los permisos de tu cuenta de macOS. Te recomendamos activar el bloqueo con Face ID o código de la app.</li>
+</ul>
+<p><a href="privacy/#es">Lee la política de privacidad</a></p>
+
+<h2>Requisitos</h2>
+<table>
+  <tr><th>Mac</th><td>macOS 14 o posterior; Sesión remota activada; Tailscale instalado y con la sesión iniciada; al menos Claude Code o Codex instalado (no hace falta si solo usas sesiones de terminal). Mantén tu Mac encendido, conectado a la red y activo, con tu cuenta iniciada. Puede estar bloqueado, pero no en reposo.</td></tr>
+  <tr><th>iPhone</th><td>iOS 17 o posterior; Tailscale instalado y con la sesión iniciada en la misma cuenta que tu Mac.</td></tr>
+</table>
+</section>
+
+</main>
+<footer><div class="wrap">
+  <div data-l="zh" lang="zh-Hans">
+    <a href="privacy/#zh">隐私政策</a><a href="support/#zh">技术支持</a><a href="download/#zh">下载</a><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a>
+    <p>Claude Code 与 Codex 属于各自的所有者；Kitestring 是独立 App，与它们无隶属关系。</p>
+  </div>
+  <div data-l="en" lang="en">
+    <a href="privacy/#en">Privacy Policy</a><a href="support/#en">Support</a><a href="download/#en">Download</a><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a>
+    <p>Claude Code and Codex are products of their respective owners. Kitestring is an independent app and isn’t affiliated with them.</p>
+  </div>
+  <div data-l="es" lang="es">
+    <a href="privacy/#es">Política de privacidad</a><a href="support/#es">Soporte</a><a href="download/#es">Descargar</a><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a>
+    <p>Claude Code y Codex son productos de sus respectivos propietarios. Kitestring es una app independiente y no está afiliada a ellos.</p>
+  </div>
+</div></footer>
+</body>
+</html>

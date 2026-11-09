@@ -1,0 +1,88 @@
+/* Static site stylesheet: no web fonts, no external resources. */
+:root {
+  --bg: #fbfaf7;
+  --fg: #1d1f21;
+  --muted: #5d6166;
+  --line: #e2dfd8;
+  --card: #ffffff;
+  --accent: #1f6feb;
+  --accent-fg: #ffffff;
+  --code-bg: #f1efe9;
+  --warn-bg: #fff6e0;
+  --warn-line: #e8c46a;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #15171a;
+    --fg: #e8e6e1;
+    --muted: #a3a7ad;
+    --line: #2c3036;
+    --card: #1c1f23;
+    --accent: #5b9dff;
+    --accent-fg: #0b0d10;
+    --code-bg: #23272c;
+    --warn-bg: #2b2516;
+    --warn-line: #7a6326;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #15171a; --fg: #e8e6e1; --muted: #a3a7ad; --line: #2c3036; --card: #1c1f23;
+  --accent: #5b9dff; --accent-fg: #0b0d10; --code-bg: #23272c; --warn-bg: #2b2516; --warn-line: #7a6326;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "Noto Sans", Helvetica, Arial, sans-serif;
+}
+a { color: var(--accent); }
+.wrap { max-width: 860px; margin: 0 auto; padding: 0 16px; }
+header.top { border-bottom: 1px solid var(--line); }
+header.top .wrap { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between; padding-top: 12px; padding-bottom: 12px; }
+.brand { font-weight: 700; color: var(--fg); text-decoration: none; }
+.langs a { margin-left: 10px; font-size: 14px; }
+nav.pages { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 16px 0 8px; font-size: 15px; }
+h1 { font-size: 30px; line-height: 1.25; margin: 24px 0 12px; }
+h2 { font-size: 22px; margin: 36px 0 10px; padding-top: 4px; border-top: 1px solid var(--line); padding-top: 24px; }
+h3 { font-size: 17px; margin: 24px 0 6px; }
+p, li { max-width: 72ch; }
+.lead { font-size: 18px; color: var(--muted); }
+.muted { color: var(--muted); font-size: 14px; }
+code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 14px; }
+code { background: var(--code-bg); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
+pre { background: var(--code-bg); padding: 12px 14px; border-radius: 8px; overflow-x: auto; }
+pre code { background: none; padding: 0; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0; align-items: center; }
+.button { display: inline-block; background: var(--accent); color: var(--accent-fg); text-decoration: none; font-weight: 600; padding: 10px 18px; border-radius: 8px; }
+/* Placeholder for the official store badge (to be replaced with the badge artwork after launch). */
+.badge-placeholder { display: inline-block; border: 2px dashed var(--line); color: var(--muted); padding: 8px 14px; border-radius: 8px; text-decoration: none; font-size: 14px; }
+ol.steps { padding-left: 22px; }
+ol.steps li { margin: 8px 0; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; padding: 0; list-style: none; }
+.grid li { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+table { border-collapse: collapse; width: 100%; font-size: 15px; display: block; overflow-x: auto; }
+th, td { text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); padding: 8px 10px 8px 0; }
+td code { overflow-wrap: anywhere; }
+.note { background: var(--warn-bg); border: 1px solid var(--warn-line); border-radius: 8px; padding: 10px 14px; }
+footer { border-top: 1px solid var(--line); margin-top: 48px; padding: 20px 0 40px; font-size: 14px; color: var(--muted); }
+footer a { margin-right: 14px; }
+
+.langs a[aria-current] { color: var(--fg); font-weight: 600; text-decoration: none; }
+
+/* Languages. Every page has three sections <section class="lang" id="zh|en|es" data-l="…"> and one
+   footer block per language (data-l), so a reader sees one language only.
+   With JavaScript: the inline script in each page's <head> sets <html data-lang="zh|en|es"> (fragment ›
+   ?lang= › browser languages › English) and the first group of rules shows that language.
+   Without JavaScript: #zh / #en / #es, or an anchor inside a section (#es-pairing), picks the language
+   through :target; otherwise English. Browsers without :has() ignore that second group and then show
+   all three languages one after another. The two groups must stay separate rules: one selector that
+   a browser cannot parse drops its whole rule. */
+html[data-lang="zh"] [data-l]:not([data-l="zh"]),
+html[data-lang="en"] [data-l]:not([data-l="en"]),
+html[data-lang="es"] [data-l]:not([data-l="es"]) { display: none; }
+html:not([data-lang]) body:has(#zh:target, #zh :target) [data-l]:not([data-l="zh"]),
+html:not([data-lang]) body:has(#es:target, #es :target) [data-l]:not([data-l="es"]),
+html:not([data-lang]) body:not(:has(#zh:target, #zh :target, #es:target, #es :target)) [data-l]:not([data-l="en"]) { display: none; }

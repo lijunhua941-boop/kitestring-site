@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-zh="下载 Kitestring for Mac" data-es="Descargar Kitestring para Mac">Download Kitestring for Mac</title>
+<meta name="description" data-zh="下载 Kitestring for Mac 0.16.4：免费的 DMG，已签名并经过公证，附 SHA-256 校验值。" data-es="Descarga Kitestring para Mac 0.16.4: DMG gratuito, firmado y notarizado, con su suma de verificación SHA-256." content="Download Kitestring for Mac 0.16.4: free, signed and notarized DMG with its SHA-256 checksum.">
+<link rel="canonical" href="https://lijunhua941-boop.github.io/kitestring-site/download/">
+<link rel="stylesheet" href="../assets/site.css">
+<script>
+/* Language (the same script on every page; site/README.md「三语」). Order: the fragment #zh / #en / #es
+   or an anchor inside a section (#es-pairing; #zh-Hans, #es-419 work too), then ?lang=, then the
+   browser's preferred languages, then English. Sets <html lang> and data-lang (site.css then shows only
+   that language), the page title and description, and makes every link to another page of the site carry the language.
+   Nothing is stored. Without JavaScript site.css reads the fragment itself and shows English otherwise. */
+(function () {
+  var TAGS = { zh: "zh-Hans", en: "en", es: "es" }, root = document.documentElement, lang = "en";
+  function norm(s) { s = String(s || "").toLowerCase().split(/[-_;]/)[0]; return TAGS.hasOwnProperty(s) ? s : ""; }
+  function fromHash() { try { return norm(decodeURIComponent(location.hash.slice(1))); } catch (e) { return ""; } }
+  function fromQuery() { var m = /[?&]lang=([^&#]*)/.exec(location.search); return m ? norm(m[1]) : ""; }
+  function fromBrowser() {
+    var list = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language];
+    for (var i = 0; i < list.length; i++) { var l = norm(list[i]); if (l) return l; }
+    return "";
+  }
+  function relink() {
+    var links = document.querySelectorAll("a[href]");
+    for (var i = 0; i < links.length; i++) {
+      var a = links[i], href = a.getAttribute("data-href") || a.getAttribute("href");
+      var cut = href.indexOf("#"), path = cut < 0 ? href : href.slice(0, cut), frag = cut < 0 ? "" : href.slice(cut + 1);
+      if (cut === 0) {                                   // same-page link: mark the active language switch
+        if (a.parentNode && a.parentNode.className === "langs") {
+          if (frag === lang) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current");
+        }
+        continue;
+      }
+      // Only the site's own pages: relative ("./", "../", "download/", "../privacy/"), with no fragment
+      // or a bare language fragment. mailto:, https:, files (.md, .json, .dmg) and other anchors stay.
+      if (/^([a-z][a-z0-9+.-]*:|\/\/)/i.test(href) || !/\/$/.test(path) || (frag && !TAGS.hasOwnProperty(frag))) continue;
+      a.setAttribute("data-href", href);
+      a.setAttribute("href", path + "#" + lang);
+    }
+  }
+  function apply() {
+    lang = fromHash() || fromQuery() || fromBrowser() || "en";
+    root.setAttribute("data-lang", lang);
+    root.setAttribute("lang", TAGS[lang]);
+    var t = document.querySelector("title");
+    if (t) {
+      if (!t.hasAttribute("data-en")) t.setAttribute("data-en", t.textContent);
+      document.title = t.getAttribute("data-" + lang) || t.getAttribute("data-en");
+    }
+    // The description (and any og:/twitter: title or description) the same way: data-zh / data-es
+    // beside the English content, which stays in the page for readers without JavaScript.
+    var metas = document.querySelectorAll('meta[name="description"], meta[property^="og:"], meta[name^="twitter:"]');
+    for (var j = 0; j < metas.length; j++) {
+      var m = metas[j];
+      if (!m.hasAttribute("data-zh") && !m.hasAttribute("data-es")) continue;
+      if (!m.hasAttribute("data-en")) m.setAttribute("data-en", m.getAttribute("content"));
+      m.setAttribute("content", m.getAttribute("data-" + lang) || m.getAttribute("data-en"));
+    }
+    if (document.readyState !== "loading") relink();
+  }
+  apply();
+  document.addEventListener("DOMContentLoaded", relink);
+  window.addEventListener("hashchange", apply);
+})();
+</script>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="../">Kitestring</a>
+  <span class="langs"><a href="#zh" hreflang="zh-Hans" lang="zh-Hans">中文</a><a href="#en" hreflang="en" lang="en">English</a><a href="#es" hreflang="es" lang="es">Español</a></span>
+</div></header>
+<main class="wrap">
+<!-- Release values (0.16.4, https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.4-11/Kitestring-0.16.4-11.dmg, b6042ca66d5105fc09baa83e55097436bca79e20a1ab99c9b3144cd91e4485df …) come from the release
+     step of scripts/release_mac_app.sh (stage C2); fill_placeholders.sh writes them into _out/. -->
+
+<!-- ===== 简体中文（主稿） ===== -->
+<section class="lang" id="zh" lang="zh-Hans" data-l="zh">
+<nav class="pages"><a href="../#zh">首页</a><a href="#zh">下载</a><a href="../support/#zh">技术支持</a><a href="../privacy/#zh">隐私政策</a></nav>
+<h1>下载 Kitestring for Mac</h1>
+<p class="lead">免费的菜单栏 App：引导你完成 Tailscale、远程登录和助手安装，然后配对 iPhone。DMG 已签名并经过公证。</p>
+<div class="actions"><a class="button" href="https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.4-11/Kitestring-0.16.4-11.dmg">下载 DMG（0.16.4）</a></div>
+<table>
+  <tr><th>版本</th><td>0.16.4（构建 11）</td></tr>
+  <tr><th>发布日期</th><td>2026-11-09</td></tr>
+  <tr><th>文件</th><td><a href="https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.4-11/Kitestring-0.16.4-11.dmg">https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.4-11/Kitestring-0.16.4-11.dmg</a>（87806506 字节）</td></tr>
+  <tr><th>SHA-256</th><td><code>b6042ca66d5105fc09baa83e55097436bca79e20a1ab99c9b3144cd91e4485df</code></td></tr>
+  <tr><th>发布说明</th><td><a href="https://lijunhua941-boop.github.io/kitestring-site/download/">本版更新内容</a></td></tr>
+</table>
+
+<h2>系统要求</h2>
+<ul>
+  <li>Mac：macOS 14 或更高；打开「远程登录」；安装并登录 Tailscale；装好 Claude Code 或 Codex 至少一个（只用终端会话可以不装）。</li>
+  <li>iPhone：iOS 17 或更高；安装 Tailscale 并登录与 Mac 相同的账号；从 App Store 安装 Kitestring。</li>
+</ul>
+
+<h2>安装</h2>
+<ol class="steps">
+  <li>打开下载的 DMG，把 Kitestring for Mac 拖进「应用程序」文件夹。</li>
+  <li>打开它，按「设置向导」逐步完成；最后一步在窗口里显示配对二维码，用 iPhone App 扫码。</li>
+</ol>
+<h3>用 Homebrew 安装</h3>
+<pre><code>brew install --cask lijunhua941-boop/kitestring/kitestring</code></pre>
+<p>以后用 <code>brew upgrade --cask kitestring</code> 更新，或在 App 里选「检查更新」。</p>
+<h3>让 Claude Code 代你安装</h3>
+<p>在这台 Mac 的终端里打开 Claude Code（或 Codex），粘贴这一句，下载、安装、检查和配对由它完成。登录 Tailscale、打开「远程登录」、批准 macOS 的权限请求和扫描二维码仍需要你本人操作：</p>
+<pre><code>请读取 https://lijunhua941-boop.github.io/kitestring-site/agent-install.md，按其中步骤在这台 Mac 上安装并配置 Kitestring for Mac，完成后告诉我结果。</code></pre>
+<p>说明文件本身：<a href="https://lijunhua941-boop.github.io/kitestring-site/agent-install.md">agent-install.md</a>；机器可读的版本信息：<a href="https://lijunhua941-boop.github.io/kitestring-site/download/latest.json">latest.json</a>。</p>
+
+<h2>校验下载的文件（可选）</h2>
+<p>在「终端」里运行下面的命令。命令后的文件路径可以直接把 DMG 拖进终端窗口得到。</p>
+<ol>
+  <li>核对 SHA-256，输出必须与上表一致：
+<pre><code>shasum -a 256 &lt;DMG 文件路径&gt;</code></pre></li>
+  <li>核对签名与公证，应看到 <code>accepted</code> 和 <code>source=Notarized Developer ID</code>：
+<pre><code>spctl -a -t open --context context:primary-signature -v &lt;DMG 文件路径&gt;</code></pre></li>
+  <li>装好后核对 App 的标识，应看到 <code>Identifier=sh.kitestring.mac</code>：
+<pre><code>codesign -dv "/Applications/Kitestring.app" 2&gt;&amp;1 | grep Identifier</code></pre></li>
+</ol>
+
+<h2>更新</h2>
+<p>App 第二次启动时会询问是否自动检查更新；同意后定期检查，任何时候也可以在菜单栏选「检查更新」。每个更新都带开发者的签名，App 用内置的公钥核对签名后才安装；更新不会打断正在运行的会话。</p>
+</section>
+
+<!-- ===== English ===== -->
+<section class="lang" id="en" lang="en" data-l="en">
+<nav class="pages"><a href="../#en">Home</a><a href="#en">Download</a><a href="../support/#en">Support</a><a href="../privacy/#en">Privacy</a></nav>
+<h1>Download Kitestring for Mac</h1>
+<p class="lead">A free menu bar app that guides you through Tailscale, Remote Login, and installing the helper, and then pairs your iPhone. The DMG is signed and notarized.</p>
+<div class="actions"><a class="button" href="https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.4-11/Kitestring-0.16.4-11.dmg">Download DMG (0.16.4)</a></div>
+<table>
+  <tr><th>Version</th><td>0.16.4 (build 11)</td></tr>
+  <tr><th>Released</th><td>2026-11-09</td></tr>
+  <tr><th>File</th><td><a href="https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.4-11/Kitestring-0.16.4-11.dmg">https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.4-11/Kitestring-0.16.4-11.dmg</a> (87806506 bytes)</td></tr>
+  <tr><th>SHA-256</th><td><code>b6042ca66d5105fc09baa83e55097436bca79e20a1ab99c9b3144cd91e4485df</code></td></tr>
+  <tr><th>Release Notes</th><td><a href="https://lijunhua941-boop.github.io/kitestring-site/download/">What’s new in this version</a></td></tr>
+</table>
+
+<h2>Requirements</h2>
+<ul>
+  <li>Mac: macOS 14 or later; Remote Login turned on; Tailscale installed and signed in; at least one of Claude Code or Codex installed (not needed for terminal-only sessions).</li>
+  <li>iPhone: iOS 17 or later; Tailscale installed and signed in with the same account as your Mac; Kitestring from the App Store.</li>
+</ul>
+
+<h2>Install</h2>
+<ol class="steps">
+  <li>Open the downloaded DMG and drag Kitestring for Mac to the Applications folder.</li>
+  <li>Open the app and follow the Setup Assistant. The last step shows a pairing code in the window; scan it with the iPhone app.</li>
+</ol>
+<h3>Install with Homebrew</h3>
+<pre><code>brew install --cask lijunhua941-boop/kitestring/kitestring</code></pre>
+<p>To update later, run <code>brew upgrade --cask kitestring</code> or choose “Check for Updates” in the app.</p>
+<h3>Let Claude Code Install It for You</h3>
+<p>Open Claude Code (or Codex) in Terminal on this Mac and paste this line. It downloads, installs, checks, and pairs the app for you. You’ll still need to sign in to Tailscale, enable Remote Login, approve macOS permission requests, and scan the QR code.</p>
+<pre><code>Read https://lijunhua941-boop.github.io/kitestring-site/agent-install.md and follow it to install and set up Kitestring for Mac on this Mac, then tell me the result.</code></pre>
+<p>Instructions: <a href="https://lijunhua941-boop.github.io/kitestring-site/agent-install.md">agent-install.md</a>. Machine-readable release information: <a href="https://lijunhua941-boop.github.io/kitestring-site/download/latest.json">latest.json</a>.</p>
+
+<h2>Verify the Download (Optional)</h2>
+<p>Run these commands in Terminal. To get the file path, drag the DMG into the Terminal window.</p>
+<ol>
+  <li>Check the SHA-256. The output must match the table above:
+<pre><code>shasum -a 256 &lt;path to the DMG&gt;</code></pre></li>
+  <li>Check the signature and notarization. You should see <code>accepted</code> and <code>source=Notarized Developer ID</code>:
+<pre><code>spctl -a -t open --context context:primary-signature -v &lt;path to the DMG&gt;</code></pre></li>
+  <li>After installing, check the app’s identifier. You should see <code>Identifier=sh.kitestring.mac</code>:
+<pre><code>codesign -dv "/Applications/Kitestring.app" 2&gt;&amp;1 | grep Identifier</code></pre></li>
+</ol>
+
+<h2>Updates</h2>
+<p>The second time you open the app, it asks whether to check for updates automatically. If you agree, it checks regularly, and you can choose “Check for Updates” in the menu bar at any time. Every update is signed by the developer, and the app verifies the signature with its built-in public key before installing. Updating doesn’t interrupt running sessions.</p>
+</section>
+
+<!-- ===== Español ===== -->
+<section class="lang" id="es" lang="es" data-l="es">
+<nav class="pages"><a href="../#es">Inicio</a><a href="#es">Descargar</a><a href="../support/#es">Soporte</a><a href="../privacy/#es">Privacidad</a></nav>
+<h1>Descargar Kitestring para Mac</h1>
+<p class="lead">Una app gratuita para la barra de menús que te guía por Tailscale, Sesión remota y la instalación del asistente del Mac, y después vincula tu iPhone. El DMG está firmado y notarizado.</p>
+<div class="actions"><a class="button" href="https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.4-11/Kitestring-0.16.4-11.dmg">Descargar DMG (0.16.4)</a></div>
+<table>
+  <tr><th>Versión</th><td>0.16.4 (compilación 11)</td></tr>
+  <tr><th>Fecha de publicación</th><td>2026-11-09</td></tr>
+  <tr><th>Archivo</th><td><a href="https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.4-11/Kitestring-0.16.4-11.dmg">https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.4-11/Kitestring-0.16.4-11.dmg</a> (87806506 bytes)</td></tr>
+  <tr><th>SHA-256</th><td><code>b6042ca66d5105fc09baa83e55097436bca79e20a1ab99c9b3144cd91e4485df</code></td></tr>
+  <tr><th>Notas de la versión</th><td><a href="https://lijunhua941-boop.github.io/kitestring-site/download/">Novedades de esta versión</a></td></tr>
+</table>
+
+<h2>Requisitos</h2>
+<ul>
+  <li>Mac: macOS 14 o posterior; Sesión remota activada; Tailscale instalado y con la sesión iniciada; al menos Claude Code o Codex instalado (no hace falta si solo usas sesiones de terminal).</li>
+  <li>iPhone: iOS 17 o posterior; Tailscale instalado y con la sesión iniciada en la misma cuenta que tu Mac; Kitestring instalado desde el App Store.</li>
+</ul>
+
+<h2>Instalación</h2>
+<ol class="steps">
+  <li>Abre el DMG descargado y arrastra Kitestring para Mac a la carpeta Aplicaciones.</li>
+  <li>Abre la app y sigue el Asistente de configuración. El último paso muestra un código de vinculación en la ventana; escanéalo con la app del iPhone.</li>
+</ol>
+<h3>Instalar con Homebrew</h3>
+<pre><code>brew install --cask lijunhua941-boop/kitestring/kitestring</code></pre>
+<p>Para actualizar más adelante, ejecuta <code>brew upgrade --cask kitestring</code> o elige «Buscar actualizaciones» en la app.</p>
+<h3>Deja que Claude Code lo instale por ti</h3>
+<p>Abre Claude Code (o Codex) en Terminal en este Mac y pega esta línea. Se encarga de descargar, instalar, comprobar y vincular la app. Tú solo tendrás que iniciar sesión en Tailscale, activar Sesión remota, aprobar las solicitudes de permisos de macOS y escanear el código QR.</p>
+<pre><code>Lee https://lijunhua941-boop.github.io/kitestring-site/agent-install.md y sigue sus pasos para instalar y configurar Kitestring para Mac en este Mac; después dime el resultado.</code></pre>
+<p>Instrucciones: <a href="https://lijunhua941-boop.github.io/kitestring-site/agent-install.md">agent-install.md</a>. Información de la versión en formato legible por máquina: <a href="https://lijunhua941-boop.github.io/kitestring-site/download/latest.json">latest.json</a>.</p>
+
+<h2>Verificar la descarga (opcional)</h2>
+<p>Ejecuta estos comandos en Terminal. Para obtener la ruta del archivo, arrastra el DMG a la ventana de Terminal.</p>
+<ol>
+  <li>Comprueba el SHA-256. El resultado debe coincidir con la tabla de arriba:
+<pre><code>shasum -a 256 &lt;ruta del DMG&gt;</code></pre></li>
+  <li>Comprueba la firma y la notarización. Deberías ver <code>accepted</code> y <code>source=Notarized Developer ID</code>:
+<pre><code>spctl -a -t open --context context:primary-signature -v &lt;ruta del DMG&gt;</code></pre></li>
+  <li>Después de instalarla, comprueba el identificador de la app. Deberías ver <code>Identifier=sh.kitestring.mac</code>:
+<pre><code>codesign -dv "/Applications/Kitestring.app" 2&gt;&amp;1 | grep Identifier</code></pre></li>
+</ol>
+
+<h2>Actualizaciones</h2>
+<p>La segunda vez que abras la app, te preguntará si quieres que busque actualizaciones automáticamente. Si aceptas, las buscará con regularidad, y siempre puedes elegir «Buscar actualizaciones» en la barra de menús. Cada actualización está firmada por el desarrollador, y la app verifica la firma con su clave pública integrada antes de instalarla. Actualizar no interrumpe las sesiones en curso.</p>
+</section>
+
+</main>
+<footer><div class="wrap">
+  <div data-l="zh" lang="zh-Hans"><a href="../#zh">首页</a><a href="../privacy/#zh">隐私政策</a><a href="../support/#zh">技术支持</a><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a></div>
+  <div data-l="en" lang="en"><a href="../#en">Home</a><a href="../privacy/#en">Privacy Policy</a><a href="../support/#en">Support</a><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a></div>
+  <div data-l="es" lang="es"><a href="../#es">Inicio</a><a href="../privacy/#es">Política de privacidad</a><a href="../support/#es">Soporte</a><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a></div>
+</div></footer>
+</body>
+</html>

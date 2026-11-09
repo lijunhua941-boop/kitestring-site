@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-zh="Kitestring 隐私政策" data-es="Política de privacidad de Kitestring">Kitestring Privacy Policy</title>
+<meta name="description" data-zh="Kitestring 不收集任何数据。隐私政策提供 English、简体中文和 Español 三种语言。" data-es="Kitestring no recopila ningún dato. Política de privacidad en English, 简体中文 y Español." content="Kitestring collects no data. Privacy policy in English, 简体中文 and Español.">
+<link rel="canonical" href="https://lijunhua941-boop.github.io/kitestring-site/privacy/">
+<link rel="stylesheet" href="../assets/site.css">
+<script>
+/* Language (the same script on every page; site/README.md「三语」). Order: the fragment #zh / #en / #es
+   or an anchor inside a section (#es-pairing; #zh-Hans, #es-419 work too), then ?lang=, then the
+   browser's preferred languages, then English. Sets <html lang> and data-lang (site.css then shows only
+   that language), the page title and description, and makes every link to another page of the site carry the language.
+   Nothing is stored. Without JavaScript site.css reads the fragment itself and shows English otherwise. */
+(function () {
+  var TAGS = { zh: "zh-Hans", en: "en", es: "es" }, root = document.documentElement, lang = "en";
+  function norm(s) { s = String(s || "").toLowerCase().split(/[-_;]/)[0]; return TAGS.hasOwnProperty(s) ? s : ""; }
+  function fromHash() { try { return norm(decodeURIComponent(location.hash.slice(1))); } catch (e) { return ""; } }
+  function fromQuery() { var m = /[?&]lang=([^&#]*)/.exec(location.search); return m ? norm(m[1]) : ""; }
+  function fromBrowser() {
+    var list = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language];
+    for (var i = 0; i < list.length; i++) { var l = norm(list[i]); if (l) return l; }
+    return "";
+  }
+  function relink() {
+    var links = document.querySelectorAll("a[href]");
+    for (var i = 0; i < links.length; i++) {
+      var a = links[i], href = a.getAttribute("data-href") || a.getAttribute("href");
+      var cut = href.indexOf("#"), path = cut < 0 ? href : href.slice(0, cut), frag = cut < 0 ? "" : href.slice(cut + 1);
+      if (cut === 0) {                                   // same-page link: mark the active language switch
+        if (a.parentNode && a.parentNode.className === "langs") {
+          if (frag === lang) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current");
+        }
+        continue;
+      }
+      // Only the site's own pages: relative ("./", "../", "download/", "../privacy/"), with no fragment
+      // or a bare language fragment. mailto:, https:, files (.md, .json, .dmg) and other anchors stay.
+      if (/^([a-z][a-z0-9+.-]*:|\/\/)/i.test(href) || !/\/$/.test(path) || (frag && !TAGS.hasOwnProperty(frag))) continue;
+      a.setAttribute("data-href", href);
+      a.setAttribute("href", path + "#" + lang);
+    }
+  }
+  function apply() {
+    lang = fromHash() || fromQuery() || fromBrowser() || "en";
+    root.setAttribute("data-lang", lang);
+    root.setAttribute("lang", TAGS[lang]);
+    var t = document.querySelector("title");
+    if (t) {
+      if (!t.hasAttribute("data-en")) t.setAttribute("data-en", t.textContent);
+      document.title = t.getAttribute("data-" + lang) || t.getAttribute("data-en");
+    }
+    // The description (and any og:/twitter: title or description) the same way: data-zh / data-es
+    // beside the English content, which stays in the page for readers without JavaScript.
+    var metas = document.querySelectorAll('meta[name="description"], meta[property^="og:"], meta[name^="twitter:"]');
+    for (var j = 0; j < metas.length; j++) {
+      var m = metas[j];
+      if (!m.hasAttribute("data-zh") && !m.hasAttribute("data-es")) continue;
+      if (!m.hasAttribute("data-en")) m.setAttribute("data-en", m.getAttribute("content"));
+      m.setAttribute("content", m.getAttribute("data-" + lang) || m.getAttribute("data-en"));
+    }
+    if (document.readyState !== "loading") relink();
+  }
+  apply();
+  document.addEventListener("DOMContentLoaded", relink);
+  window.addEventListener("hashchange", apply);
+})();
+</script>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="../">Kitestring</a>
+  <span class="langs"><a href="#zh" hreflang="zh-Hans" lang="zh-Hans">中文</a><a href="#en" hreflang="en" lang="en">English</a><a href="#es" hreflang="es" lang="es">Español</a></span>
+</div></header>
+<main class="wrap">
+
+<!-- ===== 简体中文（主稿）。三语内容逐条对等，改一处须同步另外两处。 ===== -->
+<section class="lang" id="zh" lang="zh-Hans" data-l="zh">
+<nav class="pages"><a href="../#zh">首页</a><a href="../download/#zh">下载</a><a href="../support/#zh">技术支持</a><a href="#zh">隐私政策</a></nav>
+<h1>隐私政策</h1>
+<p class="muted">生效日期：2026-10-22<br>适用于：Kitestring iPhone App、Kitestring for Mac（及其安装在 Mac 上的助手程序）和本网站。<br>运营者：Junhua Li</p>
+
+<h2 id="zh-summary">1. 概要</h2>
+<p><strong>我们不收集你的任何数据。</strong>你不需要 Kitestring 账号，但需要你自己的 Tailscale 账号（由 Tailscale 管理）。我们不运营任何服务器，你的会话不会经过我们的服务器。App 里没有广告、统计或第三方追踪 SDK。</p>
+
+<h2 id="zh-flow">2. 数据怎么流动</h2>
+<p>App 通过 SSH 连接<strong>你自己的 Mac</strong>，链路是你自己的 Tailscale 网络（WireGuard 加密）。你输入的内容、终端输出、对话、文件和图片只在你的 iPhone 与你的 Mac 之间传输，不经过我们。Tailscale 会尽量让两台设备直接连接；无法直连时，加密后的流量可能经 Tailscale 运营的中继服务器（DERP）转发，中继只转发、无法解密内容。</p>
+<p>App 不集成 Tailscale 的 SDK，也不修改 Tailscale、VPN、DNS 或路由设置；你对 Tailscale 的使用受 Tailscale 自己的条款与隐私政策约束。</p>
+
+<h2 id="zh-agents">3. Mac 上的 Claude Code 与 Codex</h2>
+<p>你在会话里发出的内容由你 Mac 上运行的 Claude Code 或 Codex 处理。它们按各自提供方的服务条款与隐私政策，把内容发送给提供方的服务。这部分处理由提供方负责，不经过我们。</p>
+<p>我们不读取、复制或上传它们的登录凭证；诊断只运行它们自带的登录状态命令，并且只得到登录状态。</p>
+
+<h2 id="zh-voice">4. 语音输入</h2>
+<p>只在你点麦克风之后录音。录音的去向只有这几种：</p>
+<ul>
+  <li>你在 Kitestring for Mac 里打开了「本机听写」（默认关闭）时：录音，连同所在会话最近约 800 字的文字（作为识别提示），经第 2 条所说的连接发到这台 Mac，由它自己的识别引擎在本机转写，录音不保存。识别出的文字、你的词典和改正记录存在这台 Mac 上（见第 5 条），用来让以后的识别更准，不发给我们。这台 Mac 装了 Claude Code 时，识别出的文字再交给 Claude Code，用你自己的账户整理（润色）：这一步的文字按 Anthropic 的条款与隐私政策发给 Anthropic（见第 3 条）；没装就只识别。打开本机听写时，Mac 从 Hugging Face 下载识别模型（约 3.8 GB），Hugging Face 会看到这台 Mac 的网络地址；下载之后识别不需要联网。</li>
+  <li>你在自己的 Mac 上开启了别的听写服务（默认关闭）时：录音，连同所在会话最近约 800 字的文字（作为识别提示），经 Tailscale 发到你自己配置的听写服务。Mac 助手不把音频或文字写入磁盘，也不记日志。</li>
+  <li>否则由这台 iPhone 自己的语音识别转写：设备支持该语言的本机识别时，只在本机处理；不支持时，iOS 系统的语音识别服务可能把音频交给系统提供方处理，受其条款约束。</li>
+</ul>
+
+<h2 id="zh-local">5. 存在你设备上的数据</h2>
+<ul>
+  <li><strong>iPhone：</strong>配对信息（Mac 的地址、用户名、主机公钥）；iPhone 私钥（存在钥匙串，仅限本设备，不同步 iCloud，不导出）；对话缓存、草稿与待发附件；诊断日志（错误码与耗时）；设置。</li>
+  <li><strong>Mac：</strong>助手的状态目录（会话信息、你从 iPhone 发来的文件——14 天后自动清理、你发给自己的反馈）；<code>authorized_keys</code> 中带标记的 iPhone 公钥（修改前先备份）。打开过本机听写时，还有 <code>~/Library/Application Support/Kitestring/Dictation/</code>（识别模型、识别出的文字、你的词典与改正记录，不含录音）和 <code>~/Library/Logs/Kitestring/</code>（运行日志，只有长度和耗时，不含文字）；关闭本机听写不会删除它们，可以在「本机听写」窗口删除模型，或自己删掉这两个文件夹。</li>
+</ul>
+<p>这些数据留在你的设备上，除非你自己发送出去。</p>
+
+<h2 id="zh-feedback">6. 反馈与诊断</h2>
+<p>App 的「反馈与诊断」默认把反馈发到<strong>你自己的 Mac</strong>，存为 Mac 上的本机文件，不发给我们。</p>
+<p>如果某个发布版本提供了发给开发者的反馈通道：只有你在设置里明确同意（默认关闭）后才上传诊断，内容是随机安装 ID（撤回同意即重置）、App 版本与构建号、系统版本、机型、首选语言、Mac 助手版本，以及事件记录（时间、类别、错误码、耗时，崩溃或卡顿时附系统诊断）；你主动发送的反馈另含类别、正文和你选填的联系方式。<strong>诊断和反馈永远不含会话内容、终端输出、文件或录音。</strong></p>
+
+<h2 id="zh-permissions">7. 系统权限</h2>
+<p>只在你使用对应功能时请求：相机（扫描配对二维码，或拍照发给 Mac）；麦克风与语音识别（语音输入）；Face ID（解锁 App）；本地网络（连接你的 Mac 的 SSH 端口）。</p>
+
+<h2 id="zh-updates">8. Mac 端检查更新</h2>
+<p>Kitestring for Mac 会从本网站读取更新列表，检查有没有新版本。和访问任何网站一样，这个请求带有你的 IP 地址和 App 版本号；不附带系统信息。是否自动检查由你决定（App 第二次启动时会询问）；不开启时，只在你点「检查更新」时才发出这个请求。</p>
+
+<h2 id="zh-site">9. 本网站</h2>
+<p>本网站是纯静态页面，不使用 Cookie、统计或第三方脚本。每个页面里的一小段脚本只根据链接或浏览器的语言设置选择显示语言，不存储也不发送任何信息。网站托管服务商可能按其政策保留标准访问日志（IP 地址、时间、访问的页面）。</p>
+
+<h2 id="zh-children">10. 儿童</h2>
+<p>本产品面向开发者，不针对 13 岁以下儿童；我们不收集任何人的数据，包括儿童。</p>
+
+<h2 id="zh-rights">11. 你的选择</h2>
+<p>我们不持有你的数据，因此没有可供我们查阅、导出或删除的内容。删除 iPhone App 即删除 iPhone 上的数据；在 Mac 上用菜单栏 App 卸载会撤销全部 iPhone 密钥并删除安装的文件；会话状态目录会保留，以便重装后恢复，你也可以自行删除。</p>
+
+<h2 id="zh-changes">12. 政策变更</h2>
+<p>政策有变化时会更新本页并修改上方的生效日期。</p>
+
+<h2 id="zh-contact">13. 联系我们</h2>
+<p><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a></p>
+</section>
+
+<!-- ===== English ===== -->
+<section class="lang" id="en" lang="en" data-l="en">
+<nav class="pages"><a href="../#en">Home</a><a href="../download/#en">Download</a><a href="../support/#en">Support</a><a href="#en">Privacy</a></nav>
+<h1>Privacy Policy</h1>
+<p class="muted">Effective date: 2026-10-22<br>Applies to: the Kitestring iPhone app, Kitestring for Mac (and the helper it installs on your Mac), and this website.<br>Operator: Junhua Li</p>
+
+<h2 id="en-summary">1. Summary</h2>
+<p><strong>We don’t collect any data about you.</strong> You don’t need a Kitestring account. You do need your own Tailscale account, which Tailscale manages. We don’t operate any servers, so your sessions never pass through ours. The app contains no advertising, analytics, or third-party tracking SDKs.</p>
+
+<h2 id="en-flow">2. How Data Travels</h2>
+<p>The app connects over SSH to <strong>your own Mac</strong> through your own Tailscale network (encrypted with WireGuard). What you type, terminal output, conversations, files, and images travel only between your iPhone and your Mac; they never pass through us. Tailscale connects the two devices directly whenever it can. When it can’t, the encrypted traffic may be forwarded through relay servers operated by Tailscale (DERP), which pass it on without being able to decrypt it.</p>
+<p>The app doesn’t include Tailscale’s SDK and doesn’t change Tailscale, VPN, DNS, or routing settings. Your use of Tailscale is governed by Tailscale’s own terms and privacy policy.</p>
+
+<h2 id="en-agents">3. Claude Code and Codex on Your Mac</h2>
+<p>What you send in a session is processed by Claude Code or Codex running on your Mac. They send it to their providers’ services under each provider’s own terms of service and privacy policy. That processing is the provider’s responsibility and doesn’t pass through us.</p>
+<p>We don’t read, copy, or upload their sign-in credentials. Diagnostics only run their built-in sign-in status commands and receive only the sign-in status.</p>
+
+<h2 id="en-voice">4. Voice Input</h2>
+<p>Recording starts only after you tap the microphone. A recording goes to one of these places:</p>
+<ul>
+  <li>If you’ve turned on Local Dictation in Kitestring for Mac (off by default), the recording is sent over the connection described in section 2 to that Mac, together with about the last 800 characters of the session’s text as a recognition hint, and is transcribed there by the Mac’s own speech engines. The recording isn’t kept. The recognized text, your dictionary, and your corrections are stored on that Mac (see section 5) to make later recognition more accurate, and are not sent to us. If Claude Code is installed on that Mac, the recognized text is then handed to Claude Code to be polished with your own account: that text is sent to Anthropic under Anthropic’s terms and privacy policy (see section 3); without Claude Code, recognition is all that happens. When you turn on Local Dictation, the Mac downloads the speech models (about 3.8 GB) from Hugging Face, which sees the Mac’s network address; after the download, recognition doesn’t need the internet.</li>
+  <li>If you’ve turned on another dictation service on your own Mac (off by default), the recording is sent over Tailscale to the dictation service you configured, together with about the last 800 characters of the session’s text as a recognition hint. The Mac helper doesn’t write the audio or text to disk and doesn’t log it.</li>
+  <li>Otherwise, your iPhone’s own speech recognition transcribes it. If the device supports on-device recognition for the language, the audio is processed only on the device. If it doesn’t, the iOS speech recognition service may send the audio to the system provider for processing under its terms.</li>
+</ul>
+
+<h2 id="en-local">5. Data Stored on Your Devices</h2>
+<ul>
+  <li><strong>iPhone:</strong> pairing details (the Mac’s address, username, and host public key); the iPhone’s private key (stored in the keychain, available only on this device, not synced to iCloud, and never exported); cached conversations, drafts, and pending attachments; a diagnostics log (error codes and timings); and settings.</li>
+  <li><strong>Mac:</strong> the helper’s state folder (session details; files you send from your iPhone, which are deleted automatically after 14 days; and feedback you send to yourself); and the marked iPhone public keys in <code>authorized_keys</code> (backed up before any change). If you’ve turned on Local Dictation, also <code>~/Library/Application Support/Kitestring/Dictation/</code> (the speech models, the recognized text, and your dictionary and corrections; no recordings) and <code>~/Library/Logs/Kitestring/</code> (logs with lengths and timings only, no text). Turning Local Dictation off doesn’t delete them; you can delete the models in the Local Dictation window or delete both folders yourself.</li>
+</ul>
+<p>This data stays on your devices unless you send it somewhere yourself.</p>
+
+<h2 id="en-feedback">6. Feedback and Diagnostics</h2>
+<p>“Feedback &amp; Diagnostics” in the app sends feedback to <strong>your own Mac</strong> by default, where it’s stored as a local file. It isn’t sent to us.</p>
+<p>If a release offers a feedback channel to the developer, diagnostics are uploaded only after you explicitly agree in Settings (off by default). They contain a random install ID (reset when you withdraw consent), the app version and build, the system version, the device model, your preferred language, the Mac helper version, and an event log (time, category, error code, and duration, plus the system’s diagnostic report after a crash or hang). Feedback you choose to send also includes its category, its text, and any contact details you enter. <strong>Diagnostics and feedback never include session content, terminal output, files, or recordings.</strong></p>
+
+<h2 id="en-permissions">7. System Permissions</h2>
+<p>The app requests these only when you use the related feature: camera (to scan the pairing code or take a photo to send to your Mac); microphone and speech recognition (for voice input); Face ID (to unlock the app); and local network (to reach your Mac’s SSH port).</p>
+
+<h2 id="en-updates">8. Update Checks on the Mac</h2>
+<p>Kitestring for Mac reads an update list from this website to check for new versions. As with any website visit, the request includes your IP address and the app version; no system information is attached. You decide whether it checks automatically (the app asks the second time you open it). If you don’t turn this on, the request is made only when you choose “Check for Updates.”</p>
+
+<h2 id="en-site">9. This Website</h2>
+<p>This website is static and uses no cookies, analytics, or third-party scripts. A small script on each page only chooses the display language from the link or your browser’s language settings; it doesn’t store or send anything. The hosting provider may keep standard access logs (IP address, time, and page requested) under its own policy.</p>
+
+<h2 id="en-children">10. Children</h2>
+<p>The product is intended for developers and isn’t directed at children under 13. We don’t collect data from anyone, including children.</p>
+
+<h2 id="en-rights">11. Your Choices</h2>
+<p>We don’t hold any data about you, so there’s nothing for us to look up, export, or delete. Deleting the iPhone app deletes its data from your iPhone. Uninstalling from the Mac menu bar app revokes every iPhone key and removes the installed files. The session state folder is retained so it can be restored if you reinstall; you can delete it yourself.</p>
+
+<h2 id="en-changes">12. Changes to This Policy</h2>
+<p>If this policy changes, we’ll update this page and the effective date above.</p>
+
+<h2 id="en-contact">13. Contact Us</h2>
+<p><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a></p>
+</section>
+
+<!-- ===== Español ===== -->
+<section class="lang" id="es" lang="es" data-l="es">
+<nav class="pages"><a href="../#es">Inicio</a><a href="../download/#es">Descargar</a><a href="../support/#es">Soporte</a><a href="#es">Privacidad</a></nav>
+<h1>Política de privacidad</h1>
+<p class="muted">Fecha de entrada en vigor: 2026-10-22<br>Se aplica a: la app Kitestring para iPhone, Kitestring para Mac (y el asistente que instala en tu Mac) y este sitio web.<br>Responsable: Junhua Li</p>
+
+<h2 id="es-summary">1. Resumen</h2>
+<p><strong>No recopilamos ningún dato sobre ti.</strong> No necesitas una cuenta de Kitestring, pero sí tu propia cuenta de Tailscale, que gestiona Tailscale. No operamos ningún servidor, así que tus sesiones nunca pasan por servidores nuestros. La app no contiene publicidad, analítica ni SDK de seguimiento de terceros.</p>
+
+<h2 id="es-flow">2. Cómo viajan los datos</h2>
+<p>La app se conecta por SSH a <strong>tu propio Mac</strong> a través de tu propia red de Tailscale (cifrada con WireGuard). Lo que escribes, la salida del terminal, las conversaciones, los archivos y las imágenes solo viajan entre tu iPhone y tu Mac; nunca pasan por nosotros. Tailscale conecta los dos dispositivos directamente siempre que puede. Cuando no puede, el tráfico cifrado puede reenviarse por servidores de retransmisión operados por Tailscale (DERP), que lo transmiten sin poder descifrarlo.</p>
+<p>La app no incluye el SDK de Tailscale ni cambia los ajustes de Tailscale, VPN, DNS o enrutamiento. Tu uso de Tailscale se rige por los términos y la política de privacidad de Tailscale.</p>
+
+<h2 id="es-agents">3. Claude Code y Codex en tu Mac</h2>
+<p>Lo que envías en una sesión lo procesa Claude Code o Codex en tu Mac. Estos programas lo envían a los servicios de sus proveedores según los términos de servicio y la política de privacidad de cada proveedor. Ese procesamiento es responsabilidad del proveedor y no pasa por nosotros.</p>
+<p>No leemos, copiamos ni subimos sus credenciales de inicio de sesión. El diagnóstico solo ejecuta sus propios comandos de estado de inicio de sesión y recibe únicamente ese estado.</p>
+
+<h2 id="es-voice">4. Entrada de voz</h2>
+<p>Solo se graba después de que tocas el micrófono. La grabación va a uno de estos lugares:</p>
+<ul>
+  <li>Si activaste el dictado local en Kitestring for Mac (desactivado de forma predeterminada), la grabación se envía a ese Mac por la conexión descrita en la sección 2, junto con unos 800 caracteres del texto reciente de la sesión como pista para el reconocimiento, y allí la transcriben los motores de reconocimiento del propio Mac. La grabación no se guarda. El texto reconocido, tu diccionario y tus correcciones se guardan en ese Mac (ver la sección 5) para que el reconocimiento posterior sea más preciso, y no se nos envían. Si ese Mac tiene Claude Code instalado, el texto reconocido se le pasa a Claude Code para pulirlo con tu propia cuenta: ese texto se envía a Anthropic según sus términos y su política de privacidad (ver la sección 3); sin Claude Code solo hay reconocimiento. Al activar el dictado local, el Mac descarga los modelos de reconocimiento (unos 3,8 GB) de Hugging Face, que ve la dirección de red del Mac; después de la descarga, el reconocimiento no necesita internet.</li>
+  <li>Si activaste otro servicio de dictado en tu propio Mac (desactivado de forma predeterminada), la grabación se envía por Tailscale al servicio de dictado que configuraste, junto con unos 800 caracteres del texto reciente de la sesión como pista para el reconocimiento. El asistente del Mac no guarda el audio ni el texto en el disco ni los registra.</li>
+  <li>Si no, el reconocimiento de voz de tu iPhone la transcribe. Si el dispositivo admite el reconocimiento local para ese idioma, el audio se procesa solo en el dispositivo. Si no lo admite, el servicio de reconocimiento de voz de iOS puede enviar el audio al proveedor del sistema para procesarlo según sus términos.</li>
+</ul>
+
+<h2 id="es-local">5. Datos guardados en tus dispositivos</h2>
+<ul>
+  <li><strong>iPhone:</strong> datos de vinculación (dirección del Mac, nombre de usuario y clave pública del host); la clave privada del iPhone (guardada en el llavero, disponible solo en este dispositivo, sin sincronizar con iCloud y nunca exportada); conversaciones en caché, borradores y adjuntos pendientes; un registro de diagnóstico (códigos de error y tiempos), y los ajustes.</li>
+  <li><strong>Mac:</strong> la carpeta de estado del asistente del Mac (datos de las sesiones; archivos que envías desde tu iPhone, que se eliminan automáticamente a los 14 días, y comentarios que te envías a ti mismo), y las claves públicas del iPhone marcadas en <code>authorized_keys</code> (con copia de seguridad antes de cada cambio). Si activaste el dictado local, también <code>~/Library/Application Support/Kitestring/Dictation/</code> (los modelos de reconocimiento, el texto reconocido, y tu diccionario y tus correcciones; sin grabaciones) y <code>~/Library/Logs/Kitestring/</code> (registros con solo longitudes y tiempos, sin texto). Desactivar el dictado local no los elimina; puedes eliminar los modelos en la ventana «Dictado local» o eliminar tú mismo las dos carpetas.</li>
+</ul>
+<p>Estos datos permanecen en tus dispositivos, a menos que tú los envíes a otro lugar.</p>
+
+<h2 id="es-feedback">6. Comentarios y diagnóstico</h2>
+<p>«Comentarios y diagnóstico» en la app envía los comentarios a <strong>tu propio Mac</strong> de forma predeterminada, donde se guardan como un archivo local. No se nos envían.</p>
+<p>Si una versión ofrece un canal de comentarios para el desarrollador, el diagnóstico solo se sube después de que lo aceptes de forma explícita en Ajustes (desactivado de forma predeterminada). Incluye un ID de instalación aleatorio (que se restablece al retirar tu consentimiento), la versión y la compilación de la app, la versión del sistema, el modelo del dispositivo, tu idioma preferido, la versión del asistente del Mac y un registro de eventos (hora, categoría, código de error y duración, además del informe de diagnóstico del sistema después de un cierre inesperado o un bloqueo). Los comentarios que decidas enviar incluyen además su categoría, su texto y los datos de contacto que agregues. <strong>El diagnóstico y los comentarios nunca incluyen contenido de sesiones, salida del terminal, archivos ni grabaciones.</strong></p>
+
+<h2 id="es-permissions">7. Permisos del sistema</h2>
+<p>La app los solicita solo cuando usas la función correspondiente: cámara (para escanear el código de vinculación o tomar una foto para enviarla a tu Mac); micrófono y reconocimiento de voz (para la entrada de voz); Face ID (para desbloquear la app), y red local (para conectarse al puerto SSH de tu Mac).</p>
+
+<h2 id="es-updates">8. Búsqueda de actualizaciones en el Mac</h2>
+<p>Kitestring para Mac lee una lista de actualizaciones de este sitio web para comprobar si hay versiones nuevas. Como en cualquier visita a un sitio web, la solicitud incluye tu dirección IP y la versión de la app; no se adjunta información del sistema. Tú decides si la búsqueda es automática (la app te lo pregunta la segunda vez que la abres). Si no la activas, la solicitud solo se hace cuando eliges «Buscar actualizaciones».</p>
+
+<h2 id="es-site">9. Este sitio web</h2>
+<p>Este sitio web es estático y no usa cookies, analítica ni scripts de terceros. Un pequeño script en cada página solo elige el idioma en que se muestra a partir del enlace o de la configuración de idioma de tu navegador; no guarda ni envía nada. El proveedor de alojamiento puede conservar registros de acceso estándar (dirección IP, hora y página solicitada) según su propia política.</p>
+
+<h2 id="es-children">10. Menores</h2>
+<p>El producto está pensado para desarrolladores y no está dirigido a menores de 13 años. No recopilamos datos de nadie, incluidos los menores.</p>
+
+<h2 id="es-rights">11. Tus opciones</h2>
+<p>No tenemos datos sobre ti, así que no hay nada que podamos consultar, exportar ni eliminar. Al eliminar la app del iPhone, se eliminan sus datos del iPhone. Al desinstalar desde la app de la barra de menús del Mac, se revocan todas las claves de iPhone y se eliminan los archivos instalados. La carpeta de estado de las sesiones se conserva para poder restaurarla si vuelves a instalar la app; puedes eliminarla tú mismo.</p>
+
+<h2 id="es-changes">12. Cambios en esta política</h2>
+<p>Si esta política cambia, actualizaremos esta página y la fecha de entrada en vigor indicada arriba.</p>
+
+<h2 id="es-contact">13. Contacto</h2>
+<p><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a></p>
+</section>
+
+</main>
+<footer><div class="wrap">
+  <div data-l="zh" lang="zh-Hans"><a href="../#zh">首页</a><a href="../support/#zh">技术支持</a><a href="../download/#zh">下载</a><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a></div>
+  <div data-l="en" lang="en"><a href="../#en">Home</a><a href="../support/#en">Support</a><a href="../download/#en">Download</a><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a></div>
+  <div data-l="es" lang="es"><a href="../#es">Inicio</a><a href="../support/#es">Soporte</a><a href="../download/#es">Descargar</a><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a></div>
+</div></footer>
+</body>
+</html>
