@@ -93,21 +93,28 @@
 <h2>系统要求</h2>
 <ul>
   <li>Mac：macOS 14 或更高；打开「远程登录」；安装并登录 Tailscale；装好 Claude Code 或 Codex 至少一个（只用终端会话可以不装）。</li>
-  <li>iPhone：iOS 17 或更高；安装 Tailscale 并登录与 Mac 相同的账号；从 App Store 安装 Kitestring。</li>
+  <li>iPhone：iOS 17 或更高；安装 Tailscale 并登录与 Mac 相同的账号；从 App Store 安装 Kitestring（<a href="https://apps.apple.com/app/kitestring-remote/id6832438353">App Store 页面</a>）。</li>
+  <li>连接你自己的 Mac 需要 iPhone App 里的 Kitestring Pro（按年订阅或一次买断，App 里显示价格）；演示模式和 Kitestring for Mac 免费。</li>
+  <li>可选的「本机听写」（给 Kite Voice 语音键盘和 App 里的语音输入用）：Apple 芯片的 Mac，打开时另外下载约 3.8 GB 的识别模型。</li>
 </ul>
 
-<h2>安装</h2>
+<h2 id="zh-install">安装</h2>
+<h3>让 Claude Code 或 Codex 代你安装（最省事）</h3>
+<p>在这台 Mac 上打开 Claude Code（或 Codex），粘贴这一句。下载、安装、检查和配对由它完成。iPhone 上装 App、登录 Tailscale、打开「远程登录」、批准 macOS 的权限请求和扫描二维码仍需要你本人操作，到时候它会告诉你：</p>
+<div class="copy"><pre><code id="prompt-zh">请读取 https://lijunhua941-boop.github.io/kitestring-site/agent-install.md，按其中步骤在这台 Mac 上安装并配置 Kitestring for Mac，完成后告诉我结果。</code></pre><button type="button" data-copy="prompt-zh" data-done="已复制">复制</button></div>
+<p>说明文件本身：<a href="https://lijunhua941-boop.github.io/kitestring-site/agent-install.md">agent-install.md</a>；机器可读的版本信息：<a href="https://lijunhua941-boop.github.io/kitestring-site/download/latest.json">latest.json</a>。</p>
+<h3>一条命令安装</h3>
+<p>在「终端」里运行。它把 DMG 分成几段同时下载（网络慢或离服务器远时能快几倍），中断后重新运行同一条命令会接着下；下载完核对 SHA-256、签名与公证，通过后才把 App 放进「应用程序」并打开。不需要管理员密码，不改系统设置。<a href="https://lijunhua941-boop.github.io/kitestring-site/install.sh">查看脚本内容</a></p>
+<div class="copy"><pre><code id="cmd-zh">curl -fsSL https://lijunhua941-boop.github.io/kitestring-site/install.sh | bash</code></pre><button type="button" data-copy="cmd-zh" data-done="已复制">复制</button></div>
+<h3>下载 DMG 手动安装</h3>
 <ol class="steps">
   <li>打开下载的 DMG，把 Kitestring for Mac 拖进「应用程序」文件夹。</li>
   <li>打开它，按「设置向导」逐步完成；最后一步在窗口里显示配对二维码，用 iPhone App 扫码。</li>
 </ol>
+<p class="muted">浏览器下载很慢或总是中断？用上面的「一条命令安装」，它会分段下载并断点续传。</p>
 <h3>用 Homebrew 安装</h3>
 <pre><code>brew install --cask lijunhua941-boop/kitestring/kitestring</code></pre>
 <p>以后用 <code>brew upgrade --cask kitestring</code> 更新，或在 App 里选「检查更新」。</p>
-<h3>让 Claude Code 代你安装</h3>
-<p>在这台 Mac 的终端里打开 Claude Code（或 Codex），粘贴这一句，下载、安装、检查和配对由它完成。登录 Tailscale、打开「远程登录」、批准 macOS 的权限请求和扫描二维码仍需要你本人操作：</p>
-<pre><code>请读取 https://lijunhua941-boop.github.io/kitestring-site/agent-install.md，按其中步骤在这台 Mac 上安装并配置 Kitestring for Mac，完成后告诉我结果。</code></pre>
-<p>说明文件本身：<a href="https://lijunhua941-boop.github.io/kitestring-site/agent-install.md">agent-install.md</a>；机器可读的版本信息：<a href="https://lijunhua941-boop.github.io/kitestring-site/download/latest.json">latest.json</a>。</p>
 
 <h2>校验下载的文件（可选）</h2>
 <p>在「终端」里运行下面的命令。命令后的文件路径可以直接把 DMG 拖进终端窗口得到。</p>
@@ -141,21 +148,28 @@
 <h2>Requirements</h2>
 <ul>
   <li>Mac: macOS 14 or later; Remote Login turned on; Tailscale installed and signed in; at least one of Claude Code or Codex installed (not needed for terminal-only sessions).</li>
-  <li>iPhone: iOS 17 or later; Tailscale installed and signed in with the same account as your Mac; Kitestring from the App Store.</li>
+  <li>iPhone: iOS 17 or later; Tailscale installed and signed in with the same account as your Mac; Kitestring from the App Store (<a href="https://apps.apple.com/app/kitestring-remote/id6832438353">App Store page</a>).</li>
+  <li>Connecting to your own Mac requires Kitestring Pro in the iPhone app (a yearly subscription or a one-time purchase; the app shows the price). The demo and Kitestring for Mac are free.</li>
+  <li>Optional Local Dictation (for the Kite Voice keyboard and voice input in the app): a Mac with Apple silicon; turning it on downloads about 3.8 GB of recognition models.</li>
 </ul>
 
-<h2>Install</h2>
+<h2 id="en-install">Install</h2>
+<h3>Let Claude Code or Codex Install It for You (Easiest)</h3>
+<p>Open Claude Code (or Codex) on this Mac and paste this line. It downloads, installs, checks, and pairs the app for you. You’ll still need to install the iPhone app, sign in to Tailscale, turn on Remote Login, approve macOS permission requests, and scan the QR code; it tells you when.</p>
+<div class="copy"><pre><code id="prompt-en">Read https://lijunhua941-boop.github.io/kitestring-site/agent-install.md and follow it to install and set up Kitestring for Mac on this Mac, then tell me the result.</code></pre><button type="button" data-copy="prompt-en" data-done="Copied">Copy</button></div>
+<p>Instructions: <a href="https://lijunhua941-boop.github.io/kitestring-site/agent-install.md">agent-install.md</a>. Machine-readable release information: <a href="https://lijunhua941-boop.github.io/kitestring-site/download/latest.json">latest.json</a>.</p>
+<h3>Install with One Command</h3>
+<p>Run it in Terminal. It downloads the DMG in several parts at once (several times faster on a slow or distant connection), and continues where it stopped if you run the same command again. Then it checks the SHA-256, the signature, and the notarization, and only then puts the app in Applications and opens it. No administrator password, no system settings changed. <a href="https://lijunhua941-boop.github.io/kitestring-site/install.sh">Read the script</a></p>
+<div class="copy"><pre><code id="cmd-en">curl -fsSL https://lijunhua941-boop.github.io/kitestring-site/install.sh | bash</code></pre><button type="button" data-copy="cmd-en" data-done="Copied">Copy</button></div>
+<h3>Download the DMG and Install by Hand</h3>
 <ol class="steps">
   <li>Open the downloaded DMG and drag Kitestring for Mac to the Applications folder.</li>
   <li>Open the app and follow the Setup Assistant. The last step shows a pairing code in the window; scan it with the iPhone app.</li>
 </ol>
+<p class="muted">Is the browser download slow, or does it keep stopping? Use the one-command install above: it downloads in parts and resumes.</p>
 <h3>Install with Homebrew</h3>
 <pre><code>brew install --cask lijunhua941-boop/kitestring/kitestring</code></pre>
 <p>To update later, run <code>brew upgrade --cask kitestring</code> or choose “Check for Updates” in the app.</p>
-<h3>Let Claude Code Install It for You</h3>
-<p>Open Claude Code (or Codex) in Terminal on this Mac and paste this line. It downloads, installs, checks, and pairs the app for you. You’ll still need to sign in to Tailscale, enable Remote Login, approve macOS permission requests, and scan the QR code.</p>
-<pre><code>Read https://lijunhua941-boop.github.io/kitestring-site/agent-install.md and follow it to install and set up Kitestring for Mac on this Mac, then tell me the result.</code></pre>
-<p>Instructions: <a href="https://lijunhua941-boop.github.io/kitestring-site/agent-install.md">agent-install.md</a>. Machine-readable release information: <a href="https://lijunhua941-boop.github.io/kitestring-site/download/latest.json">latest.json</a>.</p>
 
 <h2>Verify the Download (Optional)</h2>
 <p>Run these commands in Terminal. To get the file path, drag the DMG into the Terminal window.</p>
@@ -189,21 +203,28 @@
 <h2>Requisitos</h2>
 <ul>
   <li>Mac: macOS 14 o posterior; Sesión remota activada; Tailscale instalado y con la sesión iniciada; al menos Claude Code o Codex instalado (no hace falta si solo usas sesiones de terminal).</li>
-  <li>iPhone: iOS 17 o posterior; Tailscale instalado y con la sesión iniciada en la misma cuenta que tu Mac; Kitestring instalado desde el App Store.</li>
+  <li>iPhone: iOS 17 o posterior; Tailscale instalado y con la sesión iniciada en la misma cuenta que tu Mac; Kitestring instalado desde el App Store (<a href="https://apps.apple.com/app/kitestring-remote/id6832438353">página del App Store</a>).</li>
+  <li>Para conectarte a tu propio Mac necesitas Kitestring Pro en la app del iPhone (suscripción anual o compra única; la app muestra el precio). La demostración y Kitestring para Mac son gratis.</li>
+  <li>Dictado local opcional (para el teclado Kite Voice y la entrada de voz de la app): un Mac con chip de Apple; al activarlo se descargan unos 3,8 GB de modelos de reconocimiento.</li>
 </ul>
 
-<h2>Instalación</h2>
+<h2 id="es-install">Instalación</h2>
+<h3>Deja que Claude Code o Codex lo instale por ti (lo más fácil)</h3>
+<p>Abre Claude Code (o Codex) en este Mac y pega esta línea. Se encarga de descargar, instalar, comprobar y vincular la app. Tú tendrás que instalar la app del iPhone, iniciar sesión en Tailscale, activar Sesión remota, aprobar las solicitudes de permisos de macOS y escanear el código QR; te avisa cuando toca.</p>
+<div class="copy"><pre><code id="prompt-es">Lee https://lijunhua941-boop.github.io/kitestring-site/agent-install.md y sigue sus pasos para instalar y configurar Kitestring para Mac en este Mac; después dime el resultado.</code></pre><button type="button" data-copy="prompt-es" data-done="Copiado">Copiar</button></div>
+<p>Instrucciones: <a href="https://lijunhua941-boop.github.io/kitestring-site/agent-install.md">agent-install.md</a>. Información de la versión en formato legible por máquina: <a href="https://lijunhua941-boop.github.io/kitestring-site/download/latest.json">latest.json</a>.</p>
+<h3>Instalar con un solo comando</h3>
+<p>Ejecútalo en Terminal. Descarga el DMG en varias partes a la vez (varias veces más rápido con una conexión lenta o lejana) y continúa donde se quedó si ejecutas el mismo comando otra vez. Después comprueba el SHA-256, la firma y la notarización, y solo entonces coloca la app en Aplicaciones y la abre. No pide contraseña de administrador ni cambia ajustes del sistema. <a href="https://lijunhua941-boop.github.io/kitestring-site/install.sh">Ver el script</a></p>
+<div class="copy"><pre><code id="cmd-es">curl -fsSL https://lijunhua941-boop.github.io/kitestring-site/install.sh | bash</code></pre><button type="button" data-copy="cmd-es" data-done="Copiado">Copiar</button></div>
+<h3>Descargar el DMG e instalar a mano</h3>
 <ol class="steps">
   <li>Abre el DMG descargado y arrastra Kitestring para Mac a la carpeta Aplicaciones.</li>
   <li>Abre la app y sigue el Asistente de configuración. El último paso muestra un código de vinculación en la ventana; escanéalo con la app del iPhone.</li>
 </ol>
+<p class="muted">¿La descarga del navegador va lenta o se corta? Usa la instalación con un solo comando de arriba: descarga por partes y reanuda.</p>
 <h3>Instalar con Homebrew</h3>
 <pre><code>brew install --cask lijunhua941-boop/kitestring/kitestring</code></pre>
 <p>Para actualizar más adelante, ejecuta <code>brew upgrade --cask kitestring</code> o elige «Buscar actualizaciones» en la app.</p>
-<h3>Deja que Claude Code lo instale por ti</h3>
-<p>Abre Claude Code (o Codex) en Terminal en este Mac y pega esta línea. Se encarga de descargar, instalar, comprobar y vincular la app. Tú solo tendrás que iniciar sesión en Tailscale, activar Sesión remota, aprobar las solicitudes de permisos de macOS y escanear el código QR.</p>
-<pre><code>Lee https://lijunhua941-boop.github.io/kitestring-site/agent-install.md y sigue sus pasos para instalar y configurar Kitestring para Mac en este Mac; después dime el resultado.</code></pre>
-<p>Instrucciones: <a href="https://lijunhua941-boop.github.io/kitestring-site/agent-install.md">agent-install.md</a>. Información de la versión en formato legible por máquina: <a href="https://lijunhua941-boop.github.io/kitestring-site/download/latest.json">latest.json</a>.</p>
 
 <h2>Verificar la descarga (opcional)</h2>
 <p>Ejecuta estos comandos en Terminal. Para obtener la ruta del archivo, arrastra el DMG a la ventana de Terminal.</p>
@@ -226,5 +247,20 @@
   <div data-l="en" lang="en"><a href="../#en">Home</a><a href="../privacy/#en">Privacy Policy</a><a href="../support/#en">Support</a><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a></div>
   <div data-l="es" lang="es"><a href="../#es">Inicio</a><a href="../privacy/#es">Política de privacidad</a><a href="../support/#es">Soporte</a><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a></div>
 </div></footer>
+<script>
+/* Copy buttons: <button data-copy="ID"> copies the text of the element with that id; where the
+   clipboard is not available the text is selected instead. Nothing is stored or sent. */
+document.addEventListener("click", function (e) {
+  var b = e.target.closest ? e.target.closest("button[data-copy]") : null;
+  if (!b) return;
+  var el = document.getElementById(b.getAttribute("data-copy"));
+  if (!el) return;
+  var text = el.textContent, label = b.getAttribute("data-label") || b.textContent;
+  b.setAttribute("data-label", label);
+  function done() { b.textContent = b.getAttribute("data-done") || label; setTimeout(function () { b.textContent = label; }, 1600); }
+  function select() { var r = document.createRange(); r.selectNodeContents(el); var s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, select); else select();
+});
+</script>
 </body>
 </html>

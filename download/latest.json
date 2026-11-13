@@ -11,6 +11,8 @@
   "bundle_id": "sh.kitestring.mac",
   "release_notes_url": "https://lijunhua941-boop.github.io/kitestring-site/download/",
   "agent_install_url": "https://lijunhua941-boop.github.io/kitestring-site/agent-install.md",
+  "install_script": "https://lijunhua941-boop.github.io/kitestring-site/install.sh",
+  "iphone_app_store_url": "https://apps.apple.com/app/kitestring-remote/id6832438353",
   "homebrew_cask": "lijunhua941-boop/kitestring/kitestring",
   "download_page": "https://lijunhua941-boop.github.io/kitestring-site/download/",
   "support_page": "https://lijunhua941-boop.github.io/kitestring-site/support/"

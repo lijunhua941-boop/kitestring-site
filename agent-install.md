@@ -26,23 +26,31 @@ What gets installed, and nothing else:
 The app is installed in `/Applications`. The helper and its session data are installed in the
 locations listed above. No `sudo` is needed, and no system or network settings are changed.
 
-Four things only the user can do (macOS asks the person at the keyboard, not you). Tell them
-**when** each one comes up; do not try to do them yourself and never work around a permission
-dialog:
+Things only the user can do (macOS and the iPhone ask the person, not you). Tell them **when**
+each one comes up; do not try to do them yourself and never work around a permission dialog:
 
 1. Install **Tailscale** on this Mac and sign in with the same account as on the iPhone.
 2. Turn on **Remote Login** (System Settings › General › Sharing). Only the current user needs
    access.
 3. Approve macOS permission dialogs that name Kitestring (Local Network, Documents /
    Desktop / Downloads folders, "open an app downloaded from the Internet", login item).
-4. Scan the pairing QR code with the Kitestring iPhone app.
+4. Get the iPhone ready (below) and scan the pairing QR code with the Kitestring iPhone app.
+
+**Tell the user this first, before you run anything**, so the phone is ready by the time you
+reach pairing (the pairing code only lasts 10 minutes). They can do it while you work:
+
+- On the iPhone, install **Tailscale** from the App Store and sign in with the same account they
+  use (or will use) on this Mac.
+- On the iPhone, install **Kitestring** from the App Store: https://apps.apple.com/app/kitestring-remote/id6832438353
+- Open it. Connecting to your own Mac needs **Kitestring Pro** (a yearly subscription or a
+  one-time purchase; the app shows the price, and its demo is free). If the app opens on the
+  Kitestring Pro screen, buy or restore there now; otherwise it asks when they tap
+  "Scan to Pair". Kitestring for Mac itself is free.
+
+Do not wait for them: go on with step 0 and ask whether the phone is ready when you reach step 5.
 
 The current release is described at `https://lijunhua941-boop.github.io/kitestring-site/download/latest.json` (version, DMG
-URL, SHA-256). Read it first:
-
-```sh
-curl -fsSL https://lijunhua941-boop.github.io/kitestring-site/download/latest.json
-```
+URL, size, SHA-256).
 
 ## 0. Preflight (read-only)
 
@@ -62,51 +70,35 @@ test -x "$HOME/.local/bin/vibeterm" && VIBETERM_LANG="$lang" "$HOME/.local/share
 
 ## 1. Install the app
 
-**With Homebrew** (preferred; installs or upgrades to the current release, verifies the SHA-256,
-and keeps it updatable with `brew upgrade`):
+Download the installer script and run it. It downloads the DMG in several parts at once (several
+times faster than one connection on a slow or distant link), checks the published SHA-256, then
+macOS's own verdict on the DMG and the app (signature, identifier `sh.kitestring.mac`,
+notarization), and only then puts the app in `/Applications`. An app already there is replaced as
+a whole and only if it is ours; anything else with that name is left alone and reported.
+
+```sh
+curl -fsSL --retry 3 https://lijunhua941-boop.github.io/kitestring-site/install.sh -o "${TMPDIR:-/tmp}/kitestring-install.sh" && bash "${TMPDIR:-/tmp}/kitestring-install.sh" --no-open
+```
+
+- It prints progress every 10 seconds. On a slow connection the download can take several
+  minutes: give the command the longest timeout your tool allows (10 minutes if you can).
+- **If the command is cut off or fails during the download, run the same command again.** It
+  continues from what is already downloaded; nothing is fetched twice.
+- Exit status 0 means the app is in place (the last line names its path and version, in the
+  Mac's language). Exit status 1 means it stopped: the last line says why. Show it to the user
+  and stop, except for an unfinished download, which you retry up to three times.
+- It needs no `sudo`. On an account that cannot write to `/Applications` it opens the disk image
+  and says so: ask the user to drag Kitestring to Applications, then continue.
+
+The user may prefer Homebrew (one connection, so slower on a poor link; keeps the app updatable
+with `brew upgrade`). Use it only if they ask for it:
 
 ```sh
 brew install --cask lijunhua941-boop/kitestring/kitestring
 ```
 
-**Without Homebrew** (do not install Homebrew for this; it needs an administrator password). The
-DMG is checked against the published SHA-256 before anything is copied, and an app already in
-`/Applications` is replaced only if it is ours (`Identifier=sh.kitestring.mac`); anything else
-with that name is left alone and reported:
-
-```sh
-set -e
-tmp=$(mktemp -d)
-app="/Applications/Kitestring.app"
-stage="$app.new"        # staged beside the destination: the final step is a rename on the same volume
-backup="$app.previous"
-for p in "$stage" "$backup"; do
-  [ -e "$p" ] && { echo "$p is in the way (left by an earlier attempt): stop and ask the user what it is"; exit 1; }
-done
-trap 'rm -rf "$stage" "$tmp"' EXIT     # a failure at any step below leaves no staged copy behind
-url=$(curl -fsSL https://lijunhua941-boop.github.io/kitestring-site/download/latest.json | python3 -c 'import json,sys; print(json.load(sys.stdin)["dmg_url"])')
-sha=$(curl -fsSL https://lijunhua941-boop.github.io/kitestring-site/download/latest.json | python3 -c 'import json,sys; print(json.load(sys.stdin)["dmg_sha256"])')
-curl -fsSL "$url" -o "$tmp/Kitestring.dmg"
-echo "$sha  $tmp/Kitestring.dmg" | shasum -a 256 -c -          # must print OK; otherwise stop
-if [ -e "$app" ]; then
-  codesign -dv "$app" 2>&1 | grep -q '^Identifier=sh.kitestring.mac$' || { echo "another app is at $app: stop"; exit 1; }
-fi
-hdiutil attach -nobrowse -readonly -mountpoint "$tmp/vol" "$tmp/Kitestring.dmg"
-ditto "$tmp/vol/Kitestring.app" "$stage"                          # a complete copy, nothing replaced yet
-hdiutil detach "$tmp/vol"
-codesign --verify --deep --strict "$stage"                                # the copy is intact; otherwise stop
-codesign -dv "$stage" 2>&1 | grep -q '^Identifier=sh.kitestring.mac$' || { echo "downloaded app has another identifier: stop"; exit 1; }
-# Whole-bundle replacement by rename, no merge; the old app is kept beside until the new one is in place.
-if [ -e "$app" ]; then mv "$app" "$backup"; fi
-if mv "$stage" "$app"; then
-  rm -rf "$backup"
-else
-  [ -e "$backup" ] && mv "$backup" "$app"
-  echo "could not place the new app: the old one is back"; exit 1
-fi
-```
-
-**Then verify before running anything from the bundle** (read-only; also after the Homebrew path):
+**Then verify before running anything from the bundle** (read-only; the installer has already
+checked the same things, this is your own confirmation, and it is required after the Homebrew path):
 
 ```sh
 app="/Applications/Kitestring.app"
@@ -149,10 +141,10 @@ privacy permissions belong to it), so start the app rather than running the serv
 ```sh
 open -a "Kitestring"
 sleep 5
-echo '{"v":1,"op":"hello"}' | "$HOME/.local/bin/vibeterm" rpc | python3 -c 'import json,sys; r=json.load(sys.stdin)["result"]; print("server_running", r["server"]["running"], "helper", r["helper_version"], "agents", {k: v["found"] for k, v in r["agents"].items()})'
+echo '{"v":1,"op":"hello"}' | "$HOME/.local/bin/vibeterm" rpc | plutil -extract result.server.running raw -o - -
 ```
 
-Expected: `server_running True`. The app's menu bar icon appears and its Setup Assistant window
+Expected: `true`. The app's menu bar icon appears and its Setup Assistant window
 opens; that window is for the user and shows the same steps as this document with check marks.
 If the user is asked to move the app to Applications, it was not installed there: go back to
 step 1.
@@ -190,39 +182,90 @@ Only when `tailscale` is ready, `remote_login` is `ok` and the service is runnin
 a one-time secret valid for 10 minutes; it is shown on **this Mac's screen** (a QR code opened in
 Preview) and must not be copied into the conversation, a file or a log.
 
-First record the devices that are already paired (an upgrade or a second iPhone starts with a
-non-empty list), then run the pairing in the background (it blocks until the phone redeems the
-code, or 10 minutes) and tell the user to open the Kitestring app on the iPhone › Settings ›
-Mac › Add Mac and scan the QR code shown in Preview:
+**First ask the user whether the iPhone is ready, and wait for the answer** (do not start the
+code before; the 10 minutes would run out while they install or pay):
+
+- Kitestring is installed from the App Store (https://apps.apple.com/app/kitestring-remote/id6832438353) and, if it showed
+  the Kitestring Pro screen, the purchase is done or restored;
+- Tailscale on the iPhone is connected, with the same account as this Mac.
+
+Also tell them: while your QR code is open, **do not click "Pair iPhone…" in the Mac's menu bar or
+the pairing step of the Setup Assistant**. Only one pairing can be open at a time; the QR code to
+scan is the one in Preview.
+
+Record the devices that are already paired (an upgrade or a second iPhone starts with a non-empty
+list), then run the pairing in the background (it blocks until the phone redeems the code, or 10
+minutes). Its standard output draws the QR code and is discarded; its error output holds only
+messages and is kept:
 
 ```sh
-before=$("$HOME/.local/bin/vibeterm" devices --json | python3 -c 'import json,sys; print("\n".join(d["fingerprint"] for d in json.load(sys.stdin)["devices"]))')
-VIBETERM_LANG="$lang" nohup "$HOME/.local/bin/vibeterm" pair > /dev/null 2>&1 &
+"$HOME/.local/bin/vibeterm" devices --json
+VIBETERM_LANG="$lang" nohup "$HOME/.local/bin/vibeterm" pair > /dev/null 2> "${TMPDIR:-/tmp}/kitestring-pair.err" &
 pair_pid=$!
 ```
+
+Tell the user what to do on the iPhone, in their language:
+
+- First Mac: open Kitestring; on the "Connect Your Mac" screen tap **Scan to Pair**
+  (Chinese 「扫码配对」, Spanish «Escanear para vincular»). If the app asks for
+  Kitestring Pro at this point, buy or restore, then tap it again.
+- A Mac is already paired in the app: Settings › **Add Mac** (「添加 Mac」, «Añadir Mac»).
+- Allow the camera, scan the QR code shown in Preview on this Mac, and confirm with **Pair**.
 
 Then poll (every 10 s, up to 10 minutes) until the pairing process has exited, reading its exit
 status; a new fingerprint in `devices` is the confirmation but not required (an iPhone that was
 paired with this Mac before keeps its key, so a successful re-pairing adds no fingerprint):
 
 ```sh
-if kill -0 "$pair_pid" 2>/dev/null; then echo "pairing still open"; else wait "$pair_pid"; echo "pairing exit $?"; fi
+if kill -0 "$pair_pid" 2>/dev/null; then echo "pairing still open"; else wait "$pair_pid"; echo "pairing exit $?"; cat "${TMPDIR:-/tmp}/kitestring-pair.err"; fi
 "$HOME/.local/bin/vibeterm" devices --json
 ```
 
-`pairing exit 0` means the iPhone redeemed the code: report the device `name` (the new
-fingerprint's, or the one the user named). Exit 1 means the code expired or was voided: ask the
-user whether to try again, then repeat this step once. If you have to give up while it is still
-open, end it (`kill "$pair_pid"`), which voids the unused code. Several iPhones can be paired, one
-QR code each.
+- `pairing exit 0`: the iPhone redeemed the code. Report the device `name` (the new
+  fingerprint's, or the one the user named).
+- `pairing exit 1`: the code expired or was voided (the iPhone says the code expired or was
+  already used). Ask the user whether the phone is ready now, then repeat this step once.
+- `pairing exit 2`: the pairing could not start; the message printed after it (already in the
+  user's language) says why. "Another pairing is in progress" means the app's own pairing window
+  or another terminal has a code open: ask the user to scan the code shown **there**, or to close
+  that window, then repeat this step. A Tailscale or Remote Login message: go back to step 4.
+- If you have to give up while it is still open, end it (`kill "$pair_pid"`), which voids the
+  unused code. Several iPhones can be paired, one QR code each.
 
-## 6. Report
+## 6. Kite Voice (only if the user asks for it)
+
+Kite Voice is a separate iPhone app from the same developer: a voice keyboard that can use this
+Mac for speech recognition and AI polish (https://apps.apple.com/app/kite-voice-ai-dictation/id6833265822). Skip this step unless the
+user says they use it. Recognition on the Mac needs "Local Dictation", which only the user can
+turn on (macOS asks them to approve a login item):
+
+```sh
+uname -m                                                   # must be arm64 (Apple silicon)
+df -g "$HOME" | awk 'NR==2 { print $4 " GB free" }'        # about 6 GB free is needed
+```
+
+- Not `arm64`: Local Dictation does not run on this Mac; Kite Voice then uses the iPhone's own
+  speech recognition. Say so and skip the rest of this step.
+- Otherwise tell the user: menu bar Kitestring icon › **Local Dictation…**
+  (「本机听写…」, «Dictado local…») › **Turn On Local Dictation** (「打开本机听写」, «Activar
+  dictado local»). It downloads about 3.8 GB of recognition models and can take a while; the
+  window shows the progress and says when Local Dictation is on.
+- AI polish uses Claude Code signed in on this Mac; without it Kite Voice still gets the
+  recognised text.
+- Pairing Kite Voice is step 5 again with its own code (one QR code per app): in Kite Voice, tap
+  "配对 Mac" and scan. Kite Voice 1.0.0 cannot read this Mac's code; it needs **Kite Voice 1.0.1
+  or later** (update it in the App Store first).
+
+## 7. Report
 
 Tell the user, in their language:
 
 - The app version installed (`defaults read "/Applications/Kitestring.app/Contents/Info.plist" CFBundleShortVersionString`) and the helper version (`"$HOME/.local/bin/vibeterm" version`).
 - Which doctor checks are still `warn`, in plain words, and whether an iPhone is paired.
-- How to update later: `brew upgrade --cask kitestring`, or the app's own "Check for Updates".
+- If no iPhone is paired yet: what is left on the phone (the App Store link above, Pro, Tailscale)
+  and that they can pair any time from the Mac's menu bar › "Pair iPhone…".
+- How to update later: the app's own "Check for Updates" (or `brew upgrade --cask kitestring` if it
+  was installed with Homebrew).
 - How to uninstall: quit the app, run `VIBETERM_LANG=<code> "$HOME/.local/share/vibeterm/bin/vibe-host" uninstall`
   (removes the helper files and the iPhone's authorized key; exit 5 means the key could not be
   removed and the message says what to do), then `brew uninstall --cask kitestring` or drag the
