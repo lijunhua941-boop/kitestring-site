@@ -119,7 +119,7 @@ main() {
       [ "$(bytes "$f")" -eq "$want" ]
     }
     local i pids="" monitor failed=0
-    i=0; while [ "$i" -lt "$parts" ]; do fetch_part "$i" & pids="$pids $!"; i=$(( i + 1 )); done
+    i=0; while [ "$i" -lt "$parts" ]; do fetch_part "$i" 2>/dev/null & pids="$pids $!"; i=$(( i + 1 )); done
     ( last=-1
       while sleep 10; do
         got=0; i=0
