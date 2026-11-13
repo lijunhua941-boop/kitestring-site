@@ -81,17 +81,32 @@
 <p class="lead">Kitestring 是连接你自己的 Mac 的 SSH 终端与编程助手会话管理器，配合 Claude Code 与 Codex 使用。和 Blink Shell、Termius 一样，它是 SSH 客户端：iPhone 显示会话、发送你的输入，程序都在你的 Mac 上运行。App 不会在 iPhone 上下载或执行代码。</p>
 <div class="actions">
   <a class="button" href="download/#zh">下载 Kitestring for Mac（免费）</a>
-  <!-- App Store 徽章占位：上架后换成官方徽章图片（按徽章的使用规范），链接填 KITE_APP_STORE_URL。 -->
-  
+  <a class="button secondary" href="https://apps.apple.com/app/kitestring-remote/id6832438353">iPhone App：在 App Store 下载</a>
 </div>
 
-<h2>三步上手</h2>
+<h2 id="zh-agent">最快的装法：交给 Claude Code 或 Codex</h2>
+<p>在要连接的那台 Mac 上打开 Claude Code（或 Codex），把下面这句话发给它。下载、安装和检查都由它完成，需要你动手的地方它会告诉你。</p>
+<div class="copy"><pre><code id="prompt-zh">请读取 https://lijunhua941-boop.github.io/kitestring-site/agent-install.md，按其中步骤在这台 Mac 上安装并配置 Kitestring for Mac，完成后告诉我结果。</code></pre><button type="button" data-copy="prompt-zh" data-done="已复制">复制</button></div>
+<p>你自己要做的只有这几件：</p>
 <ol class="steps">
-  <li><strong>在 Mac 上下载 Kitestring for Mac。</strong>它的「设置向导」带你逐步完成：Tailscale、远程登录、安装助手、Claude Code 或 Codex、常用文件夹授权。App 自动检查每一步，完成后标记为已完成。</li>
+  <li><strong>iPhone 上装两个 App：</strong>Kitestring（<a href="https://apps.apple.com/app/kitestring-remote/id6832438353">App Store</a>）和 Tailscale。</li>
+  <li><strong>Mac 和 iPhone 的 Tailscale 登录同一个账号。</strong>Mac 上还没装 Tailscale，它会提醒你装。</li>
+  <li><strong>在 Mac 上打开「远程登录」，批准 macOS 弹出的权限请求。</strong>它会替你打开对应的设置页。</li>
+  <li><strong>用 iPhone App 扫 Mac 屏幕上的二维码。</strong>二维码 10 分钟内有效、只能用一次，所以它会先问你 iPhone 准备好了没有。</li>
+</ol>
+
+<h2 id="zh-manual">自己动手装</h2>
+<ol class="steps">
+  <li><strong>装 Mac App。</strong>在 Mac 的「终端」里运行下面这条命令，或到<a href="download/#zh">下载页</a>下载 DMG。命令会分段下载（网络慢时快几倍，中断后重新运行会接着下），核对校验值、签名与公证，再把 App 放进「应用程序」并打开。
+  <div class="copy"><pre><code id="cmd-zh">curl -fsSL https://lijunhua941-boop.github.io/kitestring-site/install.sh | bash</code></pre><button type="button" data-copy="cmd-zh" data-done="已复制">复制</button></div>
+  App 的「设置向导」带你逐步完成：Tailscale、远程登录、安装助手、Claude Code 或 Codex、常用文件夹授权。每一步自动检查，完成后打勾。</li>
   <li><strong>两台设备都装 Tailscale，登录同一个账号。</strong>iPhone 和 Mac 之间的连接只走你自己的 Tailscale 网络。</li>
   <li><strong>在 Mac 菜单栏点「配对 iPhone」，用 iPhone App 扫码。</strong>二维码 10 分钟内有效、只能用一次。配对会自动设置 Mac 的地址、用户名、主机身份和访问权限。</li>
 </ol>
-<p class="muted">还没有 Mac？打开 iPhone App，在欢迎页点「先看看演示（不需要 Mac）」，不需要连接任何设备。</p>
+
+<h2 id="zh-price">价格</h2>
+<p>Kitestring for Mac 免费。iPhone App 免费下载，演示模式免费：不需要 Mac，就能看到全部界面。连接你自己的 Mac 需要 Kitestring Pro：按年订阅 US$9.99，或一次买断 US$29.99，没有试用期；各地区的价格以 App Store 显示的为准。</p>
+<p class="muted">建议的顺序：先在 Mac 上装好，等「设置向导」前几步都打勾，再在 iPhone 上购买并扫码配对。</p>
 
 <h2>能做什么</h2>
 <ul class="grid">
@@ -114,6 +129,12 @@
 </ul>
 <p><a href="privacy/#zh">阅读隐私政策</a></p>
 
+<h2 id="zh-demo">还没有 Mac？</h2>
+<p>打开 iPhone App，点「演示」：不需要连接任何设备，也不用付费，就能把每个界面都看一遍。</p>
+
+<h2 id="zh-voice">Kite Voice：用你的 Mac 做语音输入</h2>
+<p>同一个开发者的另一个 iPhone App：语音键盘。说话的录音经 Tailscale 送到你自己的 Mac 上识别，再由 Mac 上的 Claude Code 整理成干净的文字。<a href="voice/#zh">了解 Kite Voice 与配置方法</a> · <a href="https://apps.apple.com/app/kite-voice-ai-dictation/id6833265822">App Store</a></p>
+
 <h2>系统要求</h2>
 <table>
   <tr><th>Mac</th><td>macOS 14 或更高；打开「远程登录」；安装并登录 Tailscale；装好 Claude Code 或 Codex 至少一个（只用终端会话可以不装）。Mac 需要保持通电、联网和唤醒，并登录你的账户（可以锁屏，不能睡眠）。</td></tr>
@@ -128,17 +149,32 @@
 <p class="lead">Kitestring is an SSH terminal and coding-agent session manager for your own Mac, and it works with Claude Code and Codex. Like Blink Shell and Termius, it’s an SSH client: your iPhone displays the session and sends your input; the programs run on your Mac. The app never downloads or runs code on your iPhone.</p>
 <div class="actions">
   <a class="button" href="download/#en">Download Kitestring for Mac (Free)</a>
-  <!-- App Store badge placeholder: replace with the official badge artwork after launch (follow its usage rules); link = KITE_APP_STORE_URL. -->
-  
+  <a class="button secondary" href="https://apps.apple.com/app/kitestring-remote/id6832438353">iPhone App: Download on the App Store</a>
 </div>
 
-<h2>Three Steps</h2>
+<h2 id="en-agent">The Fastest Way: Hand It to Claude Code or Codex</h2>
+<p>On the Mac you want to reach, open Claude Code (or Codex) and send it this line. It downloads, installs, and checks everything, and tells you when it needs you.</p>
+<div class="copy"><pre><code id="prompt-en">Read https://lijunhua941-boop.github.io/kitestring-site/agent-install.md and follow it to install and set up Kitestring for Mac on this Mac, then tell me the result.</code></pre><button type="button" data-copy="prompt-en" data-done="Copied">Copy</button></div>
+<p>All that’s left for you:</p>
 <ol class="steps">
-  <li><strong>Download Kitestring for Mac on your Mac.</strong> Its Setup Assistant walks you through Tailscale, Remote Login, installing the helper, Claude Code or Codex, and access to common folders. The app checks each step automatically and marks it complete.</li>
+  <li><strong>Install two apps on your iPhone:</strong> Kitestring (<a href="https://apps.apple.com/app/kitestring-remote/id6832438353">App Store</a>) and Tailscale.</li>
+  <li><strong>Sign in to Tailscale with the same account on your Mac and your iPhone.</strong> If Tailscale isn’t on your Mac yet, it reminds you to install it.</li>
+  <li><strong>Turn on Remote Login on your Mac and approve the macOS permission requests.</strong> It opens the right settings pane for you.</li>
+  <li><strong>Scan the QR code on your Mac’s screen with the iPhone app.</strong> The code is valid for 10 minutes and can be used only once, so it asks first whether your iPhone is ready.</li>
+</ol>
+
+<h2 id="en-manual">Set It Up Yourself</h2>
+<ol class="steps">
+  <li><strong>Install the Mac app.</strong> Run this command in Terminal on your Mac, or get the DMG from the <a href="download/#en">download page</a>. The command downloads in several parts (several times faster on a slow connection, and it continues where it stopped if you run it again), checks the checksum, signature, and notarization, then puts the app in Applications and opens it.
+  <div class="copy"><pre><code id="cmd-en">curl -fsSL https://lijunhua941-boop.github.io/kitestring-site/install.sh | bash</code></pre><button type="button" data-copy="cmd-en" data-done="Copied">Copy</button></div>
+  The app’s Setup Assistant walks you through Tailscale, Remote Login, installing the helper, Claude Code or Codex, and access to common folders. It checks each step automatically and marks it complete.</li>
   <li><strong>Install Tailscale on both devices and sign in with the same account.</strong> Your iPhone reaches your Mac only over your own Tailscale network.</li>
   <li><strong>Click “Pair iPhone” in the Mac menu bar and scan the code with the iPhone app.</strong> The code is valid for 10 minutes and can be used only once. Pairing automatically configures the Mac’s address, username, host identity, and access permissions.</li>
 </ol>
-<p class="muted">Don’t have a Mac yet? Open the iPhone app and tap “Try the demo (no Mac needed)” on the welcome screen. No other device is needed.</p>
+
+<h2 id="en-price">Pricing</h2>
+<p>Kitestring for Mac is free. The iPhone app is free to download, and its demo is free: you can explore every screen without a Mac. Connecting to your own Mac requires Kitestring Pro: US$9.99 per year, or US$29.99 once for lifetime access. There’s no free trial. Prices vary by country; the App Store shows yours.</p>
+<p class="muted">A good order: set up your Mac first, wait until the first steps of the Setup Assistant are checked, then buy on your iPhone and scan to pair.</p>
 
 <h2>What It Does</h2>
 <ul class="grid">
@@ -161,6 +197,12 @@
 </ul>
 <p><a href="privacy/#en">Read the Privacy Policy</a></p>
 
+<h2 id="en-demo">Don’t Have a Mac Yet?</h2>
+<p>Open the iPhone app and tap the demo: you can explore every screen without connecting to anything and without paying.</p>
+
+<h2 id="en-voice">Kite Voice: Dictate with Your Mac</h2>
+<p>Another iPhone app from the same developer: a voice keyboard. What you say travels over Tailscale to your own Mac, is recognized there, and Claude Code on your Mac turns it into clean text. <a href="voice/#en">About Kite Voice and how to set it up</a> · <a href="https://apps.apple.com/app/kite-voice-ai-dictation/id6833265822">App Store</a></p>
+
 <h2>Requirements</h2>
 <table>
   <tr><th>Mac</th><td>macOS 14 or later; Remote Login turned on; Tailscale installed and signed in; at least one of Claude Code or Codex installed (not needed for terminal-only sessions). Keep your Mac powered on, connected to the network, and awake, with your account signed in. It can be locked, but it can’t be asleep.</td></tr>
@@ -175,17 +217,32 @@
 <p class="lead">Kitestring es un terminal SSH y un gestor de sesiones de agentes de programación para tu propio Mac, compatible con Claude Code y Codex. Como Blink Shell y Termius, es un cliente SSH: tu iPhone muestra la sesión y envía lo que escribes; los programas se ejecutan en tu Mac. La app nunca descarga ni ejecuta código en tu iPhone.</p>
 <div class="actions">
   <a class="button" href="download/#es">Descargar Kitestring para Mac (gratis)</a>
-  <!-- Marcador de la insignia del App Store: sustituir por la insignia oficial tras el lanzamiento (según sus normas de uso); enlace = KITE_APP_STORE_URL. -->
-  
+  <a class="button secondary" href="https://apps.apple.com/app/kitestring-remote/id6832438353">App para iPhone: descárgala en el App Store</a>
 </div>
 
-<h2>Tres pasos</h2>
+<h2 id="es-agent">La forma más rápida: déjaselo a Claude Code o Codex</h2>
+<p>En el Mac al que quieres conectarte, abre Claude Code (o Codex) y envíale esta línea. Se encarga de descargar, instalar y comprobarlo todo, y te avisa cuando te necesita.</p>
+<div class="copy"><pre><code id="prompt-es">Lee https://lijunhua941-boop.github.io/kitestring-site/agent-install.md y sigue sus pasos para instalar y configurar Kitestring para Mac en este Mac; después dime el resultado.</code></pre><button type="button" data-copy="prompt-es" data-done="Copiado">Copiar</button></div>
+<p>Lo único que te queda a ti:</p>
 <ol class="steps">
-  <li><strong>Descarga Kitestring para Mac en tu Mac.</strong> Su Asistente de configuración te guía por Tailscale, Sesión remota, la instalación del asistente del Mac, Claude Code o Codex y el acceso a las carpetas habituales. La app comprueba cada paso automáticamente y lo marca como completado.</li>
+  <li><strong>Instala dos apps en tu iPhone:</strong> Kitestring (<a href="https://apps.apple.com/app/kitestring-remote/id6832438353">App Store</a>) y Tailscale.</li>
+  <li><strong>Inicia sesión en Tailscale con la misma cuenta en tu Mac y en tu iPhone.</strong> Si Tailscale todavía no está en tu Mac, te recuerda instalarlo.</li>
+  <li><strong>Activa Sesión remota en tu Mac y aprueba las solicitudes de permisos de macOS.</strong> Te abre el panel de ajustes correspondiente.</li>
+  <li><strong>Escanea con la app del iPhone el código QR de la pantalla de tu Mac.</strong> El código es válido durante 10 minutos y solo se puede usar una vez, así que antes te pregunta si tu iPhone está listo.</li>
+</ol>
+
+<h2 id="es-manual">Configúralo tú mismo</h2>
+<ol class="steps">
+  <li><strong>Instala la app del Mac.</strong> Ejecuta este comando en Terminal en tu Mac, o descarga el DMG desde la <a href="download/#es">página de descarga</a>. El comando descarga en varias partes (varias veces más rápido con una conexión lenta, y continúa donde se quedó si lo ejecutas otra vez), comprueba la suma de verificación, la firma y la notarización, y después coloca la app en Aplicaciones y la abre.
+  <div class="copy"><pre><code id="cmd-es">curl -fsSL https://lijunhua941-boop.github.io/kitestring-site/install.sh | bash</code></pre><button type="button" data-copy="cmd-es" data-done="Copiado">Copiar</button></div>
+  El Asistente de configuración de la app te guía por Tailscale, Sesión remota, la instalación del asistente del Mac, Claude Code o Codex y el acceso a las carpetas habituales. Comprueba cada paso automáticamente y lo marca como completado.</li>
   <li><strong>Instala Tailscale en ambos dispositivos e inicia sesión con la misma cuenta.</strong> Tu iPhone se conecta a tu Mac solo a través de tu propia red de Tailscale.</li>
   <li><strong>Haz clic en «Vincular iPhone» en la barra de menús del Mac y escanea el código con la app del iPhone.</strong> El código es válido durante 10 minutos y solo se puede usar una vez. La vinculación configura automáticamente la dirección del Mac, el nombre de usuario, la identidad del host y los permisos de acceso.</li>
 </ol>
-<p class="muted">¿Todavía no tienes un Mac? Abre la app del iPhone y toca «Prueba la demostración (sin Mac)» en la pantalla de bienvenida. No necesitas ningún otro dispositivo.</p>
+
+<h2 id="es-price">Precio</h2>
+<p>Kitestring para Mac es gratis. La app del iPhone se descarga gratis y su demostración es gratuita: puedes explorar todas las pantallas sin un Mac. Para conectarte a tu propio Mac necesitas Kitestring Pro: 9,99 USD al año, o 29,99 USD una sola vez para acceso de por vida. No hay prueba gratuita. Los precios varían según el país; el App Store muestra el tuyo.</p>
+<p class="muted">Un buen orden: configura primero tu Mac, espera a que los primeros pasos del Asistente de configuración estén marcados y después compra en tu iPhone y escanea para vincular.</p>
 
 <h2>Qué hace</h2>
 <ul class="grid">
@@ -207,6 +264,12 @@
   <li>No es un entorno aislado (sandbox): Claude Code y Codex se ejecutan en tus sesiones con los permisos de tu cuenta de macOS. Te recomendamos activar el bloqueo con Face ID o código de la app.</li>
 </ul>
 <p><a href="privacy/#es">Lee la política de privacidad</a></p>
+
+<h2 id="es-demo">¿Todavía no tienes un Mac?</h2>
+<p>Abre la app del iPhone y toca la demostración: puedes explorar todas las pantallas sin conectarte a nada y sin pagar.</p>
+
+<h2 id="es-voice">Kite Voice: dicta con tu Mac</h2>
+<p>Otra app para iPhone del mismo desarrollador: un teclado de voz. Lo que dices viaja por Tailscale a tu propio Mac, se reconoce allí y Claude Code en tu Mac lo convierte en texto limpio. <a href="voice/#es">Qué es Kite Voice y cómo configurarlo</a> · <a href="https://apps.apple.com/app/kite-voice-ai-dictation/id6833265822">App Store</a></p>
 
 <h2>Requisitos</h2>
 <table>
@@ -230,5 +293,20 @@
     <p>Claude Code y Codex son productos de sus respectivos propietarios. Kitestring es una app independiente y no está afiliada a ellos.</p>
   </div>
 </div></footer>
+<script>
+/* Copy buttons: <button data-copy="ID"> copies the text of the element with that id; where the
+   clipboard is not available the text is selected instead. Nothing is stored or sent. */
+document.addEventListener("click", function (e) {
+  var b = e.target.closest ? e.target.closest("button[data-copy]") : null;
+  if (!b) return;
+  var el = document.getElementById(b.getAttribute("data-copy"));
+  if (!el) return;
+  var text = el.textContent, label = b.getAttribute("data-label") || b.textContent;
+  b.setAttribute("data-label", label);
+  function done() { b.textContent = b.getAttribute("data-done") || label; setTimeout(function () { b.textContent = label; }, 1600); }
+  function select() { var r = document.createRange(); r.selectNodeContents(el); var s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, select); else select();
+});
+</script>
 </body>
 </html>

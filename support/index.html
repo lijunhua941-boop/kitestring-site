@@ -79,7 +79,15 @@
 <nav class="pages"><a href="../#zh">首页</a><a href="../download/#zh">下载</a><a href="#zh">技术支持</a><a href="../privacy/#zh">隐私政策</a></nav>
 <h1>技术支持</h1>
 <p>找不到答案？写信到 <a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a>，附上 Mac 菜单栏「诊断」里复制的结果（不含会话内容）。</p>
-<p class="muted">目录：<a href="#zh-setup">装机卡住</a> · <a href="#zh-tailscale">Tailscale</a> · <a href="#zh-remote-login">远程登录</a> · <a href="#zh-pairing">配对失败</a> · <a href="#zh-folders">文件夹授权</a> · <a href="#zh-login">Claude Code 显示未登录</a> · <a href="#zh-awake">Mac 要保持唤醒</a> · <a href="#zh-no-sessions">没有会话</a> · <a href="#zh-no-devices">没有已配对的设备</a> · <a href="#zh-no-agents">没装 Claude Code / Codex</a> · <a href="#zh-lost">手机丢了</a> · <a href="#zh-uninstall">卸载</a> · <a href="#zh-feedback">反馈</a></p>
+<p class="muted">目录：<a href="#zh-start">从哪里开始</a> · <a href="#zh-setup">装机卡住</a> · <a href="#zh-tailscale">Tailscale</a> · <a href="#zh-remote-login">远程登录</a> · <a href="#zh-pairing">配对失败</a> · <a href="#zh-folders">文件夹授权</a> · <a href="#zh-login">Claude Code 显示未登录</a> · <a href="#zh-awake">Mac 要保持唤醒</a> · <a href="#zh-no-sessions">没有会话</a> · <a href="#zh-no-devices">没有已配对的设备</a> · <a href="#zh-no-agents">没装 Claude Code / Codex</a> · <a href="#zh-lost">手机丢了</a> · <a href="#zh-uninstall">卸载</a> · <a href="#zh-feedback">反馈</a></p>
+
+<h2 id="zh-start">从哪里开始？要付费吗？</h2>
+<ul>
+  <li><strong>最省事：</strong>在要连接的 Mac 上打开 Claude Code 或 Codex，把<a href="../download/#zh-install">下载页</a>上的那句话发给它。它负责下载、安装和检查，需要你动手时会告诉你。</li>
+  <li><strong>自己装：</strong>在「终端」里运行 <code>curl -fsSL https://lijunhua941-boop.github.io/kitestring-site/install.sh | bash</code>，或从下载页下载 DMG，然后按 App 的「设置向导」逐步完成。</li>
+  <li><strong>费用：</strong>Kitestring for Mac 免费；iPhone App 的演示模式免费。连接你自己的 Mac 需要 Kitestring Pro（按年订阅或一次买断，没有试用期，价格在 App 里显示）。建议先把 Mac 这边装好、「设置向导」前几步都打勾，再在 iPhone 上购买和扫码。</li>
+  <li><strong>下载很慢或总是中断：</strong>用上面的命令，它会分段下载并断点续传；中断了重新运行同一条命令即可。</li>
+</ul>
 
 <h2 id="zh-setup">装机卡在某一步怎么办？</h2>
 <p>Kitestring for Mac 的「设置向导」共六步（菜单栏「设置向导…」随时可再打开）。App 自动检查每一步，完成后标记为已完成。卡住时按对应的一步处理：</p>
@@ -106,6 +114,9 @@
 
 <h2 id="zh-pairing">配对失败怎么办？</h2>
 <ul>
+  <li>iPhone App 要求 Kitestring Pro：连接自己的 Mac 需要先购买或恢复购买。买完后二维码可能已经过期，回到 Mac 重新点「配对 iPhone」拿一个新的再扫。</li>
+  <li>Mac 提示「另一个配对正在进行」：同一时间只能有一个配对码。扫已经打开的那个二维码（可能在「预览」或终端窗口里），或者先把它关掉（终端里按 Control-C），再点「配对 iPhone」。</li>
+  <li>Kite Voice 提示「这不是 Kitestring 的配对二维码」：这是 Kite Voice 1.0.0 的问题，在 App Store 更新到 1.0.1 或更高版本后再扫。</li>
   <li>二维码 10 分钟内有效、只能用一次。过期或已用过，就在 Mac 菜单栏重新点「配对 iPhone」。</li>
   <li>配对链接里的 Mac 地址必须是 Tailscale 地址；iPhone 上的 Tailscale 没连接时会连不上，先在 iPhone 上打开 Tailscale。</li>
   <li>从 App 以外打开的配对链接，App 会先显示 Mac 名称、地址与用户名，你确认后才配对。</li>
@@ -154,7 +165,15 @@
 <nav class="pages"><a href="../#en">Home</a><a href="../download/#en">Download</a><a href="#en">Support</a><a href="../privacy/#en">Privacy</a></nav>
 <h1>Support</h1>
 <p>Can’t find an answer? Email <a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a> and include the results copied from “Diagnostics” in the Mac menu bar. They don’t include any session content.</p>
-<p class="muted">Contents: <a href="#en-setup">Setup Is Stuck</a> · <a href="#en-tailscale">Tailscale</a> · <a href="#en-remote-login">Remote Login</a> · <a href="#en-pairing">Pairing Fails</a> · <a href="#en-folders">Folder Access</a> · <a href="#en-login">Claude Code Says I’m Not Signed In</a> · <a href="#en-awake">Keep Your Mac Awake</a> · <a href="#en-no-sessions">No Sessions</a> · <a href="#en-no-devices">No Paired Devices</a> · <a href="#en-no-agents">No Claude Code or Codex</a> · <a href="#en-lost">Lost iPhone</a> · <a href="#en-uninstall">Uninstall</a> · <a href="#en-feedback">Feedback</a></p>
+<p class="muted">Contents: <a href="#en-start">Where to start</a> · <a href="#en-setup">Setup Is Stuck</a> · <a href="#en-tailscale">Tailscale</a> · <a href="#en-remote-login">Remote Login</a> · <a href="#en-pairing">Pairing Fails</a> · <a href="#en-folders">Folder Access</a> · <a href="#en-login">Claude Code Says I’m Not Signed In</a> · <a href="#en-awake">Keep Your Mac Awake</a> · <a href="#en-no-sessions">No Sessions</a> · <a href="#en-no-devices">No Paired Devices</a> · <a href="#en-no-agents">No Claude Code or Codex</a> · <a href="#en-lost">Lost iPhone</a> · <a href="#en-uninstall">Uninstall</a> · <a href="#en-feedback">Feedback</a></p>
+
+<h2 id="en-start">Where Do I Start, and What Does It Cost?</h2>
+<ul>
+  <li><strong>Easiest:</strong> on the Mac you want to reach, open Claude Code or Codex and send it the line on the <a href="../download/#en-install">download page</a>. It downloads, installs, and checks everything, and tells you when it needs you.</li>
+  <li><strong>By hand:</strong> run <code>curl -fsSL https://lijunhua941-boop.github.io/kitestring-site/install.sh | bash</code> in Terminal, or get the DMG from the download page, then follow the app’s Setup Assistant.</li>
+  <li><strong>Cost:</strong> Kitestring for Mac is free, and so is the iPhone app’s demo. Connecting to your own Mac requires Kitestring Pro (a yearly subscription or a one-time purchase; no free trial; the app shows the price). A good order: set up the Mac first, wait until the first steps of the Setup Assistant are checked, then buy on your iPhone and scan.</li>
+  <li><strong>Slow or interrupted download:</strong> use the command above. It downloads in parts and resumes; if it stops, run the same command again.</li>
+</ul>
 
 <h2 id="en-setup">What If Setup Gets Stuck on a Step?</h2>
 <p>The Setup Assistant in Kitestring for Mac has six steps. You can reopen it at any time by choosing “Setup Assistant…” in the menu bar. The app checks each step automatically and marks it complete. If a step is stuck:</p>
@@ -181,6 +200,9 @@
 
 <h2 id="en-pairing">What If Pairing Fails?</h2>
 <ul>
+  <li>The iPhone app asks for Kitestring Pro: connecting to your own Mac requires a purchase (or Restore Purchases) first. The code may have expired by the time you finish, so click “Pair iPhone” on the Mac again and scan the new one.</li>
+  <li>The Mac says another pairing is in progress: only one pairing code can be open at a time. Scan the code that’s already open (in Preview or a Terminal window), or close it first (press Control-C in Terminal), then click “Pair iPhone”.</li>
+  <li>Kite Voice says the code isn’t a Kitestring pairing code: that’s a problem in Kite Voice 1.0.0. Update to 1.0.1 or later in the App Store, then scan again.</li>
   <li>The code is valid for 10 minutes and can be used only once. If it has expired or was already used, click “Pair iPhone” in the Mac menu bar again.</li>
   <li>The Mac address in the pairing link must be a Tailscale address. If Tailscale isn’t connected on your iPhone, pairing can’t reach your Mac, so turn on Tailscale first.</li>
   <li>If you open a pairing link from outside the app, the app first shows the Mac’s name, address, and username, and pairs only after you confirm.</li>
@@ -229,7 +251,15 @@
 <nav class="pages"><a href="../#es">Inicio</a><a href="../download/#es">Descargar</a><a href="#es">Soporte</a><a href="../privacy/#es">Privacidad</a></nav>
 <h1>Soporte</h1>
 <p>¿No encuentras una respuesta? Escribe a <a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a> e incluye el resultado copiado de «Diagnóstico» en la barra de menús del Mac. No incluye contenido de las sesiones.</p>
-<p class="muted">Índice: <a href="#es-setup">La configuración no avanza</a> · <a href="#es-tailscale">Tailscale</a> · <a href="#es-remote-login">Sesión remota</a> · <a href="#es-pairing">Falla la vinculación</a> · <a href="#es-folders">Acceso a carpetas</a> · <a href="#es-login">Claude Code dice que no iniciaste sesión</a> · <a href="#es-awake">Mac activo</a> · <a href="#es-no-sessions">Sin sesiones</a> · <a href="#es-no-devices">Sin dispositivos vinculados</a> · <a href="#es-no-agents">Sin Claude Code ni Codex</a> · <a href="#es-lost">iPhone perdido</a> · <a href="#es-uninstall">Desinstalar</a> · <a href="#es-feedback">Comentarios</a></p>
+<p class="muted">Índice: <a href="#es-start">Por dónde empezar</a> · <a href="#es-setup">La configuración no avanza</a> · <a href="#es-tailscale">Tailscale</a> · <a href="#es-remote-login">Sesión remota</a> · <a href="#es-pairing">Falla la vinculación</a> · <a href="#es-folders">Acceso a carpetas</a> · <a href="#es-login">Claude Code dice que no iniciaste sesión</a> · <a href="#es-awake">Mac activo</a> · <a href="#es-no-sessions">Sin sesiones</a> · <a href="#es-no-devices">Sin dispositivos vinculados</a> · <a href="#es-no-agents">Sin Claude Code ni Codex</a> · <a href="#es-lost">iPhone perdido</a> · <a href="#es-uninstall">Desinstalar</a> · <a href="#es-feedback">Comentarios</a></p>
+
+<h2 id="es-start">¿Por dónde empiezo y cuánto cuesta?</h2>
+<ul>
+  <li><strong>Lo más fácil:</strong> en el Mac al que quieres conectarte, abre Claude Code o Codex y envíale la línea de la <a href="../download/#es-install">página de descarga</a>. Se encarga de descargar, instalar y comprobarlo todo, y te avisa cuando te necesita.</li>
+  <li><strong>A mano:</strong> ejecuta <code>curl -fsSL https://lijunhua941-boop.github.io/kitestring-site/install.sh | bash</code> en Terminal, o descarga el DMG desde la página de descarga, y sigue el Asistente de configuración de la app.</li>
+  <li><strong>Precio:</strong> Kitestring para Mac es gratis, y también la demostración de la app del iPhone. Para conectarte a tu propio Mac necesitas Kitestring Pro (suscripción anual o compra única; sin prueba gratuita; la app muestra el precio). Un buen orden: configura primero el Mac, espera a que los primeros pasos del Asistente de configuración estén marcados y después compra en tu iPhone y escanea.</li>
+  <li><strong>Descarga lenta o interrumpida:</strong> usa el comando de arriba. Descarga por partes y reanuda; si se corta, ejecuta el mismo comando otra vez.</li>
+</ul>
 
 <h2 id="es-setup">¿Qué hago si la configuración no avanza en un paso?</h2>
 <p>El Asistente de configuración de Kitestring para Mac tiene seis pasos. Puedes volver a abrirlo cuando quieras con «Asistente de configuración…» en la barra de menús. La app comprueba cada paso automáticamente y lo marca como completado. Si un paso no avanza:</p>
@@ -256,6 +286,9 @@
 
 <h2 id="es-pairing">¿Qué hago si falla la vinculación?</h2>
 <ul>
+  <li>La app del iPhone pide Kitestring Pro: para conectarte a tu propio Mac primero hay que comprar (o restaurar las compras). Puede que el código haya caducado cuando termines, así que vuelve a hacer clic en «Vincular iPhone» en el Mac y escanea el nuevo.</li>
+  <li>El Mac dice que hay otra vinculación en curso: solo puede haber un código de vinculación abierto a la vez. Escanea el código que ya está abierto (en Vista Previa o en una ventana de Terminal), o ciérralo primero (pulsa Control-C en Terminal) y después haz clic en «Vincular iPhone».</li>
+  <li>Kite Voice dice que el código no es un código de vinculación de Kitestring: es un problema de Kite Voice 1.0.0. Actualiza a la versión 1.0.1 o posterior en el App Store y vuelve a escanear.</li>
   <li>El código es válido durante 10 minutos y solo se puede usar una vez. Si caducó o ya se usó, vuelve a hacer clic en «Vincular iPhone» en la barra de menús del Mac.</li>
   <li>La dirección del Mac en el enlace de vinculación debe ser una dirección de Tailscale. Si Tailscale no está conectado en tu iPhone, la vinculación no puede llegar a tu Mac, así que primero activa Tailscale.</li>
   <li>Si abres un enlace de vinculación desde fuera de la app, la app primero muestra el nombre, la dirección y el nombre de usuario del Mac, y solo lo vincula cuando lo confirmas.</li>
