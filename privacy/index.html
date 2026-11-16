@@ -78,7 +78,7 @@
 <section class="lang" id="zh" lang="zh-Hans" data-l="zh">
 <nav class="pages"><a href="../#zh">首页</a><a href="../download/#zh">下载</a><a href="../support/#zh">技术支持</a><a href="#zh">隐私政策</a></nav>
 <h1>隐私政策</h1>
-<p class="muted">生效日期：2026-11-10<br>适用于：Kitestring iPhone App、Kitestring for Mac（及其安装在 Mac 上的助手程序）和本网站。<br>运营者：Junhua Li</p>
+<p class="muted">生效日期：2026-11-17<br>适用于：Kitestring iPhone App、Kitestring for Mac（及其安装在 Mac 上的助手程序）和本网站。<br>运营者：Junhua Li</p>
 
 <h2 id="zh-summary">1. 概要</h2>
 <p><strong>我们不收集你的任何数据。</strong>你不需要 Kitestring 账号，但需要你自己的 Tailscale 账号（由 Tailscale 管理）。我们不运营任何服务器，你的会话不会经过我们的服务器。App 里没有广告、统计或第三方追踪 SDK。</p>
@@ -94,7 +94,7 @@
 <h2 id="zh-voice">4. 语音输入</h2>
 <p>只在你点麦克风之后录音。录音的去向只有这几种：</p>
 <ul>
-  <li>你在 Kitestring for Mac 里打开了「本机听写」（默认关闭）时：录音，连同所在会话最近约 800 字的文字（作为识别提示），经第 2 条所说的连接发到这台 Mac，由它自己的识别引擎在本机转写，录音不保存。识别出的文字、你的词典和改正记录存在这台 Mac 上（见第 5 条），用来让以后的识别更准，不发给我们。这台 Mac 装了 Claude Code 时，识别出的文字再交给 Claude Code，用你自己的账户整理（润色）：这一步的文字按 Anthropic 的条款与隐私政策发给 Anthropic（见第 3 条）；没装就只识别。打开本机听写时，Mac 从 Hugging Face 下载识别模型（约 3.8 GB），Hugging Face 会看到这台 Mac 的网络地址；下载之后识别不需要联网。</li>
+  <li>你在 Kitestring for Mac 里打开了「本机听写」（默认关闭）时：录音，连同所在会话最近约 800 字的文字（作为识别提示），经第 2 条所说的连接发到这台 Mac，由它自己的识别引擎在本机转写，录音不保存。识别出的文字、你的词典和改正记录存在这台 Mac 上（见第 5 条），用来让以后的识别更准，不发给我们。这台 Mac 装了 Claude Code 或 Codex 时，识别出的文字再交给其中一个，用你自己的账户整理（润色）：优先用 Claude Code；没有 Claude Code 或它没登录、而 Codex 已登录时用 Codex。这一步的文字按所用程序提供方（Anthropic 或 OpenAI）的条款与隐私政策发给该提供方（见第 3 条）；两个都没有就只识别。打开本机听写时，Mac 从 Hugging Face 下载识别模型（约 3.8 GB），Hugging Face 会看到这台 Mac 的网络地址；下载之后识别不需要联网。</li>
   <li>你在自己的 Mac 上开启了别的听写服务（默认关闭）时：录音，连同所在会话最近约 800 字的文字（作为识别提示），经 Tailscale 发到你自己配置的听写服务。Mac 助手不把音频或文字写入磁盘，也不记日志。</li>
   <li>否则由这台 iPhone 自己的语音识别转写：设备支持该语言的本机识别时，只在本机处理；不支持时，iOS 系统的语音识别服务可能把音频交给系统提供方处理，受其条款约束。</li>
 </ul>
@@ -139,7 +139,7 @@
 <section class="lang" id="en" lang="en" data-l="en">
 <nav class="pages"><a href="../#en">Home</a><a href="../download/#en">Download</a><a href="../support/#en">Support</a><a href="#en">Privacy</a></nav>
 <h1>Privacy Policy</h1>
-<p class="muted">Effective date: 2026-11-10<br>Applies to: the Kitestring iPhone app, Kitestring for Mac (and the helper it installs on your Mac), and this website.<br>Operator: Junhua Li</p>
+<p class="muted">Effective date: 2026-11-17<br>Applies to: the Kitestring iPhone app, Kitestring for Mac (and the helper it installs on your Mac), and this website.<br>Operator: Junhua Li</p>
 
 <h2 id="en-summary">1. Summary</h2>
 <p><strong>We don’t collect any data about you.</strong> You don’t need a Kitestring account. You do need your own Tailscale account, which Tailscale manages. We don’t operate any servers, so your sessions never pass through ours. The app contains no advertising, analytics, or third-party tracking SDKs.</p>
@@ -155,7 +155,7 @@
 <h2 id="en-voice">4. Voice Input</h2>
 <p>Recording starts only after you tap the microphone. A recording goes to one of these places:</p>
 <ul>
-  <li>If you’ve turned on Local Dictation in Kitestring for Mac (off by default), the recording is sent over the connection described in section 2 to that Mac, together with about the last 800 characters of the session’s text as a recognition hint, and is transcribed there by the Mac’s own speech engines. The recording isn’t kept. The recognized text, your dictionary, and your corrections are stored on that Mac (see section 5) to make later recognition more accurate, and are not sent to us. If Claude Code is installed on that Mac, the recognized text is then handed to Claude Code to be polished with your own account: that text is sent to Anthropic under Anthropic’s terms and privacy policy (see section 3); without Claude Code, recognition is all that happens. When you turn on Local Dictation, the Mac downloads the speech models (about 3.8 GB) from Hugging Face, which sees the Mac’s network address; after the download, recognition doesn’t need the internet.</li>
+  <li>If you’ve turned on Local Dictation in Kitestring for Mac (off by default), the recording is sent over the connection described in section 2 to that Mac, together with about the last 800 characters of the session’s text as a recognition hint, and is transcribed there by the Mac’s own speech engines. The recording isn’t kept. The recognized text, your dictionary, and your corrections are stored on that Mac (see section 5) to make later recognition more accurate, and are not sent to us. If Claude Code or Codex is installed on that Mac, the recognized text is then handed to one of them to be polished with your own account: Claude Code first; Codex when Claude Code is not there or not signed in and Codex is signed in. That text is sent to the provider of the program used (Anthropic or OpenAI) under that provider’s terms and privacy policy (see section 3); with neither, recognition is all that happens. When you turn on Local Dictation, the Mac downloads the speech models (about 3.8 GB) from Hugging Face, which sees the Mac’s network address; after the download, recognition doesn’t need the internet.</li>
   <li>If you’ve turned on another dictation service on your own Mac (off by default), the recording is sent over Tailscale to the dictation service you configured, together with about the last 800 characters of the session’s text as a recognition hint. The Mac helper doesn’t write the audio or text to disk and doesn’t log it.</li>
   <li>Otherwise, your iPhone’s own speech recognition transcribes it. If the device supports on-device recognition for the language, the audio is processed only on the device. If it doesn’t, the iOS speech recognition service may send the audio to the system provider for processing under its terms.</li>
 </ul>
@@ -200,7 +200,7 @@
 <section class="lang" id="es" lang="es" data-l="es">
 <nav class="pages"><a href="../#es">Inicio</a><a href="../download/#es">Descargar</a><a href="../support/#es">Soporte</a><a href="#es">Privacidad</a></nav>
 <h1>Política de privacidad</h1>
-<p class="muted">Fecha de entrada en vigor: 2026-11-10<br>Se aplica a: la app Kitestring para iPhone, Kitestring para Mac (y el asistente que instala en tu Mac) y este sitio web.<br>Responsable: Junhua Li</p>
+<p class="muted">Fecha de entrada en vigor: 2026-11-17<br>Se aplica a: la app Kitestring para iPhone, Kitestring para Mac (y el asistente que instala en tu Mac) y este sitio web.<br>Responsable: Junhua Li</p>
 
 <h2 id="es-summary">1. Resumen</h2>
 <p><strong>No recopilamos ningún dato sobre ti.</strong> No necesitas una cuenta de Kitestring, pero sí tu propia cuenta de Tailscale, que gestiona Tailscale. No operamos ningún servidor, así que tus sesiones nunca pasan por servidores nuestros. La app no contiene publicidad, analítica ni SDK de seguimiento de terceros.</p>
@@ -216,7 +216,7 @@
 <h2 id="es-voice">4. Entrada de voz</h2>
 <p>Solo se graba después de que tocas el micrófono. La grabación va a uno de estos lugares:</p>
 <ul>
-  <li>Si activaste el dictado local en Kitestring for Mac (desactivado de forma predeterminada), la grabación se envía a ese Mac por la conexión descrita en la sección 2, junto con unos 800 caracteres del texto reciente de la sesión como pista para el reconocimiento, y allí la transcriben los motores de reconocimiento del propio Mac. La grabación no se guarda. El texto reconocido, tu diccionario y tus correcciones se guardan en ese Mac (ver la sección 5) para que el reconocimiento posterior sea más preciso, y no se nos envían. Si ese Mac tiene Claude Code instalado, el texto reconocido se le pasa a Claude Code para pulirlo con tu propia cuenta: ese texto se envía a Anthropic según sus términos y su política de privacidad (ver la sección 3); sin Claude Code solo hay reconocimiento. Al activar el dictado local, el Mac descarga los modelos de reconocimiento (unos 3,8 GB) de Hugging Face, que ve la dirección de red del Mac; después de la descarga, el reconocimiento no necesita internet.</li>
+  <li>Si activaste el dictado local en Kitestring for Mac (desactivado de forma predeterminada), la grabación se envía a ese Mac por la conexión descrita en la sección 2, junto con unos 800 caracteres del texto reciente de la sesión como pista para el reconocimiento, y allí la transcriben los motores de reconocimiento del propio Mac. La grabación no se guarda. El texto reconocido, tu diccionario y tus correcciones se guardan en ese Mac (ver la sección 5) para que el reconocimiento posterior sea más preciso, y no se nos envían. Si ese Mac tiene Claude Code o Codex instalado, el texto reconocido se le pasa a uno de los dos para pulirlo con tu propia cuenta: primero Claude Code; Codex cuando Claude Code no está o no tiene la sesión iniciada y Codex sí. Ese texto se envía al proveedor del programa usado (Anthropic u OpenAI) según sus términos y su política de privacidad (ver la sección 3); sin ninguno de los dos solo hay reconocimiento. Al activar el dictado local, el Mac descarga los modelos de reconocimiento (unos 3,8 GB) de Hugging Face, que ve la dirección de red del Mac; después de la descarga, el reconocimiento no necesita internet.</li>
   <li>Si activaste otro servicio de dictado en tu propio Mac (desactivado de forma predeterminada), la grabación se envía por Tailscale al servicio de dictado que configuraste, junto con unos 800 caracteres del texto reciente de la sesión como pista para el reconocimiento. El asistente del Mac no guarda el audio ni el texto en el disco ni los registra.</li>
   <li>Si no, el reconocimiento de voz de tu iPhone la transcribe. Si el dispositivo admite el reconocimiento local para ese idioma, el audio se procesa solo en el dispositivo. Si no lo admite, el servicio de reconocimiento de voz de iOS puede enviar el audio al proveedor del sistema para procesarlo según sus términos.</li>
 </ul>

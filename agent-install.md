@@ -250,8 +250,8 @@ df -g "$HOME" | awk 'NR==2 { print $4 " GB free" }'        # about 6 GB free is 
   (「本机听写…」, «Dictado local…») › **Turn On Local Dictation** (「打开本机听写」, «Activar
   dictado local»). It downloads about 3.8 GB of recognition models and can take a while; the
   window shows the progress and says when Local Dictation is on.
-- AI polish uses Claude Code signed in on this Mac; without it Kite Voice still gets the
-  recognised text.
+- AI polish uses Claude Code or Codex signed in on this Mac (Claude Code first); with neither, Kite
+  Voice still gets the recognised text.
 - Pairing Kite Voice is step 5 again with its own code (one QR code per app): in Kite Voice, tap
   "配对 Mac" and scan. Kite Voice 1.0.0 cannot read this Mac's code; it needs **Kite Voice 1.0.1
   or later** (update it in the App Store first).

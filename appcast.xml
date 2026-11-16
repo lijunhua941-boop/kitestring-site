@@ -24,6 +24,20 @@
     <language>en</language>
     <item>
       <title>Version 0.16.5</title>
+      <pubDate>Mon, 16 Nov 2026 05:26:06 +0000</pubDate>
+      <!-- CFBundleVersion (build number) decides ordering; CFBundleShortVersionString is what users see. -->
+      <sparkle:version>14</sparkle:version>
+      <sparkle:shortVersionString>0.16.5</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <sparkle:releaseNotesLink>https://lijunhua941-boop.github.io/kitestring-site/download/</sparkle:releaseNotesLink>
+      <enclosure
+        url="https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.5-14/Kitestring-0.16.5-14.dmg"
+        length="56455521"
+        type="application/octet-stream"
+        sparkle:edSignature="keRDs9bn5nUu7P35iZaBHCrUkTqe79qa+nGN1g4mHCmXK5XowKn0wfD6mEaI3FvNkJfiRxoSs8sx/UGchrV5Dg=="/>
+    </item>
+    <item>
+      <title>Version 0.16.5</title>
       <pubDate>Fri, 13 Nov 2026 02:57:10 +0000</pubDate>
       <!-- CFBundleVersion (build number) decides ordering; CFBundleShortVersionString is what users see. -->
       <sparkle:version>13</sparkle:version>
