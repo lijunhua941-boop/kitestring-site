@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-zh="Kitepost：AI 邮件助理，你确认后才发出" data-es="Kitepost: asistente de correo con IA" data-fr="Kitepost : assistant e-mail IA privé" data-de="Kitepost: privater KI-E-Mail-Assistent">Kitepost: Private AI Email Assistant</title>
+<meta name="description" data-zh="Kitepost 的引擎运行在你自己的 Mac 上：把邮件分成「要回复」和「要知道」，写简报，用你自己的 Claude Code 或 Codex 起草回信；你在 iPhone 上确认后才发出。" data-es="El motor de Kitepost funciona en tu propio Mac: ordena el correo en Por responder y Para saber, prepara resúmenes y redacta respuestas con tu propio Claude Code o Codex; nada se envía hasta que lo confirmas en el iPhone." data-fr="Le moteur de Kitepost tourne sur votre propre Mac : il trie vos e-mails en « À répondre » et « À savoir », prépare une synthèse et rédige les réponses avec votre propre Claude Code ou Codex ; rien ne part avant votre validation sur l'iPhone." data-de="Die Engine von Kitepost läuft auf deinem eigenen Mac: Sie sortiert E-Mails in „Zu beantworten“ und „Zur Info“, schreibt Briefings und entwirft Antworten mit deinem eigenen Claude Code oder Codex; gesendet wird erst, wenn du auf dem iPhone bestätigst." content="Kitepost's engine runs on your own Mac: it sorts mail into To Reply and To Know, writes briefings and drafts replies with your own Claude Code or Codex. Nothing is sent until you confirm on the iPhone.">
+<link rel="canonical" href="https://lijunhua941-boop.github.io/kitestring-site/kitepost/">
+<link rel="stylesheet" href="site.css">
+<script>
+/* Language (the Kitepost pages' copy of the site script; site/README.md「三语」, five languages here).
+   Order: the fragment #zh / #en / #es / #fr / #de or an anchor inside a section (#fr-pairing; #zh-Hans,
+   #es-419, #de-CH work too), then ?lang=, then the browser's preferred languages, then English. A
+   language this page has no section for falls back to English. Sets <html lang> and data-lang (site.css
+   then shows only that language), the page title and description, and makes every link to another page
+   of the site carry the language (pages that only have zh/en/es show English for #fr/#de). Nothing is stored. Without JavaScript site.css reads the fragment itself. */
+(function () {
+  var TAGS = { zh: "zh-Hans", en: "en", es: "es", fr: "fr", de: "de" }, root = document.documentElement, lang = "en";
+  function norm(s) { s = String(s || "").toLowerCase().split(/[-_;]/)[0]; return TAGS.hasOwnProperty(s) ? s : ""; }
+  function fromHash() { try { return norm(decodeURIComponent(location.hash.slice(1))); } catch (e) { return ""; } }
+  function fromQuery() { var m = /[?&]lang=([^&#]*)/.exec(location.search); return m ? norm(m[1]) : ""; }
+  function fromBrowser() {
+    var list = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language];
+    for (var i = 0; i < list.length; i++) { var l = norm(list[i]); if (l) return l; }
+    return "";
+  }
+  function relink() {
+    var links = document.querySelectorAll("a[href]");
+    for (var i = 0; i < links.length; i++) {
+      var a = links[i], href = a.getAttribute("data-href") || a.getAttribute("href");
+      var cut = href.indexOf("#"), path = cut < 0 ? href : href.slice(0, cut), frag = cut < 0 ? "" : href.slice(cut + 1);
+      if (cut === 0) {                                   // same-page link: mark the active language switch
+        if (a.parentNode && a.parentNode.className === "langs") {
+          if (frag === lang) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current");
+        }
+        continue;
+      }
+      // Only the site's own pages: relative ("./", "../", "support/", "../privacy/"), with no fragment
+      // or a bare language fragment. mailto:, https:, files and other anchors stay.
+      if (/^([a-z][a-z0-9+.-]*:|\/\/)/i.test(href) || !/\/$/.test(path) || (frag && !TAGS.hasOwnProperty(frag))) continue;
+      a.setAttribute("data-href", href);
+      a.setAttribute("href", path + "#" + lang);
+    }
+  }
+  function apply() {
+    lang = fromHash() || fromQuery() || fromBrowser() || "en";
+    // Once the page is parsed: a language without its own section on this page shows English.
+    if (document.readyState !== "loading" && !document.querySelector('[data-l="' + lang + '"]')) lang = "en";
+    root.setAttribute("data-lang", lang);
+    root.setAttribute("lang", TAGS[lang]);
+    var t = document.querySelector("title");
+    if (t) {
+      if (!t.hasAttribute("data-en")) t.setAttribute("data-en", t.textContent);
+      document.title = t.getAttribute("data-" + lang) || t.getAttribute("data-en");
+    }
+    // The description (and any og:/twitter: title or description) the same way: data-zh / data-es /
+    // data-fr / data-de beside the English content, which stays in the page for readers without JavaScript.
+    var metas = document.querySelectorAll('meta[name="description"], meta[property^="og:"], meta[name^="twitter:"]');
+    for (var j = 0; j < metas.length; j++) {
+      var m = metas[j];
+      if (!m.hasAttribute("data-zh") && !m.hasAttribute("data-es") && !m.hasAttribute("data-fr") && !m.hasAttribute("data-de")) continue;
+      if (!m.hasAttribute("data-en")) m.setAttribute("data-en", m.getAttribute("content"));
+      m.setAttribute("content", m.getAttribute("data-" + lang) || m.getAttribute("data-en"));
+    }
+    if (document.readyState !== "loading") relink();
+  }
+  apply();
+  document.addEventListener("DOMContentLoaded", apply);
+  window.addEventListener("hashchange", apply);
+})();
+</script>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="./">Kitepost</a>
+  <span class="langs"><a href="#zh" hreflang="zh-Hans" lang="zh-Hans">中文</a><a href="#en" hreflang="en" lang="en">English</a><a href="#es" hreflang="es" lang="es">Español</a><a href="#fr" hreflang="fr" lang="fr">Français</a><a href="#de" hreflang="de" lang="de">Deutsch</a></span>
+</div></header>
+<main class="wrap">
+
+<!-- ===== 简体中文（主稿） ===== -->
+<section class="lang" id="zh" lang="zh-Hans" data-l="zh">
+<nav class="pages"><a href="#zh">Kitepost</a><a href="#zh-download">下载 Mac App</a><a href="support/">技术支持</a><a href="privacy/">隐私政策</a></nav>
+<h1>Kitepost：AI 邮件助理，你确认后才发出</h1>
+<p class="lead">Kitepost 的引擎运行在你自己的 Mac 上。Mac 替你盯着邮箱，把要回复的和只需知道的分开，再用你自己的 Claude Code 或 Codex 起草回信。iPhone App 用来看、拿主意和确认：你不点头，什么都不会发出去。</p>
+<div class="actions">
+  <a class="button" href="https://apps.apple.com/app/id6836148522">在 App Store 下载 Kitepost</a>
+  <a class="button secondary" href="#zh-download">下载 Kitepost for Mac（免费）</a>
+</div>
+<p class="muted">身边没有 Mac？在 iPhone App 首屏点「试用演示（无需 Mac）」，用示例邮件体验全部界面。演示不连 Mac、不连邮箱，什么也不发。</p>
+
+<h2 id="zh-features">你可以</h2>
+<ul class="grid">
+  <li><strong>简报</strong><br>今天进来了什么、什么最要紧，一页看完。</li>
+  <li><strong>要回复 / 要知道</strong><br>邮件替你分好类，每封附解读：谁在问、要什么、什么时候要。</li>
+  <li><strong>处理台</strong><br>先商量怎么回，拿到草稿，再核对确认包（收件人、抄送、主题、完整正文），确认后才发送。</li>
+  <li><strong>完整邮箱</strong><br>收件箱、已发送、草稿、星标、归档、全部邮件、垃圾邮件、废纸篓；写信、回复、回复所有人、转发，支持抄送、密送、附件和草稿。</li>
+  <li><strong>文档</strong><br>按关键词、发件人、日期或类型搜索全部邮件的附件，预览后放进新邮件发出。</li>
+  <li><strong>关注板</strong><br>期限、你答应过的事、在等对方回的线程；对方迟迟没回，可以催一下。</li>
+  <li><strong>日历与提醒事项</strong><br>一键把期限或日程加入日历或提醒事项。</li>
+  <li><strong>离线也能看</strong><br>最近的邮件在 iPhone 上留一份加密副本，新邮件每天预先取好，打开就有。</li>
+  <li><strong>多个邮箱</strong><br>一个 App 管多个邮箱。</li>
+</ul>
+
+<h2 id="zh-privacy">邮件始终是你的</h2>
+<ul>
+  <li>没有 Kitepost 服务器，不用注册。App 不收集任何数据，没有统计、广告和崩溃上报。</li>
+  <li>邮箱在 Mac 上用标准 IMAP / SMTP 连接你自己的邮箱服务商：Gmail、iCloud、Yahoo 用应用专用密码，Outlook / Hotmail 用微软授权登录，QQ、163 用授权码，其他邮箱只要支持 IMAP 也行。</li>
+  <li>密码只存在 Mac 的钥匙串里。iPhone 从不持有邮箱密码或 AI 凭据。</li>
+  <li>iPhone 只和你自己的 Mac 通信：经你自己的 Tailscale 网络走 SSH，扫 Mac 上的二维码完成配对。</li>
+  <li>iPhone 上的副本加密保存、不进备份、最多留 30 天，可以限制大小、一键清除或关闭。</li>
+  <li>AI 是你 Mac 上自己的 Claude Code 或 Codex，用你自己的订阅，遵守它们各自的条款；第一次用 AI 前 App 会先征得你的同意。Kitepost 本身从不把你的邮件发给任何 AI 服务或任何人。</li>
+</ul>
+<p><a href="privacy/">阅读完整的隐私政策</a></p>
+
+<h2 id="zh-start">上手</h2>
+<ol class="steps">
+  <li><strong>在 Mac 上装 Kitepost for Mac（免费，<a href="#zh-download">见下文</a>）</strong>，在它的设置里添加你的邮箱。各家邮箱怎么接入见<a href="support/">技术支持</a>。</li>
+  <li><strong>Mac 和 iPhone 都装 Tailscale</strong>，登录同一个账号。</li>
+  <li><strong>在 Mac 上装好并登录 Claude Code 或 Codex。</strong></li>
+  <li><strong>配对。</strong>在 iPhone App 首屏点配对；连接自己的 Mac 需要 Kitepost Pro（新订阅者可免费试用 2 周）。在 Mac 菜单栏点 Kitepost ›「配对新设备」，用 iPhone 扫出现的二维码。二维码 30 天内有效，只能用一次。</li>
+</ol>
+
+<h2 id="zh-price">价格</h2>
+<p>App 和演示模式免费。连接自己的 Mac 需要 Kitepost Pro：每年 US$9.99（自动续期），新订阅者可免费试用 2 周；或 US$29.99 一次性买断，永久使用。各地区价格可能不同，以 App Store 显示的当地价格为准。Kitepost for Mac 免费。AI 用的是你自己的 Claude 或 ChatGPT（Codex）订阅。</p>
+
+<h2 id="zh-download">下载 Kitepost for Mac</h2>
+<p>免费。Mac 上的引擎收信、整理、起草，iPhone App 连到它。</p>
+<div class="actions">
+  <a class="button" href="https://github.com/lijunhua941-boop/kitestring-site/releases/download/kitepost-1.23.0/Kitepost-1.23.0.dmg">下载 Kitepost for Mac（DMG）</a>
+</div>
+<table>
+  <tr><th>Mac</th><td>macOS 14 或更高版本</td></tr>
+  <tr><th>网络</th><td>Mac 和 iPhone 都装 Tailscale，登录同一个账号</td></tr>
+  <tr><th>AI</th><td>Mac 上装好并登录 Claude Code 或 Codex</td></tr>
+  <tr><th>iPhone</th><td>iOS 17 或更高版本，<a href="https://apps.apple.com/app/id6836148522">在 App Store 下载 Kitepost</a></td></tr>
+</table>
+<p class="muted">打开 DMG，把 Kitepost 拖进「应用程序」文件夹，然后打开它，按设置添加邮箱。Mac 要开着并联网，iPhone 才能收到新邮件；已经在手机副本里的邮件没网也能看。</p>
+</section>
+
+<!-- ===== English ===== -->
+<section class="lang" id="en" lang="en" data-l="en">
+<nav class="pages"><a href="#en">Kitepost</a><a href="#en-download">Download the Mac App</a><a href="support/">Support</a><a href="privacy/">Privacy</a></nav>
+<h1>Kitepost: Private AI Email Assistant</h1>
+<p class="lead">Kitepost’s engine runs on your own Mac. The Mac watches your mailboxes, separates what needs an answer from what you only need to know, and drafts replies with your own Claude Code or Codex. The iPhone app is where you read, decide, and confirm: nothing is sent until you approve it.</p>
+<div class="actions">
+  <a class="button" href="https://apps.apple.com/app/id6836148522">Download Kitepost on the App Store</a>
+  <a class="button secondary" href="#en-download">Download Kitepost for Mac (Free)</a>
+</div>
+<p class="muted">No Mac nearby? Tap “Try the demo (no Mac needed)” on the iPhone app’s first screen and explore every screen with sample mail. The demo never connects to a Mac or a mail server and sends nothing.</p>
+
+<h2 id="en-features">What You Can Do</h2>
+<ul class="grid">
+  <li><strong>Briefing</strong><br>A short summary of what came in and what matters today.</li>
+  <li><strong>To Reply and To Know</strong><br>Your mail sorted for you, with an Insight on each message: who is asking, what they want, by when.</li>
+  <li><strong>Reply Desk</strong><br>Talk the reply through, get a draft, check the confirmation pack with To, Cc, subject, and the full body, then send.</li>
+  <li><strong>Your full mailbox</strong><br>Inbox, Sent, Drafts, Starred, Archive, All Mail, Spam, and Trash. Write, reply, reply all, and forward, with Cc, Bcc, attachments, and saved drafts.</li>
+  <li><strong>Documents</strong><br>Search the attachments of all your mail by keyword, sender, date, or type, preview them, and send them in a new email.</li>
+  <li><strong>Board</strong><br>Deadlines, things you promised, and threads waiting on a reply, with a Nudge when someone hasn’t answered.</li>
+  <li><strong>Calendar and Reminders</strong><br>Add a deadline or an event in one tap.</li>
+  <li><strong>Read offline</strong><br>An encrypted copy of your recent mail stays on the iPhone, and new mail is preloaded every day, so it opens at once.</li>
+  <li><strong>Several mailboxes</strong><br>All in one app.</li>
+</ul>
+
+<h2 id="en-privacy">Your Mail Stays Yours</h2>
+<ul>
+  <li>No Kitepost server and no sign-up. The app collects no data and has no analytics, ads, or crash reporting.</li>
+  <li>Mailboxes connect on the Mac to your own provider over standard IMAP and SMTP: Gmail, iCloud, and Yahoo with an app password, Outlook and Hotmail with Microsoft sign-in, QQ and 163 with an authorization code, or any other IMAP mailbox.</li>
+  <li>Passwords stay in your Mac’s Keychain. The iPhone never holds mail passwords or AI credentials.</li>
+  <li>The iPhone talks only to your own Mac, over SSH through your own Tailscale network. Pairing is a QR code shown on the Mac.</li>
+  <li>The copy on the iPhone is encrypted, left out of backups, and kept for up to 30 days. You can limit it, clear it, or turn it off.</li>
+  <li>The AI is your own Claude Code or Codex on your Mac, under your own subscription and their terms; the app asks for your consent before the AI is first used. Kitepost itself never sends your mail to any AI service or to anyone else.</li>
+</ul>
+<p><a href="privacy/">Read the full privacy policy</a></p>
+
+<h2 id="en-start">Get Started</h2>
+<ol class="steps">
+  <li><strong>Install Kitepost for Mac (free, <a href="#en-download">see below</a>)</strong> and add your mailbox in its setup. How to connect each provider is on the <a href="support/">Support</a> page.</li>
+  <li><strong>Install Tailscale on the Mac and the iPhone</strong>, signed in to the same account.</li>
+  <li><strong>Install Claude Code or Codex on the Mac and sign in.</strong></li>
+  <li><strong>Pair.</strong> Tap the pairing button on the iPhone app’s first screen; connecting your own Mac requires Kitepost Pro (2-week free trial for new subscribers). On the Mac, click Kitepost in the menu bar › “Pair New Device” and scan the QR code with the iPhone. The code is valid for 30 days and works only once.</li>
+</ol>
+
+<h2 id="en-price">Pricing</h2>
+<p>The app and demo mode are free. Connecting your own Mac requires Kitepost Pro: US$9.99 per year (auto-renewing) with a 2-week free trial for new subscribers, or US$29.99 for lifetime access (one-time purchase). Prices may vary by country; the App Store shows your local price. Kitepost for Mac is free. The AI runs on your own Claude or ChatGPT (Codex) subscription.</p>
+
+<h2 id="en-download">Download Kitepost for Mac</h2>
+<p>Free. The engine on your Mac fetches, sorts, and drafts; the iPhone app connects to it.</p>
+<div class="actions">
+  <a class="button" href="https://github.com/lijunhua941-boop/kitestring-site/releases/download/kitepost-1.23.0/Kitepost-1.23.0.dmg">Download Kitepost for Mac (DMG)</a>
+</div>
+<table>
+  <tr><th>Mac</th><td>macOS 14 or later</td></tr>
+  <tr><th>Network</th><td>Tailscale on the Mac and the iPhone, signed in to the same account</td></tr>
+  <tr><th>AI</th><td>Claude Code or Codex installed and signed in on the Mac</td></tr>
+  <tr><th>iPhone</th><td>iOS 17 or later; <a href="https://apps.apple.com/app/id6836148522">get Kitepost on the App Store</a></td></tr>
+</table>
+<p class="muted">Open the DMG, drag Kitepost to the Applications folder, open it, and add your mailbox in its setup. The Mac must be on and connected for the iPhone to get new mail; mail already in the copy on the iPhone stays readable offline.</p>
+</section>
+
+<!-- ===== Español ===== -->
+<section class="lang" id="es" lang="es" data-l="es">
+<nav class="pages"><a href="#es">Kitepost</a><a href="#es-download">Descargar la app del Mac</a><a href="support/">Soporte</a><a href="privacy/">Privacidad</a></nav>
+<h1>Kitepost: asistente de correo con IA</h1>
+<p class="lead">El motor de Kitepost funciona en tu propio Mac. El Mac vigila tus buzones, separa lo que necesita respuesta de lo que solo debes saber y redacta borradores con tu propio Claude Code o Codex. En la app del iPhone lees, decides y confirmas: no se envía nada hasta que tú lo apruebas.</p>
+<div class="actions">
+  <a class="button" href="https://apps.apple.com/app/id6836148522">Descargar Kitepost en el App Store</a>
+  <a class="button secondary" href="#es-download">Descargar Kitepost for Mac (gratis)</a>
+</div>
+<p class="muted">¿No tienes un Mac a mano? Toca «Prueba la demostración (sin Mac)» en la primera pantalla de la app del iPhone y recorre todas las pantallas con correo de ejemplo. La demostración no se conecta a ningún Mac ni servidor de correo y no envía nada.</p>
+
+<h2 id="es-features">Qué puedes hacer</h2>
+<ul class="grid">
+  <li><strong>Resumen</strong><br>Lo que ha llegado y lo que importa hoy, en pocas líneas.</li>
+  <li><strong>Por responder y Para saber</strong><br>Tu correo ya clasificado, con un análisis de cada mensaje: quién pregunta, qué quiere y para cuándo.</li>
+  <li><strong>Mesa de respuestas</strong><br>Comenta cómo responder, recibe un borrador, revisa el paquete de confirmación con Para, Cc, asunto y cuerpo completo, y envía.</li>
+  <li><strong>Tu buzón completo</strong><br>Recibidos, Enviados, Borradores, Destacados, Archivo, Todos, Spam y Papelera. Escribe, responde, responde a todos y reenvía, con Cc, Cco, adjuntos y borradores.</li>
+  <li><strong>Documentos</strong><br>Busca los adjuntos de todo tu correo por palabra clave, remitente, fecha o tipo, previsualízalos y envíalos en un correo nuevo.</li>
+  <li><strong>Tablero</strong><br>Plazos, lo que prometiste y conversaciones esperando respuesta, con la opción Recordar.</li>
+  <li><strong>Calendario y Recordatorios</strong><br>Añade un plazo o un evento con un toque.</li>
+  <li><strong>Lee sin conexión</strong><br>Una copia cifrada del correo reciente se queda en el iPhone y el correo nuevo se descarga cada día, así se abre al instante.</li>
+  <li><strong>Varios buzones</strong><br>En una sola app.</li>
+</ul>
+
+<h2 id="es-privacy">Tu correo sigue siendo tuyo</h2>
+<ul>
+  <li>Sin servidor de Kitepost y sin registro. La app no recopila ningún dato y no tiene analítica, publicidad ni informes de fallos.</li>
+  <li>Los buzones se conectan en el Mac con tu propio proveedor por IMAP y SMTP estándar: Gmail, iCloud y Yahoo con una contraseña de aplicación, Outlook y Hotmail con el inicio de sesión de Microsoft, QQ y 163 con un código de autorización, o cualquier otro buzón IMAP.</li>
+  <li>Las contraseñas se quedan en el llavero de tu Mac. El iPhone nunca guarda contraseñas de correo ni credenciales de IA.</li>
+  <li>El iPhone solo se comunica con tu propio Mac, por SSH a través de tu propia red Tailscale. Se vincula con un código QR que muestra el Mac.</li>
+  <li>La copia en el iPhone está cifrada, no entra en las copias de seguridad y se guarda como máximo 30 días. Puedes limitarla, borrarla o desactivarla.</li>
+  <li>La IA es tu propio Claude Code o Codex en tu Mac, con tu propia suscripción y sus propias condiciones; la app te pide permiso antes de usar la IA por primera vez. Kitepost nunca envía tu correo a ningún servicio de IA ni a nadie.</li>
+</ul>
+<p><a href="privacy/">Lee la política de privacidad completa</a></p>
+
+<h2 id="es-start">Primeros pasos</h2>
+<ol class="steps">
+  <li><strong>Instala Kitepost for Mac (gratis, <a href="#es-download">ver abajo</a>)</strong> y añade tu buzón en su configuración. Cómo conectar cada proveedor está en <a href="support/">Soporte</a>.</li>
+  <li><strong>Instala Tailscale en el Mac y en el iPhone</strong>, con la misma cuenta.</li>
+  <li><strong>Instala Claude Code o Codex en el Mac e inicia sesión.</strong></li>
+  <li><strong>Vincula.</strong> Toca el botón de vinculación en la primera pantalla de la app del iPhone; para conectar tu propio Mac necesitas Kitepost Pro (2 semanas de prueba gratis para nuevos suscriptores). En el Mac, haz clic en Kitepost en la barra de menús › «Vincular nuevo dispositivo» y escanea el código QR con el iPhone. El código es válido 30 días y solo se puede usar una vez.</li>
+</ol>
+
+<h2 id="es-price">Precio</h2>
+<p>La app y el modo de demostración son gratis. Para conectar tu propio Mac necesitas Kitepost Pro: US$9.99 al año (renovación automática), con 2 semanas de prueba gratis para nuevos suscriptores, o US$29.99 por acceso permanente (pago único). Los precios pueden variar según el país; App Store muestra el precio local. Kitepost for Mac es gratis. La IA usa tu propia suscripción de Claude o de ChatGPT (Codex).</p>
+
+<h2 id="es-download">Descargar Kitepost for Mac</h2>
+<p>Gratis. El motor en tu Mac recibe, clasifica y redacta; la app del iPhone se conecta a él.</p>
+<div class="actions">
+  <a class="button" href="https://github.com/lijunhua941-boop/kitestring-site/releases/download/kitepost-1.23.0/Kitepost-1.23.0.dmg">Descargar Kitepost for Mac (DMG)</a>
+</div>
+<table>
+  <tr><th>Mac</th><td>macOS 14 o posterior</td></tr>
+  <tr><th>Red</th><td>Tailscale en el Mac y en el iPhone, con la misma cuenta</td></tr>
+  <tr><th>IA</th><td>Claude Code o Codex instalado y con la sesión iniciada en el Mac</td></tr>
+  <tr><th>iPhone</th><td>iOS 17 o posterior; <a href="https://apps.apple.com/app/id6836148522">descarga Kitepost en el App Store</a></td></tr>
+</table>
+<p class="muted">Abre el DMG, arrastra Kitepost a la carpeta Aplicaciones, ábrelo y añade tu buzón en su configuración. El Mac debe estar encendido y conectado para que el iPhone reciba correo nuevo; el correo que ya está en la copia del iPhone se puede leer sin conexión.</p>
+</section>
+
+<!-- ===== Français ===== -->
+<section class="lang" id="fr" lang="fr" data-l="fr">
+<nav class="pages"><a href="#fr">Kitepost</a><a href="#fr-download">Télécharger l’app Mac</a><a href="support/">Assistance</a><a href="privacy/">Confidentialité</a></nav>
+<h1>Kitepost&nbsp;: assistant e-mail IA privé</h1>
+<p class="lead">Le moteur de Kitepost tourne sur votre propre Mac. Le Mac surveille vos boîtes, distingue ce qui demande une réponse de ce qu’il suffit de savoir, et rédige les brouillons avec votre propre Claude Code ou Codex. Sur l’iPhone, vous lisez, décidez et validez&nbsp;; rien ne part sans votre accord.</p>
+<div class="actions">
+  <a class="button" href="https://apps.apple.com/app/id6836148522">Télécharger Kitepost sur l’App Store</a>
+  <a class="button secondary" href="#fr-download">Télécharger Kitepost for Mac (gratuit)</a>
+</div>
+<p class="muted">Pas de Mac sous la main&nbsp;? Touchez «&nbsp;Essayer la démo (sans Mac)&nbsp;» sur le premier écran de l’app iPhone pour tout découvrir avec des e-mails d’exemple. La démo ne se connecte à aucun Mac ni serveur de messagerie et n’envoie rien.</p>
+
+<h2 id="fr-features">Ce que vous pouvez faire</h2>
+<ul class="grid">
+  <li><strong>Synthèse</strong><br>Ce qui est arrivé et ce qui compte aujourd’hui, en quelques lignes.</li>
+  <li><strong>À répondre et À savoir</strong><br>Vos e-mails déjà triés, avec une analyse de chaque message&nbsp;: qui demande, quoi, pour quand.</li>
+  <li><strong>Bureau des réponses</strong><br>Discutez de la réponse, recevez un brouillon, vérifiez le récapitulatif à valider (À, Cc, objet, texte intégral), puis envoyez.</li>
+  <li><strong>Votre messagerie complète</strong><br>Réception, Envoyés, Brouillons, Suivis, Archives, Tous les messages, Spam et Corbeille. Écrivez, répondez à un ou à tous, transférez, avec Cc, Cci, pièces jointes et brouillons.</li>
+  <li><strong>Documents</strong><br>Cherchez les pièces jointes de tous vos e-mails par mot-clé, expéditeur, date ou type, prévisualisez-les et envoyez-les dans un nouvel e-mail.</li>
+  <li><strong>Tableau</strong><br>Échéances, promesses et fils en attente de réponse, avec Relancer.</li>
+  <li><strong>Calendrier et Rappels</strong><br>Ajoutez une échéance ou un événement d’un simple toucher.</li>
+  <li><strong>Hors ligne</strong><br>Une copie chiffrée de vos e-mails récents reste sur l’iPhone, et les nouveaux sont préchargés chaque jour pour s’ouvrir aussitôt.</li>
+  <li><strong>Plusieurs boîtes</strong><br>Dans une seule app.</li>
+</ul>
+
+<h2 id="fr-privacy">Vos e-mails restent à vous</h2>
+<ul>
+  <li>Pas de serveur Kitepost, pas d’inscription. L’app ne collecte aucune donnée et n’a ni statistiques, ni publicité, ni rapports de plantage.</li>
+  <li>Les boîtes se connectent sur le Mac à votre propre fournisseur, en IMAP et SMTP standard&nbsp;: Gmail, iCloud et Yahoo avec un mot de passe d’application, Outlook et Hotmail avec la connexion Microsoft, QQ et 163 avec un code d’autorisation, ou toute autre boîte IMAP.</li>
+  <li>Les mots de passe restent dans le trousseau de votre Mac. L’iPhone ne détient jamais de mot de passe de messagerie ni d’identifiants d’IA.</li>
+  <li>L’iPhone ne communique qu’avec votre Mac, en SSH via votre propre réseau Tailscale&nbsp;; l’association se fait par un QR code affiché sur le Mac.</li>
+  <li>La copie sur l’iPhone est chiffrée, exclue des sauvegardes et conservée 30&nbsp;jours au plus. Vous pouvez la limiter, l’effacer ou la désactiver.</li>
+  <li>L’IA, c’est votre propre Claude Code ou Codex sur votre Mac, avec votre propre abonnement et selon leurs conditions&nbsp;; l’app vous demande votre accord avant la première utilisation de l’IA. Kitepost n’envoie jamais vos e-mails à un service d’IA ni à qui que ce soit.</li>
+</ul>
+<p><a href="privacy/">Lire la politique de confidentialité complète</a></p>
+
+<h2 id="fr-start">Pour commencer</h2>
+<ol class="steps">
+  <li><strong>Installez Kitepost for Mac (gratuit, <a href="#fr-download">voir ci-dessous</a>)</strong> et ajoutez votre boîte dans sa configuration. La marche à suivre pour chaque fournisseur se trouve sur la page <a href="support/">Assistance</a>.</li>
+  <li><strong>Installez Tailscale sur le Mac et l’iPhone</strong>, connectés au même compte.</li>
+  <li><strong>Installez Claude Code ou Codex sur le Mac et connectez-vous.</strong></li>
+  <li><strong>Associez.</strong> Touchez le bouton d’association sur le premier écran de l’app iPhone&nbsp;; connecter votre propre Mac nécessite Kitepost Pro (2&nbsp;semaines d’essai gratuit pour les nouveaux abonnés). Sur le Mac, cliquez sur Kitepost dans la barre des menus › «&nbsp;Associer un appareil&nbsp;» et scannez le QR code avec l’iPhone. Le code est valable 30&nbsp;jours et ne sert qu’une fois.</li>
+</ol>
+
+<h2 id="fr-price">Tarifs</h2>
+<p>L’app et le mode démo sont gratuits. Pour connecter votre propre Mac, il faut Kitepost Pro&nbsp;: 9,99&nbsp;$&nbsp;US par an (renouvellement automatique) avec 2&nbsp;semaines d’essai gratuit pour les nouveaux abonnés, ou 29,99&nbsp;$&nbsp;US pour un accès à vie (achat unique). Les prix peuvent varier selon le pays&nbsp;; l’App Store affiche le prix local. Kitepost for Mac est gratuit. L’IA utilise votre propre abonnement Claude ou ChatGPT (Codex).</p>
+
+<h2 id="fr-download">Télécharger Kitepost for Mac</h2>
+<p>Gratuit. Le moteur sur votre Mac relève, trie et rédige&nbsp;; l’app iPhone s’y connecte.</p>
+<div class="actions">
+  <a class="button" href="https://github.com/lijunhua941-boop/kitestring-site/releases/download/kitepost-1.23.0/Kitepost-1.23.0.dmg">Télécharger Kitepost for Mac (DMG)</a>
+</div>
+<table>
+  <tr><th>Mac</th><td>macOS 14 ou ultérieur</td></tr>
+  <tr><th>Réseau</th><td>Tailscale sur le Mac et l’iPhone, connectés au même compte</td></tr>
+  <tr><th>IA</th><td>Claude Code ou Codex installé et connecté sur le Mac</td></tr>
+  <tr><th>iPhone</th><td>iOS 17 ou ultérieur&nbsp;; <a href="https://apps.apple.com/app/id6836148522">Kitepost sur l’App Store</a></td></tr>
+</table>
+<p class="muted">Ouvrez le DMG, faites glisser Kitepost dans le dossier Applications, ouvrez-le et ajoutez votre boîte dans sa configuration. Le Mac doit être allumé et connecté pour que l’iPhone reçoive les nouveaux e-mails&nbsp;; ceux qui sont déjà dans la copie sur l’iPhone restent lisibles hors ligne.</p>
+</section>
+
+<!-- ===== Deutsch ===== -->
+<section class="lang" id="de" lang="de" data-l="de">
+<nav class="pages"><a href="#de">Kitepost</a><a href="#de-download">Mac-App laden</a><a href="support/">Support</a><a href="privacy/">Datenschutz</a></nav>
+<h1>Kitepost: privater KI-E-Mail-Assistent</h1>
+<p class="lead">Die Engine von Kitepost läuft auf deinem eigenen Mac. Der Mac behält deine Postfächer im Blick, trennt, was eine Antwort braucht, von dem, was du nur wissen musst, und entwirft Antworten mit deinem eigenen Claude Code oder Codex. In der iPhone-App liest du, entscheidest und bestätigst: Nichts wird gesendet, bevor du zustimmst.</p>
+<div class="actions">
+  <a class="button" href="https://apps.apple.com/app/id6836148522">Kitepost im App Store laden</a>
+  <a class="button secondary" href="#de-download">Kitepost for Mac laden (kostenlos)</a>
+</div>
+<p class="muted">Kein Mac in der Nähe? Tippe auf dem ersten Bildschirm der iPhone-App auf „Demo ausprobieren (ohne Mac)“ und sieh dir alles mit Beispiel-E-Mails an. Die Demo verbindet sich mit keinem Mac und keinem Mailserver und sendet nichts.</p>
+
+<h2 id="de-features">Das kannst du tun</h2>
+<ul class="grid">
+  <li><strong>Briefing</strong><br>Was reingekommen ist und was heute zählt, in wenigen Zeilen.</li>
+  <li><strong>Zu beantworten und Zur Info</strong><br>Deine E-Mails vorsortiert, mit einer Einordnung zu jeder Nachricht: Wer fragt, was wird gebraucht, bis wann?</li>
+  <li><strong>Antwortzentrale</strong><br>Besprich die Antwort, erhalte einen Entwurf, prüfe das Bestätigungspaket mit An, Cc, Betreff und vollständigem Text und sende dann.</li>
+  <li><strong>Dein komplettes Postfach</strong><br>Posteingang, Gesendet, Entwürfe, Markiert, Archiv, Alle Nachrichten, Spam und Papierkorb. Schreiben, antworten, allen antworten, weiterleiten, mit Cc, Bcc, Anhängen und Entwürfen.</li>
+  <li><strong>Dokumente</strong><br>Durchsuche die Anhänge all deiner E-Mails nach Stichwort, Absender, Datum oder Typ, sieh sie an und verschicke sie in einer neuen E-Mail.</li>
+  <li><strong>Übersicht</strong><br>Fristen, Zusagen und Verläufe, die auf Antwort warten, mit Nachhaken.</li>
+  <li><strong>Kalender und Erinnerungen</strong><br>Frist oder Termin mit einem Tippen übernehmen.</li>
+  <li><strong>Offline lesen</strong><br>Eine verschlüsselte Kopie deiner letzten E-Mails bleibt auf dem iPhone; neue werden täglich vorab geladen und öffnen sich sofort.</li>
+  <li><strong>Mehrere Postfächer</strong><br>In einer App.</li>
+</ul>
+
+<h2 id="de-privacy">Deine E-Mails bleiben deine</h2>
+<ul>
+  <li>Kein Kitepost-Server, keine Registrierung. Die App erhebt keine Daten und hat keine Statistik, keine Werbung und keine Absturzberichte.</li>
+  <li>Postfächer werden auf dem Mac über Standard-IMAP und -SMTP mit deinem eigenen Anbieter verbunden: Gmail, iCloud und Yahoo mit App-Passwort, Outlook und Hotmail mit Microsoft-Anmeldung, QQ und 163 mit Autorisierungscode oder jedes andere IMAP-Postfach.</li>
+  <li>Passwörter bleiben im Schlüsselbund deines Mac. Das iPhone hat nie E-Mail-Passwörter oder KI-Zugangsdaten.</li>
+  <li>Das iPhone spricht nur mit deinem Mac, per SSH über dein eigenes Tailscale-Netzwerk; gekoppelt wird per QR-Code, den der Mac anzeigt.</li>
+  <li>Die Kopie auf dem iPhone ist verschlüsselt, von Backups ausgenommen und wird höchstens 30 Tage aufbewahrt. Du kannst sie begrenzen, löschen oder abschalten.</li>
+  <li>Die KI ist dein eigenes Claude Code oder Codex auf deinem Mac, mit deinem eigenen Abo und nach deren Bedingungen; vor der ersten Nutzung der KI fragt die App nach deiner Zustimmung. Kitepost selbst schickt deine E-Mails nie an einen KI-Dienst oder sonst jemanden.</li>
+</ul>
+<p><a href="privacy/">Vollständige Datenschutzerklärung lesen</a></p>
+
+<h2 id="de-start">Loslegen</h2>
+<ol class="steps">
+  <li><strong>Installiere Kitepost for Mac (kostenlos, <a href="#de-download">siehe unten</a>)</strong> und füge in der Einrichtung dein Postfach hinzu. Wie du jeden Anbieter verbindest, steht auf der <a href="support/">Support</a>-Seite.</li>
+  <li><strong>Installiere Tailscale auf Mac und iPhone</strong>, mit demselben Konto angemeldet.</li>
+  <li><strong>Installiere Claude Code oder Codex auf dem Mac und melde dich an.</strong></li>
+  <li><strong>Koppeln.</strong> Tippe auf dem ersten Bildschirm der iPhone-App auf die Kopplungstaste; um deinen eigenen Mac zu verbinden, brauchst du Kitepost Pro (2 Wochen kostenloser Test für neue Abonnenten). Klicke auf dem Mac in der Menüleiste auf Kitepost › „Neues Gerät koppeln“ und scanne den QR-Code mit dem iPhone. Der Code gilt 30 Tage und nur einmal.</li>
+</ol>
+
+<h2 id="de-price">Preise</h2>
+<p>Die App und der Demomodus sind kostenlos. Um deinen eigenen Mac zu verbinden, brauchst du Kitepost Pro: 9,99 US$ pro Jahr (automatische Verlängerung) mit 2 Wochen kostenlosem Test für neue Abonnenten oder 29,99 US$ für dauerhaften Zugang (Einmalkauf). Preise können je nach Land abweichen; der App Store zeigt deinen lokalen Preis. Kitepost for Mac ist kostenlos. Die KI nutzt dein eigenes Claude- oder ChatGPT-Abo (Codex).</p>
+
+<h2 id="de-download">Kitepost for Mac laden</h2>
+<p>Kostenlos. Die Engine auf deinem Mac holt, sortiert und entwirft; die iPhone-App verbindet sich mit ihr.</p>
+<div class="actions">
+  <a class="button" href="https://github.com/lijunhua941-boop/kitestring-site/releases/download/kitepost-1.23.0/Kitepost-1.23.0.dmg">Kitepost for Mac laden (DMG)</a>
+</div>
+<table>
+  <tr><th>Mac</th><td>macOS 14 oder neuer</td></tr>
+  <tr><th>Netzwerk</th><td>Tailscale auf Mac und iPhone, mit demselben Konto angemeldet</td></tr>
+  <tr><th>KI</th><td>Claude Code oder Codex, auf dem Mac installiert und angemeldet</td></tr>
+  <tr><th>iPhone</th><td>iOS 17 oder neuer; <a href="https://apps.apple.com/app/id6836148522">Kitepost im App Store</a></td></tr>
+</table>
+<p class="muted">Öffne das DMG, zieh Kitepost in den Ordner „Programme“, öffne es und füge in der Einrichtung dein Postfach hinzu. Der Mac muss eingeschaltet und verbunden sein, damit das iPhone neue E-Mails bekommt; was schon in der Kopie auf dem iPhone ist, bleibt offline lesbar.</p>
+</section>
+
+</main>
+<footer><div class="wrap">
+  <div data-l="zh" lang="zh-Hans">
+    <a href="privacy/">隐私政策</a><a href="support/">技术支持</a><a href="../">Kitestring</a><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a>
+    <p>Claude Code 是 Anthropic 的产品，Codex 是 OpenAI 的产品；Gmail 是 Google 的商标，Outlook 是 Microsoft 的商标。Kitepost 是独立开发的 App，与上述公司没有隶属或背书关系。</p>
+  </div>
+  <div data-l="en" lang="en">
+    <a href="privacy/">Privacy Policy</a><a href="support/">Support</a><a href="../">Kitestring</a><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a>
+    <p>Claude Code is a product of Anthropic. Codex is a product of OpenAI. Gmail is a trademark of Google, Outlook of Microsoft. Kitepost is an independent app and is not affiliated with or endorsed by any of these companies.</p>
+  </div>
+  <div data-l="es" lang="es">
+    <a href="privacy/">Política de privacidad</a><a href="support/">Soporte</a><a href="../">Kitestring</a><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a>
+    <p>Claude Code es un producto de Anthropic. Codex es un producto de OpenAI. Gmail es una marca de Google y Outlook, de Microsoft. Kitepost es una app independiente y no está afiliada ni respaldada por ninguna de estas empresas.</p>
+  </div>
+  <div data-l="fr" lang="fr">
+    <a href="privacy/">Politique de confidentialité</a><a href="support/">Assistance</a><a href="../">Kitestring</a><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a>
+    <p>Claude Code est un produit d’Anthropic. Codex est un produit d’OpenAI. Gmail est une marque de Google, Outlook une marque de Microsoft. Kitepost est une app indépendante, sans lien avec ces entreprises.</p>
+  </div>
+  <div data-l="de" lang="de">
+    <a href="privacy/">Datenschutzerklärung</a><a href="support/">Support</a><a href="../">Kitestring</a><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a>
+    <p>Claude Code ist ein Produkt von Anthropic. Codex ist ein Produkt von OpenAI. Gmail ist eine Marke von Google, Outlook eine Marke von Microsoft. Kitepost ist eine unabhängige App ohne Verbindung zu diesen Unternehmen.</p>
+  </div>
+</div></footer>
+</body>
+</html>

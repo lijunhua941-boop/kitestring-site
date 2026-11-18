@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-zh="Kitepost 技术支持" data-es="Soporte de Kitepost" data-fr="Assistance Kitepost" data-de="Kitepost Support">Kitepost Support</title>
+<meta name="description" data-zh="Kitepost 常见问题：接入邮箱、配对 Mac、AI、手机上的副本、图片、购买和联系方式。" data-es="Preguntas frecuentes de Kitepost: conectar buzones, vincular el Mac, IA, copia en el iPhone, imágenes, compras y contacto." data-fr="FAQ Kitepost : connecter une boîte, associer le Mac, IA, copie sur l'iPhone, images, achats et contact." data-de="Kitepost-FAQ: Postfach verbinden, Mac koppeln, KI, Kopie auf dem iPhone, Bilder, Käufe und Kontakt." content="Kitepost FAQ: connecting mailboxes, pairing your Mac, AI, the copy on the iPhone, images, purchases, and contact.">
+<link rel="canonical" href="https://lijunhua941-boop.github.io/kitestring-site/kitepost/support/">
+<link rel="stylesheet" href="../site.css">
+<script>
+/* Language (the Kitepost pages' copy of the site script; site/README.md「三语」, five languages here).
+   Order: the fragment #zh / #en / #es / #fr / #de or an anchor inside a section (#fr-pairing; #zh-Hans,
+   #es-419, #de-CH work too), then ?lang=, then the browser's preferred languages, then English. A
+   language this page has no section for falls back to English. Sets <html lang> and data-lang (site.css
+   then shows only that language), the page title and description, and makes every link to another page
+   of the site carry the language (pages that only have zh/en/es show English for #fr/#de). Nothing is stored. Without JavaScript site.css reads the fragment itself. */
+(function () {
+  var TAGS = { zh: "zh-Hans", en: "en", es: "es", fr: "fr", de: "de" }, root = document.documentElement, lang = "en";
+  function norm(s) { s = String(s || "").toLowerCase().split(/[-_;]/)[0]; return TAGS.hasOwnProperty(s) ? s : ""; }
+  function fromHash() { try { return norm(decodeURIComponent(location.hash.slice(1))); } catch (e) { return ""; } }
+  function fromQuery() { var m = /[?&]lang=([^&#]*)/.exec(location.search); return m ? norm(m[1]) : ""; }
+  function fromBrowser() {
+    var list = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language];
+    for (var i = 0; i < list.length; i++) { var l = norm(list[i]); if (l) return l; }
+    return "";
+  }
+  function relink() {
+    var links = document.querySelectorAll("a[href]");
+    for (var i = 0; i < links.length; i++) {
+      var a = links[i], href = a.getAttribute("data-href") || a.getAttribute("href");
+      var cut = href.indexOf("#"), path = cut < 0 ? href : href.slice(0, cut), frag = cut < 0 ? "" : href.slice(cut + 1);
+      if (cut === 0) {                                   // same-page link: mark the active language switch
+        if (a.parentNode && a.parentNode.className === "langs") {
+          if (frag === lang) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current");
+        }
+        continue;
+      }
+      // Only the site's own pages: relative ("./", "../", "support/", "../privacy/"), with no fragment
+      // or a bare language fragment. mailto:, https:, files and other anchors stay.
+      if (/^([a-z][a-z0-9+.-]*:|\/\/)/i.test(href) || !/\/$/.test(path) || (frag && !TAGS.hasOwnProperty(frag))) continue;
+      a.setAttribute("data-href", href);
+      a.setAttribute("href", path + "#" + lang);
+    }
+  }
+  function apply() {
+    lang = fromHash() || fromQuery() || fromBrowser() || "en";
+    // Once the page is parsed: a language without its own section on this page shows English.
+    if (document.readyState !== "loading" && !document.querySelector('[data-l="' + lang + '"]')) lang = "en";
+    root.setAttribute("data-lang", lang);
+    root.setAttribute("lang", TAGS[lang]);
+    var t = document.querySelector("title");
+    if (t) {
+      if (!t.hasAttribute("data-en")) t.setAttribute("data-en", t.textContent);
+      document.title = t.getAttribute("data-" + lang) || t.getAttribute("data-en");
+    }
+    // The description (and any og:/twitter: title or description) the same way: data-zh / data-es /
+    // data-fr / data-de beside the English content, which stays in the page for readers without JavaScript.
+    var metas = document.querySelectorAll('meta[name="description"], meta[property^="og:"], meta[name^="twitter:"]');
+    for (var j = 0; j < metas.length; j++) {
+      var m = metas[j];
+      if (!m.hasAttribute("data-zh") && !m.hasAttribute("data-es") && !m.hasAttribute("data-fr") && !m.hasAttribute("data-de")) continue;
+      if (!m.hasAttribute("data-en")) m.setAttribute("data-en", m.getAttribute("content"));
+      m.setAttribute("content", m.getAttribute("data-" + lang) || m.getAttribute("data-en"));
+    }
+    if (document.readyState !== "loading") relink();
+  }
+  apply();
+  document.addEventListener("DOMContentLoaded", apply);
+  window.addEventListener("hashchange", apply);
+})();
+</script>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="../">Kitepost</a>
+  <span class="langs"><a href="#zh" hreflang="zh-Hans" lang="zh-Hans">中文</a><a href="#en" hreflang="en" lang="en">English</a><a href="#es" hreflang="es" lang="es">Español</a><a href="#fr" hreflang="fr" lang="fr">Français</a><a href="#de" hreflang="de" lang="de">Deutsch</a></span>
+</div></header>
+<main class="wrap">
+
+<!-- ===== 简体中文（主稿） ===== -->
+<section class="lang" id="zh" lang="zh-Hans" data-l="zh">
+<nav class="pages"><a href="../#zh">Kitepost</a><a href="#zh">技术支持</a><a href="../privacy/#zh">隐私政策</a></nav>
+<h1>Kitepost 技术支持</h1>
+<p class="lead">上手步骤见<a href="../#zh-start">产品页</a>。下面是常见问题；没解决就写信给 <a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a>。</p>
+
+<h2 id="zh-mailbox">怎么接入我的邮箱？</h2>
+<p>在 Mac 上的 Kitepost for Mac 设置里添加邮箱，它会按邮箱类型给出步骤。密码只在 Mac 上填，只存进 Mac 的钥匙串。</p>
+<table>
+  <tr><th>Gmail</th><td>开启两步验证，生成一个应用专用密码填进去。（Kitepost 不提供「用 Google 登录」。）</td></tr>
+  <tr><th>Outlook / Hotmail</th><td>用微软授权登录：在浏览器里登录并同意。</td></tr>
+  <tr><th>QQ / Foxmail、163 / 126</th><td>在网页版邮箱开启 IMAP/SMTP，生成授权码填进去。</td></tr>
+  <tr><th>iCloud、Yahoo</th><td>在账号安全页生成应用专用密码。</td></tr>
+  <tr><th>其他（公司邮箱等）</th><td>用邮箱自己的密码；向服务商要 IMAP / SMTP 服务器地址。</td></tr>
+</table>
+
+<h2 id="zh-pairing">iPhone 连不上 Mac / 配对失败</h2>
+<ul>
+  <li>Mac 和 iPhone 都要装 Tailscale、登录<strong>同一个账号</strong>，并且都已连上。</li>
+  <li>二维码在 Mac 菜单栏的 Kitepost ›「配对新设备」里，30 天内有效、只能用一次；用过或过期就重新生成一个。</li>
+  <li>Mac 要开着、联网、没有睡眠。</li>
+  <li>连接自己的 Mac 需要 Kitepost Pro；购买页在你开始配对时出现。</li>
+</ul>
+
+<h2 id="zh-ai">AI 不工作 / 没有解读和草稿</h2>
+<p>AI 用的是你 Mac 上的 Claude Code 或 Codex：至少装一个并登录。AI 用的是你自己的额度，额度用完时会提示，等额度恢复后再试。第一次用 AI 前 App 会请你同意数据说明。</p>
+
+<h2 id="zh-send">会不会替我自动发信？</h2>
+<p>不会。每封回信都要你在确认包里核对收件人、抄送、主题和完整正文，确认后才发出。没连上 Mac 时滑动发送会直接告诉你没有发出，不排队、不代发。演示模式什么也不发。</p>
+
+<h2 id="zh-copy">手机上的副本、离线阅读</h2>
+<p>在「我的 › 隐私和手机上的副本」里可以改上限（50 / 100 / 200 / 500 MB）、一键清除或关闭。副本加密、不进备份、最多 30 天。</p>
+
+<h2 id="zh-images">邮件里的图片没显示</h2>
+<p>默认只有邮箱服务商判为安全的邮件才自动取图；你屏蔽的发件人不取。设置成「先问」时，要点「显示图片」才取（或已信任的发件人）。图片由你的 Mac 代取，只取 https 图片，数量和大小有上限；1×1 的跟踪图永远不取。取图会让发件人的服务器看到你 Mac 的 IP 地址，详见<a href="../privacy/#zh-images">隐私政策第 7 条</a>。</p>
+
+<h2 id="zh-lost">手机丢了</h2>
+<p>在 Mac 菜单栏的 Kitepost ›「手机和 iPad」里吊销这台设备。它下次连上 Mac 时会被拒绝，手机上的副本随之清空。只在手机上「解除配对」只删掉手机上的钥匙，不会让 Mac 拒绝它。</p>
+
+<h2 id="zh-purchase">购买、试用、恢复购买</h2>
+<ul>
+  <li>App 和演示免费；连接自己的 Mac 需要 Kitepost Pro：每年 US$9.99（新订阅者免费试用 2 周）或 US$29.99 一次买断。Kitepost for Mac 免费。</li>
+  <li>换了手机或重装：在购买页点「恢复购买」。</li>
+  <li>管理或取消订阅：iPhone「设置」› 你的名字 ›「订阅」。试用期内取消不收费。退款由 Apple 处理（reportaproblem.apple.com）。</li>
+</ul>
+
+<h2 id="zh-contact">联系我们</h2>
+<p>写信给 <a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a>，写上 iPhone 和 Mac App 的版本、邮箱类型和出了什么事。请不要发送密码；我们看不到你的邮件，除非你自己附上。</p>
+</section>
+
+<!-- ===== English ===== -->
+<section class="lang" id="en" lang="en" data-l="en">
+<nav class="pages"><a href="../#en">Kitepost</a><a href="#en">Support</a><a href="../privacy/#en">Privacy</a></nav>
+<h1>Kitepost Support</h1>
+<p class="lead">For setup steps, see the <a href="../#en-start">product page</a>. Common questions are below; if they don’t help, write to <a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a>.</p>
+
+<h2 id="en-mailbox">How Do I Connect My Mailbox?</h2>
+<p>Add the mailbox in the setup of Kitepost for Mac on your Mac; it shows the steps for your kind of mailbox. Passwords are entered only on the Mac and stored only in the Mac’s Keychain.</p>
+<table>
+  <tr><th>Gmail</th><td>Turn on 2-Step Verification, create an app password, and enter it. (Kitepost offers no “Sign in with Google.”)</td></tr>
+  <tr><th>Outlook / Hotmail</th><td>Microsoft sign-in: sign in in your browser and consent.</td></tr>
+  <tr><th>QQ / Foxmail, 163 / 126</th><td>Turn on IMAP/SMTP in the webmail settings, create an authorization code, and enter it.</td></tr>
+  <tr><th>iCloud, Yahoo</th><td>Create an app password on the account security page.</td></tr>
+  <tr><th>Others (company mail, etc.)</th><td>Use the mailbox’s own password; ask your provider for the IMAP and SMTP server addresses.</td></tr>
+</table>
+
+<h2 id="en-pairing">The iPhone Can’t Reach the Mac / Pairing Fails</h2>
+<ul>
+  <li>Install Tailscale on both the Mac and the iPhone, signed in to the <strong>same account</strong>, and make sure both are connected.</li>
+  <li>The QR code is under Kitepost in the Mac menu bar › “Pair New Device”. It’s valid for 30 days and works only once; if it was used or has expired, create a new one.</li>
+  <li>The Mac must be on, connected, and awake.</li>
+  <li>Connecting your own Mac requires Kitepost Pro; the purchase screen appears when you start pairing.</li>
+</ul>
+
+<h2 id="en-ai">The AI Isn’t Working / No Insights or Drafts</h2>
+<p>The AI is Claude Code or Codex on your Mac: install at least one and sign in. It uses your own quota; when the quota runs out, the app says so, and you can try again once it’s back. Before the AI is used for the first time, the app asks you to agree to the data notice.</p>
+
+<h2 id="en-send">Will It Send Mail on Its Own?</h2>
+<p>No. Every reply waits for you to check To, Cc, subject, and the full body in the confirmation pack; only then is it sent. If the Mac isn’t connected, swiping to send tells you right away that nothing was sent; nothing is queued or sent later. Demo mode sends nothing.</p>
+
+<h2 id="en-copy">The Copy on the iPhone and Offline Reading</h2>
+<p>Under Me › Privacy &amp; Copy on the iPhone you can change the limit (50, 100, 200, or 500 MB), clear the copy, or turn it off. It’s encrypted, excluded from backups, and kept for up to 30 days.</p>
+
+<h2 id="en-images">Images in an Email Don’t Show</h2>
+<p>By default, images are fetched automatically only for mail your provider classifies as safe, and never for senders you blocked. With the setting on “ask”, images are fetched only when you tap Show Images (or for senders you trust). Your Mac fetches them; only https images are fetched, with limits on number and size, and 1×1 tracking images never are. Fetching an image can reveal your Mac’s IP address to the sender’s server; see <a href="../privacy/#en-images">section 7 of the privacy policy</a>.</p>
+
+<h2 id="en-lost">I Lost My iPhone</h2>
+<p>Revoke the device under Kitepost in the Mac menu bar › Paired devices. The next time it connects, the Mac refuses it and the copy on the iPhone is wiped. Unpairing on the iPhone alone only deletes the key on the phone; it doesn’t make the Mac refuse it.</p>
+
+<h2 id="en-purchase">Purchases, Free Trial, Restore Purchases</h2>
+<ul>
+  <li>The app and demo are free; connecting your own Mac requires Kitepost Pro: US$9.99 per year (2-week free trial for new subscribers) or US$29.99 once. Kitepost for Mac is free.</li>
+  <li>New iPhone or reinstalled the app: tap Restore Purchases on the purchase screen.</li>
+  <li>Manage or cancel your subscription: iPhone Settings › your name › Subscriptions. Canceling during the trial costs nothing. Refunds are handled by Apple (reportaproblem.apple.com).</li>
+</ul>
+
+<h2 id="en-contact">Contact Us</h2>
+<p>Write to <a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a> with the iPhone and Mac app versions, your kind of mailbox, and what happened. Please don’t send passwords; we can’t see your mail unless you attach it yourself.</p>
+</section>
+
+<!-- ===== Español ===== -->
+<section class="lang" id="es" lang="es" data-l="es">
+<nav class="pages"><a href="../#es">Kitepost</a><a href="#es">Soporte</a><a href="../privacy/#es">Privacidad</a></nav>
+<h1>Soporte de Kitepost</h1>
+<p class="lead">Los primeros pasos están en la <a href="../#es-start">página del producto</a>. Abajo están las preguntas frecuentes; si no te ayudan, escribe a <a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a>.</p>
+
+<h2 id="es-mailbox">¿Cómo conecto mi buzón?</h2>
+<p>Añade el buzón en la configuración de Kitepost for Mac, en tu Mac; te muestra los pasos según el tipo de buzón. Las contraseñas solo se introducen en el Mac y solo se guardan en el llavero del Mac.</p>
+<table>
+  <tr><th>Gmail</th><td>Activa la verificación en dos pasos, crea una contraseña de aplicación e introdúcela. (Kitepost no ofrece «Iniciar sesión con Google».)</td></tr>
+  <tr><th>Outlook / Hotmail</th><td>Inicio de sesión de Microsoft: inicia sesión en tu navegador y da tu consentimiento.</td></tr>
+  <tr><th>QQ / Foxmail, 163 / 126</th><td>Activa IMAP/SMTP en el correo web, crea un código de autorización e introdúcelo.</td></tr>
+  <tr><th>iCloud, Yahoo</th><td>Crea una contraseña de aplicación en la página de seguridad de la cuenta.</td></tr>
+  <tr><th>Otros (correo de empresa, etc.)</th><td>Usa la contraseña del propio buzón; pide a tu proveedor las direcciones de los servidores IMAP y SMTP.</td></tr>
+</table>
+
+<h2 id="es-pairing">El iPhone no llega al Mac / la vinculación falla</h2>
+<ul>
+  <li>Instala Tailscale en el Mac y en el iPhone, con la <strong>misma cuenta</strong>, y comprueba que ambos estén conectados.</li>
+  <li>El código QR está en Kitepost, en la barra de menús del Mac › «Vincular nuevo dispositivo». Es válido 30 días y solo se puede usar una vez; si ya se usó o caducó, crea uno nuevo.</li>
+  <li>El Mac debe estar encendido, conectado y sin reposo.</li>
+  <li>Para conectar tu propio Mac necesitas Kitepost Pro; la pantalla de compra aparece cuando empiezas a vincular.</li>
+</ul>
+
+<h2 id="es-ai">La IA no funciona / no hay análisis ni borradores</h2>
+<p>La IA es Claude Code o Codex en tu Mac: instala al menos uno e inicia sesión. Usa tu propia cuota; si se agota, la app te lo indica y puedes volver a intentarlo cuando se renueve. Antes de usar la IA por primera vez, la app te pide aceptar el aviso sobre los datos.</p>
+
+<h2 id="es-send">¿Enviará correos por su cuenta?</h2>
+<p>No. Cada respuesta espera a que revises Para, Cc, asunto y cuerpo completo en el paquete de confirmación; solo entonces se envía. Si el Mac no está conectado, al deslizar para enviar te dice al momento que no se envió; no se pone en cola ni se envía después. El modo de demostración no envía nada.</p>
+
+<h2 id="es-copy">La copia en el iPhone y la lectura sin conexión</h2>
+<p>En Perfil › Privacidad y copia en el iPhone puedes cambiar el límite (50, 100, 200 o 500 MB), borrar la copia o desactivarla. Está cifrada, no entra en las copias de seguridad y se guarda como máximo 30 días.</p>
+
+<h2 id="es-images">No se ven las imágenes de un correo</h2>
+<p>Por defecto, las imágenes solo se descargan automáticamente en el correo que tu proveedor clasifica como seguro, y nunca de remitentes que bloqueaste. Con el ajuste en «preguntar», solo se descargan al tocar Mostrar imágenes (o para remitentes de confianza). Las descarga tu Mac; solo imágenes https, con límites de cantidad y tamaño, y nunca las de seguimiento de 1×1. Descargar una imagen puede revelar la dirección IP de tu Mac al servidor del remitente; consulta la <a href="../privacy/#es-images">sección 7 de la política de privacidad</a>.</p>
+
+<h2 id="es-lost">Perdí mi iPhone</h2>
+<p>Revoca el dispositivo en Kitepost, en la barra de menús del Mac › Dispositivos vinculados. La próxima vez que se conecte, el Mac lo rechazará y se borrará la copia del iPhone. Desvincular solo en el iPhone borra únicamente la clave del teléfono; no hace que el Mac lo rechace.</p>
+
+<h2 id="es-purchase">Compras, prueba gratis y restaurar compras</h2>
+<ul>
+  <li>La app y la demostración son gratis; para conectar tu propio Mac necesitas Kitepost Pro: US$9.99 al año (2 semanas de prueba gratis para nuevos suscriptores) o US$29.99 una sola vez. Kitepost for Mac es gratis.</li>
+  <li>iPhone nuevo o app reinstalada: toca Restaurar compras en la pantalla de compra.</li>
+  <li>Gestionar o cancelar la suscripción: Ajustes del iPhone › tu nombre › Suscripciones. Cancelar durante la prueba no cuesta nada. Los reembolsos los gestiona Apple (reportaproblem.apple.com).</li>
+</ul>
+
+<h2 id="es-contact">Contacto</h2>
+<p>Escribe a <a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a> indicando las versiones de la app del iPhone y del Mac, el tipo de buzón y qué pasó. Por favor, no envíes contraseñas; no podemos ver tu correo salvo que tú lo adjuntes.</p>
+</section>
+
+<!-- ===== Français ===== -->
+<section class="lang" id="fr" lang="fr" data-l="fr">
+<nav class="pages"><a href="../#fr">Kitepost</a><a href="#fr">Assistance</a><a href="../privacy/#fr">Confidentialité</a></nav>
+<h1>Assistance Kitepost</h1>
+<p class="lead">Les étapes de mise en route sont sur la <a href="../#fr-start">page du produit</a>. Voici les questions fréquentes&nbsp;; si elles ne suffisent pas, écrivez à <a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a>.</p>
+
+<h2 id="fr-mailbox">Comment connecter ma boîte&nbsp;?</h2>
+<p>Ajoutez la boîte dans la configuration de Kitepost for Mac, sur votre Mac&nbsp;; elle affiche les étapes selon votre type de boîte. Les mots de passe ne se saisissent que sur le Mac et ne sont stockés que dans son trousseau.</p>
+<table>
+  <tr><th>Gmail</th><td>Activez la validation en deux étapes, créez un mot de passe d’application et saisissez-le. (Kitepost ne propose pas «&nbsp;Se connecter avec Google&nbsp;».)</td></tr>
+  <tr><th>Outlook / Hotmail</th><td>Connexion Microsoft&nbsp;: connectez-vous dans votre navigateur et donnez votre accord.</td></tr>
+  <tr><th>QQ / Foxmail, 163 / 126</th><td>Activez IMAP/SMTP dans le webmail, créez un code d’autorisation et saisissez-le.</td></tr>
+  <tr><th>iCloud, Yahoo</th><td>Créez un mot de passe d’application sur la page de sécurité du compte.</td></tr>
+  <tr><th>Autres (messagerie d’entreprise, etc.)</th><td>Utilisez le mot de passe de la boîte&nbsp;; demandez à votre fournisseur les adresses des serveurs IMAP et SMTP.</td></tr>
+</table>
+
+<h2 id="fr-pairing">L’iPhone n’atteint pas le Mac / l’association échoue</h2>
+<ul>
+  <li>Installez Tailscale sur le Mac et l’iPhone, connectés au <strong>même compte</strong>, et vérifiez que les deux sont connectés.</li>
+  <li>Le QR code se trouve dans Kitepost, dans la barre des menus du Mac › «&nbsp;Associer un appareil&nbsp;». Il est valable 30&nbsp;jours et ne sert qu’une fois&nbsp;; s’il a déjà servi ou a expiré, créez-en un nouveau.</li>
+  <li>Le Mac doit être allumé, connecté et ne pas être en veille.</li>
+  <li>Connecter votre propre Mac nécessite Kitepost Pro&nbsp;; l’écran d’achat apparaît quand vous commencez l’association.</li>
+</ul>
+
+<h2 id="fr-ai">L’IA ne fonctionne pas / pas d’analyses ni de brouillons</h2>
+<p>L’IA, c’est Claude Code ou Codex sur votre Mac&nbsp;: installez-en au moins un et connectez-vous. Elle utilise votre propre quota&nbsp;; s’il est épuisé, l’app vous le signale, et vous pouvez réessayer quand il est rétabli. Avant la première utilisation de l’IA, l’app vous demande d’accepter la notice sur les données.</p>
+
+<h2 id="fr-send">Peut-elle envoyer des e-mails toute seule&nbsp;?</h2>
+<p>Non. Chaque réponse attend que vous vérifiiez À, Cc, objet et texte intégral dans le récapitulatif à valider&nbsp;; elle n’est envoyée qu’ensuite. Si le Mac n’est pas connecté, le geste d’envoi vous indique aussitôt que rien n’est parti&nbsp;; rien n’est mis en file ni envoyé plus tard. Le mode démo n’envoie rien.</p>
+
+<h2 id="fr-copy">La copie sur l’iPhone et la lecture hors ligne</h2>
+<p>Dans Profil › Confidentialité et copie sur l’iPhone, vous pouvez changer la limite (50, 100, 200 ou 500&nbsp;Mo), effacer la copie ou la désactiver. Elle est chiffrée, exclue des sauvegardes et conservée 30&nbsp;jours au plus.</p>
+
+<h2 id="fr-images">Les images d’un e-mail ne s’affichent pas</h2>
+<p>Par défaut, les images ne sont récupérées automatiquement que pour les e-mails que votre fournisseur classe comme sûrs, et jamais pour les expéditeurs que vous avez bloqués. En mode «&nbsp;demander&nbsp;», elles ne sont récupérées que lorsque vous touchez Afficher les images (ou pour les expéditeurs de confiance). C’est votre Mac qui les récupère&nbsp;: uniquement des images https, avec des limites de nombre et de taille, et jamais d’images de suivi 1×1. Récupérer une image peut révéler l’adresse IP de votre Mac au serveur de l’expéditeur&nbsp;; voir la <a href="../privacy/#fr-images">section 7 de la politique de confidentialité</a>.</p>
+
+<h2 id="fr-lost">J’ai perdu mon iPhone</h2>
+<p>Révoquez l’appareil dans Kitepost, dans la barre des menus du Mac › Appareils associés. À sa prochaine connexion, le Mac le refusera et la copie sur l’iPhone sera effacée. Dissocier seulement sur l’iPhone ne supprime que la clé du téléphone&nbsp;; le Mac ne le refuse pas pour autant.</p>
+
+<h2 id="fr-purchase">Achats, essai gratuit, restauration des achats</h2>
+<ul>
+  <li>L’app et la démo sont gratuites&nbsp;; connecter votre propre Mac nécessite Kitepost Pro&nbsp;: 9,99&nbsp;$&nbsp;US par an (2&nbsp;semaines d’essai gratuit pour les nouveaux abonnés) ou 29,99&nbsp;$&nbsp;US une fois. Kitepost for Mac est gratuit.</li>
+  <li>Nouvel iPhone ou app réinstallée&nbsp;: touchez Restaurer les achats sur l’écran d’achat.</li>
+  <li>Gérer ou résilier l’abonnement&nbsp;: Réglages de l’iPhone › votre nom › Abonnements. Résilier pendant l’essai ne coûte rien. Les remboursements sont gérés par Apple (reportaproblem.apple.com).</li>
+</ul>
+
+<h2 id="fr-contact">Nous contacter</h2>
+<p>Écrivez à <a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a> en indiquant les versions de l’app iPhone et de l’app Mac, votre type de boîte et ce qui s’est passé. Merci de ne pas envoyer de mot de passe&nbsp;; nous ne voyons pas vos e-mails, sauf si vous les joignez vous-même.</p>
+</section>
+
+<!-- ===== Deutsch ===== -->
+<section class="lang" id="de" lang="de" data-l="de">
+<nav class="pages"><a href="../#de">Kitepost</a><a href="#de">Support</a><a href="../privacy/#de">Datenschutz</a></nav>
+<h1>Kitepost Support</h1>
+<p class="lead">Die Schritte zum Einrichten stehen auf der <a href="../#de-start">Produktseite</a>. Unten findest du häufige Fragen; hilft das nicht, schreib an <a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a>.</p>
+
+<h2 id="de-mailbox">Wie verbinde ich mein Postfach?</h2>
+<p>Füge das Postfach in der Einrichtung von Kitepost for Mac auf deinem Mac hinzu; sie zeigt die Schritte für deine Art von Postfach. Passwörter gibst du nur auf dem Mac ein, gespeichert werden sie nur im Schlüsselbund des Mac.</p>
+<table>
+  <tr><th>Gmail</th><td>Aktiviere die Bestätigung in zwei Schritten, erstelle ein App-Passwort und gib es ein. (Kitepost bietet kein „Mit Google anmelden“.)</td></tr>
+  <tr><th>Outlook / Hotmail</th><td>Microsoft-Anmeldung: Melde dich im Browser an und stimme zu.</td></tr>
+  <tr><th>QQ / Foxmail, 163 / 126</th><td>Aktiviere IMAP/SMTP im Webmail, erstelle einen Autorisierungscode und gib ihn ein.</td></tr>
+  <tr><th>iCloud, Yahoo</th><td>Erstelle auf der Sicherheitsseite des Kontos ein App-Passwort.</td></tr>
+  <tr><th>Andere (Firmen-E-Mail usw.)</th><td>Nutze das Passwort des Postfachs; frag deinen Anbieter nach den Adressen der IMAP- und SMTP-Server.</td></tr>
+</table>
+
+<h2 id="de-pairing">Das iPhone erreicht den Mac nicht / Koppeln schlägt fehl</h2>
+<ul>
+  <li>Installiere Tailscale auf Mac und iPhone, mit <strong>demselben Konto</strong> angemeldet, und prüfe, dass beide verbunden sind.</li>
+  <li>Den QR-Code findest du in Kitepost in der Mac-Menüleiste › „Neues Gerät koppeln“. Er gilt 30 Tage und nur einmal; ist er benutzt oder abgelaufen, erstelle einen neuen.</li>
+  <li>Der Mac muss eingeschaltet, verbunden und wach sein.</li>
+  <li>Um deinen eigenen Mac zu verbinden, brauchst du Kitepost Pro; die Kaufseite erscheint, wenn du mit dem Koppeln beginnst.</li>
+</ul>
+
+<h2 id="de-ai">Die KI funktioniert nicht / keine Einordnungen oder Entwürfe</h2>
+<p>Die KI ist Claude Code oder Codex auf deinem Mac: Installiere mindestens eines und melde dich an. Sie nutzt dein eigenes Kontingent; ist es aufgebraucht, sagt dir das die App, und du kannst es erneut versuchen, sobald es wieder verfügbar ist. Vor der ersten Nutzung der KI bittet dich die App, dem Datenhinweis zuzustimmen.</p>
+
+<h2 id="de-send">Sendet die App E-Mails von selbst?</h2>
+<p>Nein. Jede Antwort wartet, bis du An, Cc, Betreff und den vollständigen Text im Bestätigungspaket geprüft hast; erst dann wird sie gesendet. Ist der Mac nicht verbunden, sagt dir das Wischen zum Senden sofort, dass nichts gesendet wurde; nichts wird in eine Warteschlange gestellt oder später gesendet. Der Demomodus sendet nichts.</p>
+
+<h2 id="de-copy">Die Kopie auf dem iPhone und Offline-Lesen</h2>
+<p>Unter Profil › Datenschutz und Kopie auf dem iPhone kannst du das Limit ändern (50, 100, 200 oder 500 MB), die Kopie löschen oder abschalten. Sie ist verschlüsselt, von Backups ausgenommen und wird höchstens 30 Tage aufbewahrt.</p>
+
+<h2 id="de-images">Bilder in einer E-Mail werden nicht angezeigt</h2>
+<p>Standardmäßig werden Bilder nur für E-Mails automatisch geladen, die dein Anbieter als sicher einstuft, und nie für Absender, die du blockiert hast. Steht die Einstellung auf „Nachfragen“, werden sie nur geladen, wenn du auf „Bilder anzeigen“ tippst (oder für vertrauenswürdige Absender). Dein Mac lädt sie: nur https-Bilder, mit Grenzen für Anzahl und Größe, nie 1×1-Tracking-Bilder. Beim Laden eines Bildes kann der Server des Absenders die IP-Adresse deines Mac sehen; siehe <a href="../privacy/#de-images">Abschnitt 7 der Datenschutzerklärung</a>.</p>
+
+<h2 id="de-lost">Ich habe mein iPhone verloren</h2>
+<p>Sperre das Gerät in Kitepost in der Mac-Menüleiste › Gekoppelte Geräte. Bei der nächsten Verbindung lehnt der Mac es ab, und die Kopie auf dem iPhone wird gelöscht. Nur auf dem iPhone zu entkoppeln löscht lediglich den Schlüssel auf dem iPhone; der Mac lehnt es dadurch nicht ab.</p>
+
+<h2 id="de-purchase">Käufe, kostenloser Test, Käufe wiederherstellen</h2>
+<ul>
+  <li>App und Demo sind kostenlos; um deinen eigenen Mac zu verbinden, brauchst du Kitepost Pro: 9,99 US$ pro Jahr (2 Wochen kostenloser Test für neue Abonnenten) oder einmalig 29,99 US$. Kitepost for Mac ist kostenlos.</li>
+  <li>Neues iPhone oder App neu installiert: Tippe auf der Kaufseite auf „Käufe wiederherstellen“.</li>
+  <li>Abo verwalten oder kündigen: iPhone-Einstellungen › dein Name › Abonnements. Kündigen während des Tests kostet nichts. Erstattungen wickelt Apple ab (reportaproblem.apple.com).</li>
+</ul>
+
+<h2 id="de-contact">Kontakt</h2>
+<p>Schreib an <a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a> und nenne die Versionen der iPhone- und der Mac-App, deine Art von Postfach und was passiert ist. Bitte schick keine Passwörter; wir sehen deine E-Mails nicht, außer du hängst sie selbst an.</p>
+</section>
+
+</main>
+<footer><div class="wrap">
+  <div data-l="zh" lang="zh-Hans"><a href="../">Kitepost</a><a href="../privacy/">隐私政策</a><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a></div>
+  <div data-l="en" lang="en"><a href="../">Kitepost</a><a href="../privacy/">Privacy Policy</a><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a></div>
+  <div data-l="es" lang="es"><a href="../">Kitepost</a><a href="../privacy/">Política de privacidad</a><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a></div>
+  <div data-l="fr" lang="fr"><a href="../">Kitepost</a><a href="../privacy/">Politique de confidentialité</a><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a></div>
+  <div data-l="de" lang="de"><a href="../">Kitepost</a><a href="../privacy/">Datenschutzerklärung</a><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a></div>
+</div></footer>
+</body>
+</html>

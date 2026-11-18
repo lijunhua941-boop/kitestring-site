@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-zh="Kitepost 隐私政策" data-es="Política de privacidad de Kitepost" data-fr="Politique de confidentialité de Kitepost" data-de="Kitepost Datenschutzerklärung">Kitepost Privacy Policy</title>
+<meta name="description" data-zh="Kitepost 不收集任何数据：邮件只在你的 Mac、你的邮箱服务商和你的 iPhone 之间流动。" data-es="Kitepost no recopila ningún dato: el correo solo circula entre tu Mac, tu proveedor de correo y tu iPhone." data-fr="Kitepost ne collecte aucune donnée : vos e-mails ne circulent qu'entre votre Mac, votre fournisseur de messagerie et votre iPhone." data-de="Kitepost erhebt keine Daten: E-Mails fließen nur zwischen deinem Mac, deinem E-Mail-Anbieter und deinem iPhone." content="Kitepost collects no data: your mail moves only between your Mac, your mail provider, and your iPhone.">
+<link rel="canonical" href="https://lijunhua941-boop.github.io/kitestring-site/kitepost/privacy/">
+<link rel="stylesheet" href="../site.css">
+<script>
+/* Language (the Kitepost pages' copy of the site script; site/README.md「三语」, five languages here).
+   Order: the fragment #zh / #en / #es / #fr / #de or an anchor inside a section (#fr-pairing; #zh-Hans,
+   #es-419, #de-CH work too), then ?lang=, then the browser's preferred languages, then English. A
+   language this page has no section for falls back to English. Sets <html lang> and data-lang (site.css
+   then shows only that language), the page title and description, and makes every link to another page
+   of the site carry the language (pages that only have zh/en/es show English for #fr/#de). Nothing is stored. Without JavaScript site.css reads the fragment itself. */
+(function () {
+  var TAGS = { zh: "zh-Hans", en: "en", es: "es", fr: "fr", de: "de" }, root = document.documentElement, lang = "en";
+  function norm(s) { s = String(s || "").toLowerCase().split(/[-_;]/)[0]; return TAGS.hasOwnProperty(s) ? s : ""; }
+  function fromHash() { try { return norm(decodeURIComponent(location.hash.slice(1))); } catch (e) { return ""; } }
+  function fromQuery() { var m = /[?&]lang=([^&#]*)/.exec(location.search); return m ? norm(m[1]) : ""; }
+  function fromBrowser() {
+    var list = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language];
+    for (var i = 0; i < list.length; i++) { var l = norm(list[i]); if (l) return l; }
+    return "";
+  }
+  function relink() {
+    var links = document.querySelectorAll("a[href]");
+    for (var i = 0; i < links.length; i++) {
+      var a = links[i], href = a.getAttribute("data-href") || a.getAttribute("href");
+      var cut = href.indexOf("#"), path = cut < 0 ? href : href.slice(0, cut), frag = cut < 0 ? "" : href.slice(cut + 1);
+      if (cut === 0) {                                   // same-page link: mark the active language switch
+        if (a.parentNode && a.parentNode.className === "langs") {
+          if (frag === lang) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current");
+        }
+        continue;
+      }
+      // Only the site's own pages: relative ("./", "../", "support/", "../privacy/"), with no fragment
+      // or a bare language fragment. mailto:, https:, files and other anchors stay.
+      if (/^([a-z][a-z0-9+.-]*:|\/\/)/i.test(href) || !/\/$/.test(path) || (frag && !TAGS.hasOwnProperty(frag))) continue;
+      a.setAttribute("data-href", href);
+      a.setAttribute("href", path + "#" + lang);
+    }
+  }
+  function apply() {
+    lang = fromHash() || fromQuery() || fromBrowser() || "en";
+    // Once the page is parsed: a language without its own section on this page shows English.
+    if (document.readyState !== "loading" && !document.querySelector('[data-l="' + lang + '"]')) lang = "en";
+    root.setAttribute("data-lang", lang);
+    root.setAttribute("lang", TAGS[lang]);
+    var t = document.querySelector("title");
+    if (t) {
+      if (!t.hasAttribute("data-en")) t.setAttribute("data-en", t.textContent);
+      document.title = t.getAttribute("data-" + lang) || t.getAttribute("data-en");
+    }
+    // The description (and any og:/twitter: title or description) the same way: data-zh / data-es /
+    // data-fr / data-de beside the English content, which stays in the page for readers without JavaScript.
+    var metas = document.querySelectorAll('meta[name="description"], meta[property^="og:"], meta[name^="twitter:"]');
+    for (var j = 0; j < metas.length; j++) {
+      var m = metas[j];
+      if (!m.hasAttribute("data-zh") && !m.hasAttribute("data-es") && !m.hasAttribute("data-fr") && !m.hasAttribute("data-de")) continue;
+      if (!m.hasAttribute("data-en")) m.setAttribute("data-en", m.getAttribute("content"));
+      m.setAttribute("content", m.getAttribute("data-" + lang) || m.getAttribute("data-en"));
+    }
+    if (document.readyState !== "loading") relink();
+  }
+  apply();
+  document.addEventListener("DOMContentLoaded", apply);
+  window.addEventListener("hashchange", apply);
+})();
+</script>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="../">Kitepost</a>
+  <span class="langs"><a href="#zh" hreflang="zh-Hans" lang="zh-Hans">中文</a><a href="#en" hreflang="en" lang="en">English</a><a href="#es" hreflang="es" lang="es">Español</a><a href="#fr" hreflang="fr" lang="fr">Français</a><a href="#de" hreflang="de" lang="de">Deutsch</a></span>
+</div></header>
+<main class="wrap">
+
+<!-- ===== 简体中文（主稿） ===== -->
+<section class="lang" id="zh" lang="zh-Hans" data-l="zh">
+<nav class="pages"><a href="../#zh">Kitepost</a><a href="../support/#zh">技术支持</a><a href="#zh">隐私政策</a></nav>
+<h1>Kitepost 隐私政策</h1>
+<p class="muted">生效日期：2026-11-17<br>适用于：Kitepost iPhone App、Kitepost for Mac（及其在 Mac 上运行的引擎）和这几页网站。<br>运营者：Junhua Li</p>
+
+<h2 id="zh-summary">1. 概要</h2>
+<p><strong>我们不收集任何关于你的数据。</strong>Kitepost 没有账户，也没有自己的服务器：你的邮件只在你的 Mac、你的邮箱服务商和你的 iPhone 之间流动，从不经过我们。App 里没有广告、统计、崩溃上报或第三方追踪 SDK。</p>
+
+<h2 id="zh-flow">2. 数据怎么流动</h2>
+<ul>
+  <li><strong>Mac 与你的邮箱：</strong>Kitepost for Mac 用你在 Mac 上填的凭据，通过标准 IMAP / SMTP 加密连接你自己的邮箱服务商收信、发信。Outlook / Hotmail 用微软授权登录：你在浏览器里登录 <code>login.microsoftonline.com</code> 并同意，微软发给 Mac 的令牌存进 Mac 的钥匙串。Kitepost 不提供「用 Google 登录」，也不使用需要服务商审批的邮件接口。你的邮箱服务商按它自己的条款和隐私政策处理你的邮件。</li>
+  <li><strong>iPhone 与 Mac：</strong>iPhone App 只连你自己的 Mac，经你自己的 Tailscale 网络走 SSH（加密）。Tailscale 账户是你自己的，由 Tailscale 管理；无法直连时，加密流量可能经 Tailscale 的中继服务器转发，中继无法解密。你使用 Tailscale 受 Tailscale 自己的条款和隐私政策约束。</li>
+  <li>我们不运营任何接收你的数据的服务器。</li>
+</ul>
+
+<h2 id="zh-credentials">3. 凭据</h2>
+<p>邮箱密码、应用专用密码、授权码和微软的刷新令牌只存在这台 Mac 的系统钥匙串里。它们只能在 Mac 上录入，不经过 iPhone，不写进设置文件，不进日志。iPhone 从不持有邮箱密码或 AI 凭据。</p>
+
+<h2 id="zh-ai">4. AI：第三方处理</h2>
+<p>Kitepost 的 AI 功能（分类、简报、解读、起草回信和处理台里的对话）由你在 Mac 上自己安装、用自己的账户登录的 Claude Code 或 Codex 完成。为完成这些任务，Mac 上的引擎会把相关的邮件内容（例如邮件正文、线程和你的指示）交给你选用的这个程序，再由它发给它的提供方处理：</p>
+<ul>
+  <li>Claude Code：Anthropic；</li>
+  <li>Codex：OpenAI。</li>
+</ul>
+<p>这一处理只在你的 Mac 上发起，用的是你自己的账户和订阅，受该提供方的条款和隐私政策约束，由该提供方负责，不经过我们。iPhone App 本身不包含也不调用任何 AI 服务，不持有 AI 凭据。<strong>第一次使用 AI 之前，App 会说明这一点并征得你的同意。</strong>你可以在 App 里关掉自动的「AI 预先读好」。除你选用的 AI 程序外，Kitepost 从不把你的邮件发给任何 AI 服务或任何人。</p>
+
+<h2 id="zh-mac">5. 存在你 Mac 上的数据</h2>
+<p>Kitepost for Mac 在你的 Mac 上保存你的邮件（原始邮件和附件）、分类和处理记录、草稿、设置，以及邮件图片的缓存（最多 256 MB、30 天）。邮件保存的时间和空间上限可以在 App 里设置。这些数据留在你的 Mac 上，不发给我们。</p>
+
+<h2 id="zh-phone">6. 手机上的副本</h2>
+<p>为了打开就有内容、没网也能看，iPhone 上留一份副本：列表、数量、简报、关注板、解读、最近看过和预先取好的邮件（正文、排版和其中的图片），以及处理台最近的一次会话。</p>
+<ul>
+  <li>最近 30 天、默认最多 200 MB（可在「我的 › 隐私和手机上的副本」改成 50 / 100 / 500 MB），可一键清除或关闭（关闭即清除）。</li>
+  <li>用系统文件加密保存，标记为不备份（不进 iCloud，不进电脑备份）。不放附件原件、邮箱密码或任何凭据。</li>
+  <li>解除配对、重新配对、Mac 上移除了这个邮箱或 Mac 拒绝这台设备时立即清空。手机丢了：在 Mac 菜单栏的 Kitepost 里吊销这台设备，它下次连上 Mac 时会被拒绝并清空副本；一直连不上的手机清不了，副本最多留 30 天，这时靠手机自己的锁屏和加密保护。</li>
+  <li>系统给的后台刷新时间里，App 只向你自己的 Mac 取新内容。副本只在这台手机上，不上传到任何地方。</li>
+</ul>
+
+<h2 id="zh-images">7. 邮件里的远程图片</h2>
+<p>邮件里的图片可能放在发件人的服务器上。图片由你 Mac 上的引擎代取并缓存，以内嵌数据随邮件交给 iPhone；<strong>iPhone 从不直接连接发件人的图片服务器</strong>。默认是「自动」：只有邮箱服务商判为安全的邮件才取图（判断不了的一律不取），你屏蔽的发件人不取。你可以在「我的 › 隐私和手机上的副本」里改成「先问」：这时只有你点了「显示图片」或已信任的发件人才取图。只取 https 图片，数量和大小都有上限。<strong>取图会让发件人的图片服务器看到你 Mac 的 IP 地址</strong>，对方也可能借独有的图片链接知道邮件被取过。1×1 的跟踪图永远不取。邮件里的 JavaScript 始终关闭；邮件里的链接在 Safari 里打开。</p>
+
+<h2 id="zh-permissions">8. 系统权限</h2>
+<p>相机：扫 Mac 上的配对二维码。提醒事项：只写入你选的那一条，不读取其他提醒。日历：「加入日历」用系统自带的新建日程页，App 不要日历权限，不读你的日历。</p>
+
+<h2 id="zh-purchases">9. App 内购买</h2>
+<p>Kitepost Pro 的年订阅和买断由 Apple 通过 App Store 处理。App 用 StoreKit 在你的设备上核对权益；我们收不到你的付款信息，不把收据或交易信息发到任何开发者服务器，也不使用购买分析 SDK。恢复购买同样走 Apple 的服务，受 Apple 的隐私政策约束。</p>
+
+<h2 id="zh-none">10. 没有统计和追踪</h2>
+<p>Kitepost 没有统计上报、崩溃上报、广告或追踪，不读取广告标识符；引擎不做自动更新检查。</p>
+
+<h2 id="zh-site">11. 本网站</h2>
+<p>这几页是静态网页，不用 Cookie、统计或第三方脚本。每页一小段脚本只根据链接或浏览器的语言设置选择显示语言，不存储也不发送任何东西。托管服务商可能按它自己的政策保留标准访问日志（IP 地址、时间和请求的页面）。</p>
+
+<h2 id="zh-children">12. 儿童</h2>
+<p>本产品不面向 13 岁以下儿童。我们不收集任何人的数据，包括儿童。</p>
+
+<h2 id="zh-rights">13. 你的选择</h2>
+<p>我们不持有关于你的任何数据，所以没有可供我们查询、导出或删除的内容。删除 iPhone App 会删除它在手机上的数据；手机上的副本可以随时清除或关闭；在 Mac 上可以吊销设备、移除邮箱、删除 Kitepost for Mac。你的邮件始终在你的邮箱服务商那里。</p>
+
+<h2 id="zh-changes">14. 政策变更</h2>
+<p>本政策如有变更，我们会更新本页和上面的生效日期。数据流向有实质变化时（例如加入推送通知），会先更新本政策。</p>
+
+<h2 id="zh-contact">15. 联系我们</h2>
+<p><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a></p>
+</section>
+
+<!-- ===== English ===== -->
+<section class="lang" id="en" lang="en" data-l="en">
+<nav class="pages"><a href="../#en">Kitepost</a><a href="../support/#en">Support</a><a href="#en">Privacy</a></nav>
+<h1>Kitepost Privacy Policy</h1>
+<p class="muted">Effective date: 2026-11-17<br>Applies to: the Kitepost iPhone app, Kitepost for Mac (and the engine it runs on your Mac), and these web pages.<br>Operator: Junhua Li</p>
+
+<h2 id="en-summary">1. Summary</h2>
+<p><strong>We don’t collect any data about you.</strong> Kitepost has no accounts and no servers of its own: your mail moves only between your Mac, your mail provider, and your iPhone, and never passes through us. The app contains no advertising, analytics, crash reporting, or third-party tracking SDKs.</p>
+
+<h2 id="en-flow">2. How Data Travels</h2>
+<ul>
+  <li><strong>Your Mac and your mailbox:</strong> Kitepost for Mac connects to your own mail provider over standard, encrypted IMAP and SMTP, with the credentials you enter on the Mac, to fetch and send mail. Outlook and Hotmail use Microsoft sign-in: you sign in at <code>login.microsoftonline.com</code> in your browser and consent, and the token Microsoft issues to your Mac is stored in the Mac’s Keychain. Kitepost offers no “Sign in with Google” and uses no mail API that needs a provider’s approval. Your mail provider handles your mail under its own terms and privacy policy.</li>
+  <li><strong>Your iPhone and your Mac:</strong> the iPhone app connects only to your own Mac, over SSH (encrypted) through your own Tailscale network. The Tailscale account is yours and is managed by Tailscale; when the devices can’t connect directly, the encrypted traffic may be forwarded through Tailscale’s relay servers, which can’t decrypt it. Your use of Tailscale is governed by Tailscale’s own terms and privacy policy.</li>
+  <li>We don’t operate any server that receives your data.</li>
+</ul>
+
+<h2 id="en-credentials">3. Credentials</h2>
+<p>Mail passwords, app passwords, authorization codes, and Microsoft refresh tokens are stored only in the system Keychain of your Mac. They can be entered only on the Mac, never pass through the iPhone, and are not written to settings files or logs. The iPhone never holds mail passwords or AI credentials.</p>
+
+<h2 id="en-ai">4. AI: Third-Party Processing</h2>
+<p>Kitepost’s AI features (sorting, briefings, Insights, drafting replies, and conversations in the Reply Desk) are performed by Claude Code or Codex, which you install on your own Mac and sign in to with your own account. For these tasks, the engine on your Mac hands the relevant email content (such as message text, threads, and your instructions) to the program you chose, which sends it to its provider for processing:</p>
+<ul>
+  <li>Claude Code: Anthropic;</li>
+  <li>Codex: OpenAI.</li>
+</ul>
+<p>This processing starts only on your Mac, uses your own account and subscription, and is governed by that provider’s terms and privacy policy; it is the provider’s responsibility and doesn’t pass through us. The iPhone app itself contains and calls no AI service and holds no AI credentials. <strong>Before the AI is used for the first time, the app explains this and asks for your consent.</strong> You can turn off automatic “Pre-Read with AI” in the app. Apart from the AI program you chose, Kitepost never sends your mail to any AI service or to anyone else.</p>
+
+<h2 id="en-mac">5. Data Stored on Your Mac</h2>
+<p>Kitepost for Mac stores your mail (original messages and attachments), sorting and handling records, drafts, settings, and a cache of email images (up to 256 MB, 30 days) on your Mac. You can set how long and how much mail is kept in the app. This data stays on your Mac and isn’t sent to us.</p>
+
+<h2 id="en-phone">6. The Copy on the iPhone</h2>
+<p>So that mail opens at once and can be read offline, the iPhone keeps a copy: lists, counts, briefings, the Board, Insights, recently viewed and preloaded messages (text, layout, and their images), and the latest Reply Desk session.</p>
+<ul>
+  <li>The last 30 days, up to 200 MB by default (change it to 50, 100, or 500 MB under Me › Privacy &amp; Copy on the iPhone). You can clear it at any time or turn it off (turning it off clears it).</li>
+  <li>It’s stored with the system’s file encryption and marked as excluded from backups (no iCloud, no computer backups). It never holds original attachments, mail passwords, or any credentials.</li>
+  <li>It’s cleared immediately when you unpair or pair again, when the mailbox is removed on the Mac, or when the Mac refuses this device. If you lose your iPhone, revoke it in Kitepost in the Mac menu bar: the next time it connects, it’s refused and the copy is wiped. An iPhone that never reconnects can’t be wiped; its copy is kept for at most 30 days and is then protected by the phone’s own lock and encryption.</li>
+  <li>During background refresh time granted by iOS, the app fetches new content only from your own Mac. The copy stays on this iPhone and is never uploaded anywhere.</li>
+</ul>
+
+<h2 id="en-images">7. Remote Images in Email</h2>
+<p>Images in an email may be hosted on the sender’s servers. The engine on your Mac fetches and caches them and hands them to the iPhone embedded in the email; <strong>the iPhone never connects to a sender’s image server</strong>. The default is “automatic”: images are fetched only for mail that your mail provider classifies as safe (mail it can’t classify gets no images), and never for senders you blocked. You can switch to “ask” under Me › Privacy &amp; Copy on the iPhone; images are then fetched only when you tap Show Images, or for senders you trust. Only https images are fetched, with limits on their number and size. <strong>Fetching an image can reveal your Mac’s IP address to the sender’s server</strong>, and a unique image link may tell the sender that the message was fetched. 1×1 tracking images are never fetched. JavaScript in email is always off, and links in email open in Safari.</p>
+
+<h2 id="en-permissions">8. System Permissions</h2>
+<p>Camera: to scan the pairing QR code shown on your Mac. Reminders: to add only the item you choose; other reminders aren’t read. Calendar: “Add to Calendar” uses the system’s own new-event screen; the app asks for no calendar access and doesn’t read your calendar.</p>
+
+<h2 id="en-purchases">9. In-App Purchases</h2>
+<p>Apple processes Kitepost Pro annual subscriptions and lifetime purchases through the App Store. The app uses StoreKit to verify entitlements on your device. We don’t receive payment details, don’t send receipts or transaction information to any developer server, and use no purchase analytics SDKs. Restoring purchases also uses Apple’s services, under Apple’s privacy policy.</p>
+
+<h2 id="en-none">10. No Analytics or Tracking</h2>
+<p>Kitepost has no analytics, crash reporting, advertising, or tracking and doesn’t read the advertising identifier. The engine makes no automatic update checks.</p>
+
+<h2 id="en-site">11. This Website</h2>
+<p>These pages are static and use no cookies, analytics, or third-party scripts. A small script on each page only chooses the display language from the link or your browser’s language settings; it doesn’t store or send anything. The hosting provider may keep standard access logs (IP address, time, and page requested) under its own policy.</p>
+
+<h2 id="en-children">12. Children</h2>
+<p>The product isn’t directed at children under 13. We don’t collect data from anyone, including children.</p>
+
+<h2 id="en-rights">13. Your Choices</h2>
+<p>We don’t hold any data about you, so there’s nothing for us to look up, export, or delete. Deleting the iPhone app deletes its data from your iPhone; you can clear or turn off the copy on the iPhone at any time; on the Mac you can revoke devices, remove mailboxes, and delete Kitepost for Mac. Your mail always remains with your mail provider.</p>
+
+<h2 id="en-changes">14. Changes to This Policy</h2>
+<p>If this policy changes, we’ll update this page and the effective date above. Before any material change in how data travels (for example, adding push notifications), this policy will be updated first.</p>
+
+<h2 id="en-contact">15. Contact Us</h2>
+<p><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a></p>
+</section>
+
+<!-- ===== Español ===== -->
+<section class="lang" id="es" lang="es" data-l="es">
+<nav class="pages"><a href="../#es">Kitepost</a><a href="../support/#es">Soporte</a><a href="#es">Privacidad</a></nav>
+<h1>Política de privacidad de Kitepost</h1>
+<p class="muted">Fecha de entrada en vigor: 2026-11-17<br>Se aplica a: la app Kitepost para iPhone, Kitepost for Mac (y el motor que ejecuta en tu Mac) y estas páginas web.<br>Responsable: Junhua Li</p>
+
+<h2 id="es-summary">1. Resumen</h2>
+<p><strong>No recopilamos ningún dato sobre ti.</strong> Kitepost no tiene cuentas ni servidores propios: tu correo solo circula entre tu Mac, tu proveedor de correo y tu iPhone, y nunca pasa por nosotros. La app no contiene publicidad, analítica, informes de fallos ni SDK de seguimiento de terceros.</p>
+
+<h2 id="es-flow">2. Cómo viajan los datos</h2>
+<ul>
+  <li><strong>Tu Mac y tu buzón:</strong> Kitepost for Mac se conecta a tu propio proveedor de correo por IMAP y SMTP estándar y cifrados, con las credenciales que introduces en el Mac, para recibir y enviar correo. Outlook y Hotmail usan el inicio de sesión de Microsoft: inicias sesión en <code>login.microsoftonline.com</code> en tu navegador y das tu consentimiento, y el token que Microsoft emite para tu Mac se guarda en el llavero del Mac. Kitepost no ofrece «Iniciar sesión con Google» ni usa interfaces de correo que requieran la aprobación del proveedor. Tu proveedor de correo trata tu correo según sus propias condiciones y política de privacidad.</li>
+  <li><strong>Tu iPhone y tu Mac:</strong> la app del iPhone solo se conecta a tu propio Mac, por SSH (cifrado) a través de tu propia red Tailscale. La cuenta de Tailscale es tuya y la gestiona Tailscale; cuando los dispositivos no pueden conectarse directamente, el tráfico cifrado puede reenviarse por servidores de retransmisión de Tailscale, que no pueden descifrarlo. Tu uso de Tailscale se rige por sus propias condiciones y política de privacidad.</li>
+  <li>No operamos ningún servidor que reciba tus datos.</li>
+</ul>
+
+<h2 id="es-credentials">3. Credenciales</h2>
+<p>Las contraseñas de correo, contraseñas de aplicación, códigos de autorización y tokens de actualización de Microsoft se guardan solo en el llavero del sistema de tu Mac. Solo se pueden introducir en el Mac, nunca pasan por el iPhone y no se escriben en archivos de configuración ni en registros. El iPhone nunca guarda contraseñas de correo ni credenciales de IA.</p>
+
+<h2 id="es-ai">4. IA: tratamiento por terceros</h2>
+<p>Las funciones de IA de Kitepost (clasificación, resúmenes, análisis, borradores de respuesta y conversaciones en la Mesa de respuestas) las realiza Claude Code o Codex, que tú instalas en tu propio Mac e inicias con tu propia cuenta. Para estas tareas, el motor de tu Mac entrega el contenido de correo correspondiente (como el texto de los mensajes, las conversaciones y tus indicaciones) al programa que elegiste, que lo envía a su proveedor para su tratamiento:</p>
+<ul>
+  <li>Claude Code: Anthropic;</li>
+  <li>Codex: OpenAI.</li>
+</ul>
+<p>Este tratamiento se inicia solo en tu Mac, usa tu propia cuenta y suscripción, y se rige por las condiciones y la política de privacidad de ese proveedor; es responsabilidad del proveedor y no pasa por nosotros. La app del iPhone no contiene ni llama a ningún servicio de IA y no guarda credenciales de IA. <strong>Antes de usar la IA por primera vez, la app te lo explica y te pide tu consentimiento.</strong> Puedes desactivar la «Prelectura con IA» automática en la app. Aparte del programa de IA que elegiste, Kitepost nunca envía tu correo a ningún servicio de IA ni a nadie.</p>
+
+<h2 id="es-mac">5. Datos guardados en tu Mac</h2>
+<p>Kitepost for Mac guarda en tu Mac tu correo (mensajes originales y adjuntos), los registros de clasificación y gestión, borradores, ajustes y una caché de imágenes de los correos (hasta 256 MB, 30 días). En la app puedes fijar cuánto tiempo y cuánto espacio se guarda el correo. Estos datos se quedan en tu Mac y no se nos envían.</p>
+
+<h2 id="es-phone">6. La copia en el iPhone</h2>
+<p>Para que el correo se abra al instante y se pueda leer sin conexión, el iPhone guarda una copia: listas, recuentos, resúmenes, el Tablero, análisis, mensajes vistos recientemente y descargados por adelantado (texto, formato y sus imágenes) y la última sesión de la Mesa de respuestas.</p>
+<ul>
+  <li>Los últimos 30 días, hasta 200 MB por defecto (puedes cambiarlo a 50, 100 o 500 MB en Perfil › Privacidad y copia en el iPhone). Puedes borrarla en cualquier momento o desactivarla (al desactivarla se borra).</li>
+  <li>Se guarda con el cifrado de archivos del sistema y marcada para no incluirse en copias de seguridad (ni iCloud ni copias en el ordenador). Nunca contiene adjuntos originales, contraseñas de correo ni credenciales.</li>
+  <li>Se borra de inmediato al desvincular o volver a vincular, cuando se elimina el buzón en el Mac o cuando el Mac rechaza este dispositivo. Si pierdes el iPhone, revócalo en Kitepost, en la barra de menús del Mac: la próxima vez que se conecte será rechazado y se borrará la copia. Un iPhone que nunca vuelva a conectarse no se puede borrar; su copia se guarda como máximo 30 días y queda protegida por el bloqueo y el cifrado del propio teléfono.</li>
+  <li>Durante el tiempo de actualización en segundo plano que concede iOS, la app solo obtiene contenido nuevo de tu propio Mac. La copia se queda en este iPhone y nunca se sube a ningún sitio.</li>
+</ul>
+
+<h2 id="es-images">7. Imágenes remotas en los correos</h2>
+<p>Las imágenes de un correo pueden estar alojadas en los servidores del remitente. El motor de tu Mac las descarga y guarda en caché, y se las pasa al iPhone incrustadas en el correo; <strong>el iPhone nunca se conecta al servidor de imágenes de un remitente</strong>. Por defecto es «automático»: solo se descargan imágenes del correo que tu proveedor clasifica como seguro (el que no puede clasificar se queda sin imágenes), y nunca de remitentes que bloqueaste. Puedes cambiarlo a «preguntar» en Perfil › Privacidad y copia en el iPhone; entonces las imágenes solo se descargan cuando tocas Mostrar imágenes, o para remitentes de confianza. Solo se descargan imágenes https, con límites de cantidad y tamaño. <strong>Descargar una imagen puede revelar la dirección IP de tu Mac al servidor del remitente</strong>, y un enlace de imagen único puede indicarle que el mensaje se descargó. Las imágenes de seguimiento de 1×1 nunca se descargan. JavaScript en los correos está siempre desactivado y los enlaces se abren en Safari.</p>
+
+<h2 id="es-permissions">8. Permisos del sistema</h2>
+<p>Cámara: para escanear el código QR de vinculación que muestra tu Mac. Recordatorios: para añadir solo el elemento que elijas; los demás recordatorios no se leen. Calendario: «Añadir al calendario» usa la pantalla de nuevo evento del propio sistema; la app no pide acceso al calendario ni lo lee.</p>
+
+<h2 id="es-purchases">9. Compras dentro de la app</h2>
+<p>Apple procesa las suscripciones anuales y las compras de por vida de Kitepost Pro a través del App Store. La app usa StoreKit para verificar los derechos en tu dispositivo. No recibimos datos de pago, no enviamos recibos ni información de transacciones a ningún servidor del desarrollador y no usamos SDK de analítica de compras. La restauración de compras también usa los servicios de Apple, según la política de privacidad de Apple.</p>
+
+<h2 id="es-none">10. Sin analítica ni seguimiento</h2>
+<p>Kitepost no tiene analítica, informes de fallos, publicidad ni seguimiento, y no lee el identificador de publicidad. El motor no busca actualizaciones automáticamente.</p>
+
+<h2 id="es-site">11. Este sitio web</h2>
+<p>Estas páginas son estáticas y no usan cookies, analítica ni scripts de terceros. Un pequeño script en cada página solo elige el idioma según el enlace o la configuración de idioma de tu navegador; no guarda ni envía nada. El proveedor de alojamiento puede conservar registros de acceso estándar (dirección IP, hora y página solicitada) según su propia política.</p>
+
+<h2 id="es-children">12. Menores</h2>
+<p>El producto no está dirigido a menores de 13 años. No recopilamos datos de nadie, incluidos los menores.</p>
+
+<h2 id="es-rights">13. Tus opciones</h2>
+<p>No guardamos ningún dato sobre ti, así que no hay nada que podamos consultar, exportar o borrar. Al eliminar la app del iPhone se borran sus datos del iPhone; puedes borrar o desactivar la copia en el iPhone en cualquier momento; en el Mac puedes revocar dispositivos, eliminar buzones y borrar Kitepost for Mac. Tu correo siempre sigue en tu proveedor de correo.</p>
+
+<h2 id="es-changes">14. Cambios en esta política</h2>
+<p>Si esta política cambia, actualizaremos esta página y la fecha de entrada en vigor de arriba. Antes de cualquier cambio sustancial en cómo viajan los datos (por ejemplo, al añadir notificaciones push), esta política se actualizará primero.</p>
+
+<h2 id="es-contact">15. Contacto</h2>
+<p><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a></p>
+</section>
+
+<!-- ===== Français ===== -->
+<section class="lang" id="fr" lang="fr" data-l="fr">
+<nav class="pages"><a href="../#fr">Kitepost</a><a href="../support/#fr">Assistance</a><a href="#fr">Confidentialité</a></nav>
+<h1>Politique de confidentialité de Kitepost</h1>
+<p class="muted">Date d’entrée en vigueur&nbsp;: 2026-11-17<br>S’applique à&nbsp;: l’app Kitepost pour iPhone, Kitepost for Mac (et le moteur qu’il exécute sur votre Mac) et ces pages web.<br>Responsable&nbsp;: Junhua Li</p>
+
+<h2 id="fr-summary">1. Résumé</h2>
+<p><strong>Nous ne collectons aucune donnée vous concernant.</strong> Kitepost n’a ni comptes ni serveurs propres&nbsp;: vos e-mails ne circulent qu’entre votre Mac, votre fournisseur de messagerie et votre iPhone, et ne passent jamais par nous. L’app ne contient ni publicité, ni statistiques, ni rapports de plantage, ni SDK de suivi tiers.</p>
+
+<h2 id="fr-flow">2. Comment circulent les données</h2>
+<ul>
+  <li><strong>Votre Mac et votre boîte&nbsp;:</strong> Kitepost for Mac se connecte à votre propre fournisseur de messagerie en IMAP et SMTP standard et chiffrés, avec les identifiants que vous saisissez sur le Mac, pour relever et envoyer vos e-mails. Outlook et Hotmail utilisent la connexion Microsoft&nbsp;: vous vous connectez sur <code>login.microsoftonline.com</code> dans votre navigateur et donnez votre accord, et le jeton que Microsoft délivre à votre Mac est stocké dans le trousseau du Mac. Kitepost ne propose pas «&nbsp;Se connecter avec Google&nbsp;» et n’utilise aucune interface de messagerie soumise à l’approbation d’un fournisseur. Votre fournisseur traite vos e-mails selon ses propres conditions et sa propre politique de confidentialité.</li>
+  <li><strong>Votre iPhone et votre Mac&nbsp;:</strong> l’app iPhone ne se connecte qu’à votre propre Mac, en SSH (chiffré) via votre propre réseau Tailscale. Le compte Tailscale est le vôtre et est géré par Tailscale&nbsp;; lorsque les appareils ne peuvent pas se joindre directement, le trafic chiffré peut transiter par des serveurs relais de Tailscale, qui ne peuvent pas le déchiffrer. Votre utilisation de Tailscale est régie par ses propres conditions et sa politique de confidentialité.</li>
+  <li>Nous n’exploitons aucun serveur qui reçoive vos données.</li>
+</ul>
+
+<h2 id="fr-credentials">3. Identifiants</h2>
+<p>Les mots de passe de messagerie, mots de passe d’application, codes d’autorisation et jetons d’actualisation Microsoft sont stockés uniquement dans le trousseau système de votre Mac. Ils ne peuvent être saisis que sur le Mac, ne passent jamais par l’iPhone et ne sont écrits ni dans des fichiers de réglages ni dans des journaux. L’iPhone ne détient jamais de mot de passe de messagerie ni d’identifiants d’IA.</p>
+
+<h2 id="fr-ai">4. IA&nbsp;: traitement par des tiers</h2>
+<p>Les fonctions d’IA de Kitepost (tri, synthèses, analyses, rédaction des réponses et conversations dans le Bureau des réponses) sont assurées par Claude Code ou Codex, que vous installez sur votre propre Mac et auxquels vous vous connectez avec votre propre compte. Pour ces tâches, le moteur de votre Mac transmet le contenu d’e-mail concerné (par exemple le texte des messages, les fils et vos instructions) au programme que vous avez choisi, qui l’envoie à son fournisseur pour traitement&nbsp;:</p>
+<ul>
+  <li>Claude Code&nbsp;: Anthropic&nbsp;;</li>
+  <li>Codex&nbsp;: OpenAI.</li>
+</ul>
+<p>Ce traitement n’est déclenché que sur votre Mac, utilise votre propre compte et votre propre abonnement, et est régi par les conditions et la politique de confidentialité de ce fournisseur&nbsp;; il relève de la responsabilité du fournisseur et ne passe pas par nous. L’app iPhone elle-même ne contient ni n’appelle aucun service d’IA et ne détient aucun identifiant d’IA. <strong>Avant la première utilisation de l’IA, l’app vous l’explique et vous demande votre accord.</strong> Vous pouvez désactiver la «&nbsp;Prélecture par l’IA&nbsp;» automatique dans l’app. En dehors du programme d’IA que vous avez choisi, Kitepost n’envoie jamais vos e-mails à un service d’IA ni à qui que ce soit.</p>
+
+<h2 id="fr-mac">5. Données stockées sur votre Mac</h2>
+<p>Kitepost for Mac stocke sur votre Mac vos e-mails (messages d’origine et pièces jointes), les traces de tri et de traitement, les brouillons, les réglages et un cache des images des e-mails (256&nbsp;Mo et 30&nbsp;jours au plus). Vous pouvez fixer dans l’app la durée et l’espace de conservation des e-mails. Ces données restent sur votre Mac et ne nous sont pas envoyées.</p>
+
+<h2 id="fr-phone">6. La copie sur l’iPhone</h2>
+<p>Pour que vos e-mails s’ouvrent aussitôt et restent lisibles hors ligne, l’iPhone en garde une copie&nbsp;: listes, compteurs, synthèses, Tableau, analyses, messages récemment consultés et préchargés (texte, mise en page et leurs images) et la dernière session du Bureau des réponses.</p>
+<ul>
+  <li>Les 30&nbsp;derniers jours, 200&nbsp;Mo au plus par défaut (modifiable en 50, 100 ou 500&nbsp;Mo dans Profil › Confidentialité et copie sur l’iPhone). Vous pouvez l’effacer à tout moment ou la désactiver (la désactiver l’efface).</li>
+  <li>Elle est stockée avec le chiffrement de fichiers du système et exclue des sauvegardes (ni iCloud, ni sauvegardes sur ordinateur). Elle ne contient jamais de pièces jointes d’origine, de mots de passe de messagerie ni d’identifiants.</li>
+  <li>Elle est effacée immédiatement quand vous dissociez ou associez à nouveau l’appareil, quand la boîte est retirée sur le Mac ou quand le Mac refuse cet appareil. Si vous perdez votre iPhone, révoquez-le dans Kitepost, dans la barre des menus du Mac&nbsp;: à sa prochaine connexion, il sera refusé et la copie effacée. Un iPhone qui ne se reconnecte jamais ne peut pas être effacé&nbsp;; sa copie est conservée 30&nbsp;jours au plus et reste protégée par le verrouillage et le chiffrement du téléphone.</li>
+  <li>Pendant le temps d’actualisation en arrière-plan accordé par iOS, l’app ne récupère du contenu que depuis votre propre Mac. La copie reste sur cet iPhone et n’est jamais envoyée nulle part.</li>
+</ul>
+
+<h2 id="fr-images">7. Images distantes dans les e-mails</h2>
+<p>Les images d’un e-mail peuvent être hébergées sur les serveurs de l’expéditeur. Le moteur de votre Mac les récupère, les met en cache et les transmet à l’iPhone intégrées à l’e-mail&nbsp;; <strong>l’iPhone ne se connecte jamais au serveur d’images d’un expéditeur</strong>. Par défaut, le mode est «&nbsp;automatique&nbsp;»&nbsp;: les images ne sont récupérées que pour les e-mails que votre fournisseur de messagerie classe comme sûrs (ceux qu’il ne peut pas classer n’en reçoivent pas), et jamais pour les expéditeurs que vous avez bloqués. Vous pouvez passer en mode «&nbsp;demander&nbsp;» dans Profil › Confidentialité et copie sur l’iPhone&nbsp;; les images ne sont alors récupérées que lorsque vous touchez Afficher les images, ou pour les expéditeurs de confiance. Seules les images https sont récupérées, avec des limites de nombre et de taille. <strong>Récupérer une image peut révéler l’adresse IP de votre Mac au serveur de l’expéditeur</strong>, et un lien d’image unique peut lui indiquer que le message a été récupéré. Les images de suivi 1×1 ne sont jamais récupérées. JavaScript est toujours désactivé dans les e-mails, et les liens s’ouvrent dans Safari.</p>
+
+<h2 id="fr-permissions">8. Autorisations système</h2>
+<p>Appareil photo&nbsp;: pour scanner le QR code d’association affiché par votre Mac. Rappels&nbsp;: pour ajouter uniquement l’élément que vous choisissez&nbsp;; les autres rappels ne sont pas lus. Calendrier&nbsp;: «&nbsp;Ajouter au calendrier&nbsp;» utilise l’écran de nouvel événement du système&nbsp;; l’app ne demande pas l’accès au calendrier et ne le lit pas.</p>
+
+<h2 id="fr-purchases">9. Achats intégrés</h2>
+<p>Apple traite les abonnements annuels et les achats à vie de Kitepost Pro via l’App Store. L’app utilise StoreKit pour vérifier vos droits sur l’appareil. Nous ne recevons aucune donnée de paiement, n’envoyons ni reçus ni informations de transaction à un serveur du développeur et n’utilisons aucun SDK d’analyse des achats. La restauration des achats passe aussi par les services d’Apple, selon la politique de confidentialité d’Apple.</p>
+
+<h2 id="fr-none">10. Ni statistiques ni suivi</h2>
+<p>Kitepost n’a ni statistiques, ni rapports de plantage, ni publicité, ni suivi, et ne lit pas l’identifiant publicitaire. Le moteur ne vérifie pas automatiquement les mises à jour.</p>
+
+<h2 id="fr-site">11. Ce site web</h2>
+<p>Ces pages sont statiques et n’utilisent ni cookies, ni statistiques, ni scripts tiers. Un petit script sur chaque page choisit uniquement la langue d’affichage d’après le lien ou les réglages de langue de votre navigateur&nbsp;; il ne stocke ni n’envoie rien. L’hébergeur peut conserver des journaux d’accès standard (adresse IP, heure et page demandée) selon sa propre politique.</p>
+
+<h2 id="fr-children">12. Enfants</h2>
+<p>Le produit ne s’adresse pas aux enfants de moins de 13&nbsp;ans. Nous ne collectons de données auprès de personne, enfants compris.</p>
+
+<h2 id="fr-rights">13. Vos choix</h2>
+<p>Nous ne détenons aucune donnée vous concernant&nbsp;: il n’y a donc rien que nous puissions consulter, exporter ou supprimer. Supprimer l’app iPhone efface ses données de l’iPhone&nbsp;; vous pouvez effacer ou désactiver la copie sur l’iPhone à tout moment&nbsp;; sur le Mac, vous pouvez révoquer des appareils, retirer des boîtes et supprimer Kitepost for Mac. Vos e-mails restent toujours chez votre fournisseur de messagerie.</p>
+
+<h2 id="fr-changes">14. Modifications de cette politique</h2>
+<p>Si cette politique change, nous mettrons à jour cette page et la date d’entrée en vigueur ci-dessus. Avant tout changement important dans la circulation des données (par exemple l’ajout de notifications push), cette politique sera mise à jour en premier.</p>
+
+<h2 id="fr-contact">15. Nous contacter</h2>
+<p><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a></p>
+</section>
+
+<!-- ===== Deutsch ===== -->
+<section class="lang" id="de" lang="de" data-l="de">
+<nav class="pages"><a href="../#de">Kitepost</a><a href="../support/#de">Support</a><a href="#de">Datenschutz</a></nav>
+<h1>Kitepost Datenschutzerklärung</h1>
+<p class="muted">Gültig ab: 2026-11-17<br>Gilt für: die Kitepost-iPhone-App, Kitepost for Mac (und die Engine, die es auf deinem Mac ausführt) und diese Webseiten.<br>Verantwortlich: Junhua Li</p>
+
+<h2 id="de-summary">1. Zusammenfassung</h2>
+<p><strong>Wir erheben keine Daten über dich.</strong> Kitepost hat keine Konten und keine eigenen Server: Deine E-Mails fließen nur zwischen deinem Mac, deinem E-Mail-Anbieter und deinem iPhone und laufen nie über uns. Die App enthält keine Werbung, keine Statistik, keine Absturzberichte und keine Tracking-SDKs von Drittanbietern.</p>
+
+<h2 id="de-flow">2. Wie Daten fließen</h2>
+<ul>
+  <li><strong>Dein Mac und dein Postfach:</strong> Kitepost for Mac verbindet sich über verschlüsseltes Standard-IMAP und -SMTP mit deinem eigenen E-Mail-Anbieter, mit den Zugangsdaten, die du auf dem Mac eingibst, um E-Mails abzurufen und zu senden. Outlook und Hotmail nutzen die Microsoft-Anmeldung: Du meldest dich im Browser bei <code>login.microsoftonline.com</code> an und stimmst zu; das Token, das Microsoft deinem Mac ausstellt, wird im Schlüsselbund des Mac gespeichert. Kitepost bietet kein „Mit Google anmelden“ und nutzt keine E-Mail-Schnittstelle, die eine Freigabe des Anbieters braucht. Dein E-Mail-Anbieter verarbeitet deine E-Mails nach seinen eigenen Bedingungen und seiner Datenschutzerklärung.</li>
+  <li><strong>Dein iPhone und dein Mac:</strong> Die iPhone-App verbindet sich nur mit deinem eigenen Mac, per SSH (verschlüsselt) über dein eigenes Tailscale-Netzwerk. Das Tailscale-Konto gehört dir und wird von Tailscale verwaltet; können sich die Geräte nicht direkt erreichen, kann der verschlüsselte Datenverkehr über Relay-Server von Tailscale laufen, die ihn nicht entschlüsseln können. Für deine Nutzung von Tailscale gelten dessen eigene Bedingungen und Datenschutzerklärung.</li>
+  <li>Wir betreiben keinen Server, der deine Daten empfängt.</li>
+</ul>
+
+<h2 id="de-credentials">3. Zugangsdaten</h2>
+<p>E-Mail-Passwörter, App-Passwörter, Autorisierungscodes und Microsoft-Aktualisierungstoken werden nur im System-Schlüsselbund deines Mac gespeichert. Sie lassen sich nur auf dem Mac eingeben, laufen nie über das iPhone und werden weder in Einstellungsdateien noch in Protokolle geschrieben. Das iPhone hat nie E-Mail-Passwörter oder KI-Zugangsdaten.</p>
+
+<h2 id="de-ai">4. KI: Verarbeitung durch Dritte</h2>
+<p>Die KI-Funktionen von Kitepost (Sortieren, Briefings, Einordnungen, Antwortentwürfe und Gespräche in der Antwortzentrale) übernimmt Claude Code oder Codex, das du selbst auf deinem Mac installierst und mit deinem eigenen Konto anmeldest. Für diese Aufgaben übergibt die Engine auf deinem Mac die jeweiligen E-Mail-Inhalte (etwa Nachrichtentext, Verläufe und deine Anweisungen) an das von dir gewählte Programm, das sie zur Verarbeitung an seinen Anbieter sendet:</p>
+<ul>
+  <li>Claude Code: Anthropic;</li>
+  <li>Codex: OpenAI.</li>
+</ul>
+<p>Diese Verarbeitung wird nur auf deinem Mac ausgelöst, nutzt dein eigenes Konto und Abo und unterliegt den Bedingungen und der Datenschutzerklärung dieses Anbieters; sie liegt in der Verantwortung des Anbieters und läuft nicht über uns. Die iPhone-App selbst enthält und nutzt keinen KI-Dienst und hat keine KI-Zugangsdaten. <strong>Vor der ersten Nutzung der KI erklärt die App das und fragt nach deiner Zustimmung.</strong> Das automatische „Vorab mit KI lesen“ kannst du in der App abschalten. Außer an das von dir gewählte KI-Programm schickt Kitepost deine E-Mails nie an einen KI-Dienst oder sonst jemanden.</p>
+
+<h2 id="de-mac">5. Auf deinem Mac gespeicherte Daten</h2>
+<p>Kitepost for Mac speichert auf deinem Mac deine E-Mails (Originalnachrichten und Anhänge), Sortier- und Bearbeitungsprotokolle, Entwürfe, Einstellungen und einen Cache der E-Mail-Bilder (höchstens 256 MB und 30 Tage). Wie lange und wie viel E-Mail aufbewahrt wird, legst du in der App fest. Diese Daten bleiben auf deinem Mac und werden nicht an uns gesendet.</p>
+
+<h2 id="de-phone">6. Die Kopie auf dem iPhone</h2>
+<p>Damit E-Mails sofort aufgehen und offline lesbar sind, hält das iPhone eine Kopie: Listen, Zähler, Briefings, die Übersicht, Einordnungen, zuletzt angesehene und vorab geladene Nachrichten (Text, Layout und ihre Bilder) und die letzte Sitzung der Antwortzentrale.</p>
+<ul>
+  <li>Die letzten 30 Tage, standardmäßig höchstens 200 MB (änderbar auf 50, 100 oder 500 MB unter Profil › Datenschutz und Kopie auf dem iPhone). Du kannst sie jederzeit löschen oder abschalten (Abschalten löscht sie).</li>
+  <li>Sie wird mit der Dateiverschlüsselung des Systems gespeichert und ist von Backups ausgenommen (kein iCloud, keine Computer-Backups). Sie enthält nie Originalanhänge, E-Mail-Passwörter oder Zugangsdaten.</li>
+  <li>Sie wird sofort gelöscht, wenn du entkoppelst oder neu koppelst, das Postfach auf dem Mac entfernt wird oder der Mac dieses Gerät ablehnt. Wenn du dein iPhone verlierst, widerrufe es in Kitepost in der Mac-Menüleiste: Bei der nächsten Verbindung wird es abgelehnt und die Kopie gelöscht. Ein iPhone, das sich nie mehr verbindet, kann nicht gelöscht werden; seine Kopie bleibt höchstens 30 Tage erhalten und ist dann durch Sperre und Verschlüsselung des iPhone geschützt.</li>
+  <li>In der Zeit für Hintergrundaktualisierung, die iOS gewährt, holt die App neue Inhalte nur von deinem eigenen Mac. Die Kopie bleibt auf diesem iPhone und wird nirgendwohin hochgeladen.</li>
+</ul>
+
+<h2 id="de-images">7. Externe Bilder in E-Mails</h2>
+<p>Bilder in einer E-Mail können auf den Servern des Absenders liegen. Die Engine auf deinem Mac lädt sie, speichert sie zwischen und gibt sie eingebettet in die E-Mail ans iPhone weiter; <strong>das iPhone verbindet sich nie mit dem Bildserver eines Absenders</strong>. Standard ist „Automatisch“: Bilder werden nur für E-Mails geladen, die dein E-Mail-Anbieter als sicher einstuft (was er nicht einstufen kann, bekommt keine Bilder), und nie für Absender, die du blockiert hast. Unter Profil › Datenschutz und Kopie auf dem iPhone kannst du auf „Nachfragen“ umstellen; dann werden Bilder nur geladen, wenn du auf „Bilder anzeigen“ tippst, oder für vertrauenswürdige Absender. Geladen werden nur https-Bilder, mit Grenzen für Anzahl und Größe. <strong>Beim Laden eines Bildes kann der Server des Absenders die IP-Adresse deines Mac sehen</strong>, und ein eindeutiger Bildlink kann ihm verraten, dass die Nachricht abgerufen wurde. 1×1-Tracking-Bilder werden nie geladen. JavaScript ist in E-Mails immer aus, Links öffnen sich in Safari.</p>
+
+<h2 id="de-permissions">8. Systemberechtigungen</h2>
+<p>Kamera: zum Scannen des Kopplungs-QR-Codes, den dein Mac anzeigt. Erinnerungen: um nur den Eintrag hinzuzufügen, den du auswählst; andere Erinnerungen werden nicht gelesen. Kalender: „Zum Kalender hinzufügen“ nutzt den Systemdialog für neue Termine; die App fragt nicht nach Kalenderzugriff und liest deinen Kalender nicht.</p>
+
+<h2 id="de-purchases">9. In-App-Käufe</h2>
+<p>Apple wickelt Jahresabos und dauerhafte Käufe von Kitepost Pro über den App Store ab. Die App prüft deine Berechtigungen mit StoreKit auf dem Gerät. Wir erhalten keine Zahlungsdaten, senden keine Belege oder Transaktionsdaten an einen Entwicklerserver und nutzen keine SDKs zur Kaufanalyse. Auch das Wiederherstellen von Käufen läuft über Apples Dienste, nach Apples Datenschutzrichtlinie.</p>
+
+<h2 id="de-none">10. Keine Statistik, kein Tracking</h2>
+<p>Kitepost hat keine Statistik, keine Absturzberichte, keine Werbung und kein Tracking und liest die Werbe-ID nicht. Die Engine sucht nicht automatisch nach Updates.</p>
+
+<h2 id="de-site">11. Diese Website</h2>
+<p>Diese Seiten sind statisch und nutzen keine Cookies, keine Statistik und keine Skripte von Drittanbietern. Ein kleines Skript auf jeder Seite wählt nur die Anzeigesprache anhand des Links oder der Spracheinstellungen deines Browsers; es speichert und sendet nichts. Der Hosting-Anbieter kann nach seiner eigenen Richtlinie übliche Zugriffsprotokolle führen (IP-Adresse, Uhrzeit und aufgerufene Seite).</p>
+
+<h2 id="de-children">12. Kinder</h2>
+<p>Das Produkt richtet sich nicht an Kinder unter 13 Jahren. Wir erheben von niemandem Daten, auch nicht von Kindern.</p>
+
+<h2 id="de-rights">13. Deine Wahlmöglichkeiten</h2>
+<p>Wir haben keine Daten über dich, also gibt es nichts, was wir nachschlagen, exportieren oder löschen könnten. Löschst du die iPhone-App, werden ihre Daten vom iPhone gelöscht; die Kopie auf dem iPhone kannst du jederzeit löschen oder abschalten; auf dem Mac kannst du Geräte widerrufen, Postfächer entfernen und Kitepost for Mac löschen. Deine E-Mails bleiben immer bei deinem E-Mail-Anbieter.</p>
+
+<h2 id="de-changes">14. Änderungen dieser Erklärung</h2>
+<p>Ändert sich diese Erklärung, aktualisieren wir diese Seite und das Datum oben. Vor jeder wesentlichen Änderung daran, wie Daten fließen (etwa durch Push-Mitteilungen), wird zuerst diese Erklärung aktualisiert.</p>
+
+<h2 id="de-contact">15. Kontakt</h2>
+<p><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a></p>
+</section>
+
+</main>
+<footer><div class="wrap">
+  <div data-l="zh" lang="zh-Hans"><a href="../">Kitepost</a><a href="../support/">技术支持</a><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a></div>
+  <div data-l="en" lang="en"><a href="../">Kitepost</a><a href="../support/">Support</a><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a></div>
+  <div data-l="es" lang="es"><a href="../">Kitepost</a><a href="../support/">Soporte</a><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a></div>
+  <div data-l="fr" lang="fr"><a href="../">Kitepost</a><a href="../support/">Assistance</a><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a></div>
+  <div data-l="de" lang="de"><a href="../">Kitepost</a><a href="../support/">Support</a><a href="mailto:lijunhua941@gmail.com">lijunhua941@gmail.com</a></div>
+</div></footer>
+</body>
+</html>
