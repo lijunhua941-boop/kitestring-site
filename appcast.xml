@@ -23,6 +23,20 @@
     <description>Updates for Kitestring for Mac</description>
     <language>en</language>
     <item>
+      <title>Version 0.16.8</title>
+      <pubDate>Fri, 20 Nov 2026 16:20:36 +0000</pubDate>
+      <!-- CFBundleVersion (build number) decides ordering; CFBundleShortVersionString is what users see. -->
+      <sparkle:version>17</sparkle:version>
+      <sparkle:shortVersionString>0.16.8</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <sparkle:releaseNotesLink>https://lijunhua941-boop.github.io/kitestring-site/download/</sparkle:releaseNotesLink>
+      <enclosure
+        url="https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.8-17/Kitestring-0.16.8-17.dmg"
+        length="56976496"
+        type="application/octet-stream"
+        sparkle:edSignature="CRpywn5IueCxQsogiRNS0fIKjGp4ku5TNHhWyxoKGS88MnwMJEPp3hOdMOx8V5TIJLUWbMzL47+Dui6hl/scDQ=="/>
+    </item>
+    <item>
       <title>Version 0.16.7</title>
       <pubDate>Fri, 20 Nov 2026 04:30:02 +0000</pubDate>
       <!-- CFBundleVersion (build number) decides ordering; CFBundleShortVersionString is what users see. -->

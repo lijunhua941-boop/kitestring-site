@@ -264,8 +264,10 @@ Tell the user, in their language:
 - Which doctor checks are still `warn`, in plain words, and whether an iPhone is paired.
 - If no iPhone is paired yet: what is left on the phone (the App Store link above, Pro, Tailscale)
   and that they can pair any time from the Mac's menu bar › "Pair iPhone…".
-- How to update later: the app's own "Check for Updates" (or `brew upgrade --cask kitestring` if it
-  was installed with Homebrew).
+- How updates work: the app checks for updates and installs them automatically by default (it
+  relaunches itself when idle; running sessions keep going). "Check for Updates" in its menu checks
+  now, and "Update Automatically" there turns this off. With Homebrew, `brew upgrade --cask kitestring`
+  works too.
 - How to uninstall: quit the app, run `VIBETERM_LANG=<code> "$HOME/.local/share/vibeterm/bin/vibe-host" uninstall`
   (removes the helper files and the iPhone's authorized key; exit 5 means the key could not be
   removed and the message says what to do), then `brew uninstall --cask kitestring` or drag the
