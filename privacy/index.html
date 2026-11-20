@@ -81,7 +81,7 @@
 <p class="muted">生效日期：2026-11-20<br>适用于：Kitestring iPhone App、Kitestring for Mac（及其安装在 Mac 上的助手程序）和本网站。<br>运营者：Junhua Li</p>
 
 <h2 id="zh-summary">1. 概要</h2>
-<p><strong>我们不收集你的任何数据。</strong>你不需要 Kitestring 账号，但需要你自己的 Tailscale 账号（由 Tailscale 管理）。我们不运营任何服务器，你的会话不会经过我们的服务器。App 里没有广告、统计或第三方追踪 SDK。</p>
+<p><strong>我们不收集你的任何数据。</strong>你不需要 Kitestring 账号，但需要你自己的 Tailscale 账号（由 Tailscale 管理）。你的会话不会经过我们的服务器。唯一经过我们服务器的是可选的锁屏提醒：推送中转只把提醒转交给 Apple，不保存任何内容（见第 14 条）。App 里没有广告、统计或第三方追踪 SDK。</p>
 
 <h2 id="zh-flow">2. 数据怎么流动</h2>
 <p>App 通过 SSH 连接<strong>你自己的 Mac</strong>，链路是你自己的 Tailscale 网络（WireGuard 加密）。你输入的内容、终端输出、对话、文件和图片只在你的 iPhone 与你的 Mac 之间传输，不经过我们。Tailscale 会尽量让两台设备直接连接；无法直连时，加密后的流量可能经 Tailscale 运营的中继服务器（DERP）转发，中继只转发、无法解密内容。</p>
@@ -89,12 +89,12 @@
 
 <h2 id="zh-agents">3. Mac 上的 Claude Code 与 Codex</h2>
 <p>你在会话里发出的内容由你 Mac 上运行的 Claude Code 或 Codex 处理。它们按各自提供方的服务条款与隐私政策，把内容发送给提供方的服务。这部分处理由提供方负责，不经过我们。</p>
-<p>我们不读取、复制或上传它们的登录凭证；诊断只运行它们自带的登录状态命令，并且只得到登录状态。</p>
+<p>我们不读取、复制或上传它们的登录凭证；诊断只运行它们自带的登录状态命令，并且只得到登录状态。iPhone App 的会话列表会显示这两个账户的额度用量：Mac 上的助手运行它们自带的只读额度查询（不发起对话、不消耗额度），只取各个额度窗口已用的百分比、重置时间和套餐名称，经第 2 条所说的连接发给你的 iPhone，并在 Mac 和 iPhone 上各保存最近一次的结果。邮箱、账户编号等身份信息不会被读取保存，这些数据也不发给我们。</p>
 
 <h2 id="zh-voice">4. 语音输入</h2>
 <p>只在你点麦克风之后录音。录音的去向只有这几种：</p>
 <ul>
-  <li>你在 Kitestring for Mac 里打开了「本机听写」（默认关闭）时：录音，连同所在会话最近约 800 字的文字（作为识别提示），经第 2 条所说的连接发到这台 Mac，由它自己的识别引擎在本机转写，录音不保存。识别出的文字、你的词典和改正记录存在这台 Mac 上（见第 5 条），用来让以后的识别更准，不发给我们。这台 Mac 装了 Claude Code 或 Codex 时，识别出的文字再交给其中一个，用你自己的账户整理（润色）：优先用 Claude Code；没有 Claude Code 或它没登录、而 Codex 已登录时用 Codex。这一步的文字按所用程序提供方（Anthropic 或 OpenAI）的条款与隐私政策发给该提供方（见第 3 条）；两个都没有就只识别。打开本机听写时，Mac 从 Hugging Face 下载识别模型（约 3.8 GB），Hugging Face 会看到这台 Mac 的网络地址；下载之后识别不需要联网。</li>
+  <li>你在 Kitestring for Mac 里打开了「本机听写」（默认关闭）时：录音，连同所在会话最近约 800 字的文字（作为识别提示），经第 2 条所说的连接发到这台 Mac，由它自己的识别引擎在本机转写，录音不保存。识别出的文字、你的词典和改正记录存在这台 Mac 上（见第 5 条），用来让以后的识别更准，不发给我们。这台 Mac 装了 Claude Code 或 Codex 时，识别出的文字再交给其中一个，用你自己的账户整理（润色）：优先用 Claude Code；没有 Claude Code、它没登录或暂时用不了（比如额度用完），而 Codex 已登录时用 Codex。这一步的文字按所用程序提供方（Anthropic 或 OpenAI）的条款与隐私政策发给该提供方（见第 3 条）；两个都没有就只识别。打开本机听写时，Mac 从 Hugging Face 下载识别模型（约 3.8 GB），Hugging Face 会看到这台 Mac 的网络地址；下载之后识别不需要联网。</li>
   <li>你在自己的 Mac 上开启了别的听写服务（默认关闭）时：录音，连同所在会话最近约 800 字的文字（作为识别提示），经 Tailscale 发到你自己配置的听写服务。Mac 助手不把音频或文字写入磁盘，也不记日志。</li>
   <li>否则由这台 iPhone 自己的语音识别转写：设备支持该语言的本机识别时，只在本机处理；不支持时，iOS 系统的语音识别服务可能把音频交给系统提供方处理，受其条款约束。</li>
 </ul>
@@ -102,19 +102,19 @@
 <h2 id="zh-local">5. 存在你设备上的数据</h2>
 <ul>
   <li><strong>iPhone：</strong>配对信息（Mac 的地址、用户名、主机公钥）；iPhone 私钥（存在钥匙串，仅限本设备，不同步 iCloud，不导出）；对话缓存、草稿与待发附件；诊断日志（错误码与耗时）；设置。</li>
-  <li><strong>Mac：</strong>助手的状态目录（会话信息、你从 iPhone 发来的文件——14 天后自动清理、你发给自己的反馈）；<code>authorized_keys</code> 中带标记的 iPhone 公钥（修改前先备份）。打开过本机听写时，还有 <code>~/Library/Application Support/Kitestring/Dictation/</code>（识别模型、识别出的文字、你的词典与改正记录，不含录音）和 <code>~/Library/Logs/Kitestring/</code>（运行日志，只有长度和耗时，不含文字）；关闭本机听写不会删除它们，可以在「本机听写」窗口删除模型，或自己删掉这两个文件夹。</li>
+  <li><strong>Mac：</strong>助手的状态目录（会话信息、你从 iPhone 发来的文件——14 天后自动清理、你发给自己的反馈；开启锁屏提醒时还有手机的登记，见第 14 条）；<code>authorized_keys</code> 中带标记的 iPhone 公钥（修改前先备份）。打开过本机听写时，还有 <code>~/Library/Application Support/Kitestring/Dictation/</code>（识别模型、识别出的文字、你的词典与改正记录，不含录音）和 <code>~/Library/Logs/Kitestring/</code>（运行日志，只有长度和耗时，不含文字）；关闭本机听写不会删除它们，可以在「本机听写」窗口删除模型，或自己删掉这两个文件夹。</li>
 </ul>
-<p>这些数据留在你的设备上，除非你自己发送出去。</p>
+<p>这些数据留在你的设备上，除非你自己发送出去（锁屏提醒发出的内容见第 14 条）。</p>
 
 <h2 id="zh-feedback">6. 反馈与诊断</h2>
 <p>App 的「反馈与诊断」默认把反馈发到<strong>你自己的 Mac</strong>，存为 Mac 上的本机文件，不发给我们。</p>
 <p>如果某个发布版本提供了发给开发者的反馈通道：只有你在设置里明确同意（默认关闭）后才上传诊断，内容是随机安装 ID（撤回同意即重置）、App 版本与构建号、系统版本、机型、首选语言、Mac 助手版本，以及事件记录（时间、类别、错误码、耗时，崩溃或卡顿时附系统诊断）；你主动发送的反馈另含类别、正文和你选填的联系方式。<strong>诊断和反馈永远不含会话内容、终端输出、文件或录音。</strong></p>
 
 <h2 id="zh-permissions">7. 系统权限</h2>
-<p>只在你使用对应功能时请求：相机（扫描配对二维码，或拍照发给 Mac）；麦克风与语音识别（语音输入）；Face ID（解锁 App）；本地网络（连接你的 Mac 的 SSH 端口）。</p>
+<p>只在你使用对应功能时请求：相机（扫描配对二维码，或拍照发给 Mac）；麦克风与语音识别（语音输入）；Face ID（解锁 App）；本地网络（连接你的 Mac 的 SSH 端口）；通知（锁屏提醒，第一次连上你的 Mac 时询问一次）。</p>
 
 <h2 id="zh-updates">8. Mac 端检查更新</h2>
-<p>Kitestring for Mac 会从本网站读取更新列表，检查有没有新版本。和访问任何网站一样，这个请求带有你的 IP 地址和 App 版本号；不附带系统信息。是否自动检查由你决定（App 第二次启动时会询问）；不开启时，只在你点「检查更新」时才发出这个请求。</p>
+<p>Kitestring for Mac 会从本网站读取更新列表，检查有没有新版本；有新版本时下载安装包（与下载页上的是同一个文件）。和访问任何网站一样，这些请求带有你的 IP 地址和 App 版本号；不附带系统信息。默认自动检查并自动安装更新；你可以在菜单栏里关掉「自动更新」，关掉后只在你点「检查更新」时才发出这些请求。在 iPhone App 里让 Mac 检查更新时，Mac 发出的也是同样的请求。</p>
 
 <h2 id="zh-site">9. 本网站</h2>
 <p>本网站是纯静态页面，不使用 Cookie、统计或第三方脚本。每个页面里的一小段脚本只根据链接或浏览器的语言设置选择显示语言，不存储也不发送任何信息。网站托管服务商可能按其政策保留标准访问日志（IP 地址、时间、访问的页面）。</p>
@@ -148,7 +148,7 @@
 <p class="muted">Effective date: 2026-11-20<br>Applies to: the Kitestring iPhone app, Kitestring for Mac (and the helper it installs on your Mac), and this website.<br>Operator: Junhua Li</p>
 
 <h2 id="en-summary">1. Summary</h2>
-<p><strong>We don’t collect any data about you.</strong> You don’t need a Kitestring account. You do need your own Tailscale account, which Tailscale manages. We don’t operate any servers, so your sessions never pass through ours. The app contains no advertising, analytics, or third-party tracking SDKs.</p>
+<p><strong>We don’t collect any data about you.</strong> You don’t need a Kitestring account. You do need your own Tailscale account, which Tailscale manages. Your sessions never pass through our servers. The only thing that does is optional lock-screen alerts: our push relay hands each alert to Apple and keeps nothing (see section 14). The app contains no advertising, analytics, or third-party tracking SDKs.</p>
 
 <h2 id="en-flow">2. How Data Travels</h2>
 <p>The app connects over SSH to <strong>your own Mac</strong> through your own Tailscale network (encrypted with WireGuard). What you type, terminal output, conversations, files, and images travel only between your iPhone and your Mac; they never pass through us. Tailscale connects the two devices directly whenever it can. When it can’t, the encrypted traffic may be forwarded through relay servers operated by Tailscale (DERP), which pass it on without being able to decrypt it.</p>
@@ -156,12 +156,12 @@
 
 <h2 id="en-agents">3. Claude Code and Codex on Your Mac</h2>
 <p>What you send in a session is processed by Claude Code or Codex running on your Mac. They send it to their providers’ services under each provider’s own terms of service and privacy policy. That processing is the provider’s responsibility and doesn’t pass through us.</p>
-<p>We don’t read, copy, or upload their sign-in credentials. Diagnostics only run their built-in sign-in status commands and receive only the sign-in status.</p>
+<p>We don’t read, copy, or upload their sign-in credentials. Diagnostics only run their built-in sign-in status commands and receive only the sign-in status. The iPhone app’s session list shows how much of these two accounts’ usage limits has been used: the helper on your Mac runs their built-in read-only usage queries (no conversation is started and no usage is consumed) and keeps only the percentage used, the reset time and the plan name of each limit window. It sends them to your iPhone over the connection described in section 2, and the Mac and the iPhone each keep the latest result. Email addresses, account IDs and other identifying details are not kept, and none of this data is sent to us.</p>
 
 <h2 id="en-voice">4. Voice Input</h2>
 <p>Recording starts only after you tap the microphone. A recording goes to one of these places:</p>
 <ul>
-  <li>If you’ve turned on Local Dictation in Kitestring for Mac (off by default), the recording is sent over the connection described in section 2 to that Mac, together with about the last 800 characters of the session’s text as a recognition hint, and is transcribed there by the Mac’s own speech engines. The recording isn’t kept. The recognized text, your dictionary, and your corrections are stored on that Mac (see section 5) to make later recognition more accurate, and are not sent to us. If Claude Code or Codex is installed on that Mac, the recognized text is then handed to one of them to be polished with your own account: Claude Code first; Codex when Claude Code is not there or not signed in and Codex is signed in. That text is sent to the provider of the program used (Anthropic or OpenAI) under that provider’s terms and privacy policy (see section 3); with neither, recognition is all that happens. When you turn on Local Dictation, the Mac downloads the speech models (about 3.8 GB) from Hugging Face, which sees the Mac’s network address; after the download, recognition doesn’t need the internet.</li>
+  <li>If you’ve turned on Local Dictation in Kitestring for Mac (off by default), the recording is sent over the connection described in section 2 to that Mac, together with about the last 800 characters of the session’s text as a recognition hint, and is transcribed there by the Mac’s own speech engines. The recording isn’t kept. The recognized text, your dictionary, and your corrections are stored on that Mac (see section 5) to make later recognition more accurate, and are not sent to us. If Claude Code or Codex is installed on that Mac, the recognized text is then handed to one of them to be polished with your own account: Claude Code first; Codex when Claude Code is not there, not signed in or cannot answer for the moment (for example when its usage limit is used up) and Codex is signed in. That text is sent to the provider of the program used (Anthropic or OpenAI) under that provider’s terms and privacy policy (see section 3); with neither, recognition is all that happens. When you turn on Local Dictation, the Mac downloads the speech models (about 3.8 GB) from Hugging Face, which sees the Mac’s network address; after the download, recognition doesn’t need the internet.</li>
   <li>If you’ve turned on another dictation service on your own Mac (off by default), the recording is sent over Tailscale to the dictation service you configured, together with about the last 800 characters of the session’s text as a recognition hint. The Mac helper doesn’t write the audio or text to disk and doesn’t log it.</li>
   <li>Otherwise, your iPhone’s own speech recognition transcribes it. If the device supports on-device recognition for the language, the audio is processed only on the device. If it doesn’t, the iOS speech recognition service may send the audio to the system provider for processing under its terms.</li>
 </ul>
@@ -169,19 +169,19 @@
 <h2 id="en-local">5. Data Stored on Your Devices</h2>
 <ul>
   <li><strong>iPhone:</strong> pairing details (the Mac’s address, username, and host public key); the iPhone’s private key (stored in the keychain, available only on this device, not synced to iCloud, and never exported); cached conversations, drafts, and pending attachments; a diagnostics log (error codes and timings); and settings.</li>
-  <li><strong>Mac:</strong> the helper’s state folder (session details; files you send from your iPhone, which are deleted automatically after 14 days; and feedback you send to yourself); and the marked iPhone public keys in <code>authorized_keys</code> (backed up before any change). If you’ve turned on Local Dictation, also <code>~/Library/Application Support/Kitestring/Dictation/</code> (the speech models, the recognized text, and your dictionary and corrections; no recordings) and <code>~/Library/Logs/Kitestring/</code> (logs with lengths and timings only, no text). Turning Local Dictation off doesn’t delete them; you can delete the models in the Local Dictation window or delete both folders yourself.</li>
+  <li><strong>Mac:</strong> the helper’s state folder (session details; files you send from your iPhone, which are deleted automatically after 14 days; feedback you send to yourself; and, with lock-screen alerts on, your iPhone’s registration, see section 14); and the marked iPhone public keys in <code>authorized_keys</code> (backed up before any change). If you’ve turned on Local Dictation, also <code>~/Library/Application Support/Kitestring/Dictation/</code> (the speech models, the recognized text, and your dictionary and corrections; no recordings) and <code>~/Library/Logs/Kitestring/</code> (logs with lengths and timings only, no text). Turning Local Dictation off doesn’t delete them; you can delete the models in the Local Dictation window or delete both folders yourself.</li>
 </ul>
-<p>This data stays on your devices unless you send it somewhere yourself.</p>
+<p>This data stays on your devices unless you send it somewhere yourself (for what lock-screen alerts send, see section 14).</p>
 
 <h2 id="en-feedback">6. Feedback and Diagnostics</h2>
 <p>“Feedback &amp; Diagnostics” in the app sends feedback to <strong>your own Mac</strong> by default, where it’s stored as a local file. It isn’t sent to us.</p>
 <p>If a release offers a feedback channel to the developer, diagnostics are uploaded only after you explicitly agree in Settings (off by default). They contain a random install ID (reset when you withdraw consent), the app version and build, the system version, the device model, your preferred language, the Mac helper version, and an event log (time, category, error code, and duration, plus the system’s diagnostic report after a crash or hang). Feedback you choose to send also includes its category, its text, and any contact details you enter. <strong>Diagnostics and feedback never include session content, terminal output, files, or recordings.</strong></p>
 
 <h2 id="en-permissions">7. System Permissions</h2>
-<p>The app requests these only when you use the related feature: camera (to scan the pairing code or take a photo to send to your Mac); microphone and speech recognition (for voice input); Face ID (to unlock the app); and local network (to reach your Mac’s SSH port).</p>
+<p>The app requests these only when you use the related feature: camera (to scan the pairing code or take a photo to send to your Mac); microphone and speech recognition (for voice input); Face ID (to unlock the app); local network (to reach your Mac’s SSH port); and notifications (lock-screen alerts, asked once when you first connect to your Mac).</p>
 
 <h2 id="en-updates">8. Update Checks on the Mac</h2>
-<p>Kitestring for Mac reads an update list from this website to check for new versions. As with any website visit, the request includes your IP address and the app version; no system information is attached. You decide whether it checks automatically (the app asks the second time you open it). If you don’t turn this on, the request is made only when you choose “Check for Updates.”</p>
+<p>Kitestring for Mac reads an update list from this website to check for new versions, and downloads the update (the same file as on the download page) when there is one. As with any website visit, these requests include your IP address and the app version; no system information is attached. By default, updates are checked for and installed automatically. You can turn off “Update Automatically” in the menu bar; then these requests are made only when you choose “Check for Updates.” When you ask your Mac to check for updates from the iPhone app, the Mac makes the same requests.</p>
 
 <h2 id="en-site">9. This Website</h2>
 <p>This website is static and uses no cookies, analytics, or third-party scripts. A small script on each page only chooses the display language from the link or your browser’s language settings; it doesn’t store or send anything. The hosting provider may keep standard access logs (IP address, time, and page requested) under its own policy.</p>
@@ -215,7 +215,7 @@
 <p class="muted">Fecha de entrada en vigor: 2026-11-20<br>Se aplica a: la app Kitestring para iPhone, Kitestring para Mac (y el asistente que instala en tu Mac) y este sitio web.<br>Responsable: Junhua Li</p>
 
 <h2 id="es-summary">1. Resumen</h2>
-<p><strong>No recopilamos ningún dato sobre ti.</strong> No necesitas una cuenta de Kitestring, pero sí tu propia cuenta de Tailscale, que gestiona Tailscale. No operamos ningún servidor, así que tus sesiones nunca pasan por servidores nuestros. La app no contiene publicidad, analítica ni SDK de seguimiento de terceros.</p>
+<p><strong>No recopilamos ningún dato sobre ti.</strong> No necesitas una cuenta de Kitestring, pero sí tu propia cuenta de Tailscale, que gestiona Tailscale. Tus sesiones nunca pasan por servidores nuestros. Lo único que pasa por ellos son los avisos opcionales en la pantalla bloqueada: nuestro retransmisor de notificaciones entrega cada aviso a Apple y no guarda nada (ver la sección 14). La app no contiene publicidad, analítica ni SDK de seguimiento de terceros.</p>
 
 <h2 id="es-flow">2. Cómo viajan los datos</h2>
 <p>La app se conecta por SSH a <strong>tu propio Mac</strong> a través de tu propia red de Tailscale (cifrada con WireGuard). Lo que escribes, la salida del terminal, las conversaciones, los archivos y las imágenes solo viajan entre tu iPhone y tu Mac; nunca pasan por nosotros. Tailscale conecta los dos dispositivos directamente siempre que puede. Cuando no puede, el tráfico cifrado puede reenviarse por servidores de retransmisión operados por Tailscale (DERP), que lo transmiten sin poder descifrarlo.</p>
@@ -223,12 +223,12 @@
 
 <h2 id="es-agents">3. Claude Code y Codex en tu Mac</h2>
 <p>Lo que envías en una sesión lo procesa Claude Code o Codex en tu Mac. Estos programas lo envían a los servicios de sus proveedores según los términos de servicio y la política de privacidad de cada proveedor. Ese procesamiento es responsabilidad del proveedor y no pasa por nosotros.</p>
-<p>No leemos, copiamos ni subimos sus credenciales de inicio de sesión. El diagnóstico solo ejecuta sus propios comandos de estado de inicio de sesión y recibe únicamente ese estado.</p>
+<p>No leemos, copiamos ni subimos sus credenciales de inicio de sesión. El diagnóstico solo ejecuta sus propios comandos de estado de inicio de sesión y recibe únicamente ese estado. La lista de sesiones de la app para iPhone muestra cuánto se ha usado de los límites de uso de estas dos cuentas: el asistente de tu Mac ejecuta sus propias consultas de uso de solo lectura (no inicia ninguna conversación ni consume uso) y conserva solo el porcentaje usado, la hora de reinicio y el nombre del plan de cada ventana de límite. Los envía a tu iPhone por la conexión descrita en la sección 2, y el Mac y el iPhone guardan cada uno el último resultado. Las direcciones de correo, los identificadores de cuenta y otros datos identificativos no se guardan, y nada de esto se nos envía.</p>
 
 <h2 id="es-voice">4. Entrada de voz</h2>
 <p>Solo se graba después de que tocas el micrófono. La grabación va a uno de estos lugares:</p>
 <ul>
-  <li>Si activaste el dictado local en Kitestring for Mac (desactivado de forma predeterminada), la grabación se envía a ese Mac por la conexión descrita en la sección 2, junto con unos 800 caracteres del texto reciente de la sesión como pista para el reconocimiento, y allí la transcriben los motores de reconocimiento del propio Mac. La grabación no se guarda. El texto reconocido, tu diccionario y tus correcciones se guardan en ese Mac (ver la sección 5) para que el reconocimiento posterior sea más preciso, y no se nos envían. Si ese Mac tiene Claude Code o Codex instalado, el texto reconocido se le pasa a uno de los dos para pulirlo con tu propia cuenta: primero Claude Code; Codex cuando Claude Code no está o no tiene la sesión iniciada y Codex sí. Ese texto se envía al proveedor del programa usado (Anthropic u OpenAI) según sus términos y su política de privacidad (ver la sección 3); sin ninguno de los dos solo hay reconocimiento. Al activar el dictado local, el Mac descarga los modelos de reconocimiento (unos 3,8 GB) de Hugging Face, que ve la dirección de red del Mac; después de la descarga, el reconocimiento no necesita internet.</li>
+  <li>Si activaste el dictado local en Kitestring for Mac (desactivado de forma predeterminada), la grabación se envía a ese Mac por la conexión descrita en la sección 2, junto con unos 800 caracteres del texto reciente de la sesión como pista para el reconocimiento, y allí la transcriben los motores de reconocimiento del propio Mac. La grabación no se guarda. El texto reconocido, tu diccionario y tus correcciones se guardan en ese Mac (ver la sección 5) para que el reconocimiento posterior sea más preciso, y no se nos envían. Si ese Mac tiene Claude Code o Codex instalado, el texto reconocido se le pasa a uno de los dos para pulirlo con tu propia cuenta: primero Claude Code; Codex cuando Claude Code no está, no tiene la sesión iniciada o no puede responder por el momento (por ejemplo, al agotarse su límite de uso) y Codex sí. Ese texto se envía al proveedor del programa usado (Anthropic u OpenAI) según sus términos y su política de privacidad (ver la sección 3); sin ninguno de los dos solo hay reconocimiento. Al activar el dictado local, el Mac descarga los modelos de reconocimiento (unos 3,8 GB) de Hugging Face, que ve la dirección de red del Mac; después de la descarga, el reconocimiento no necesita internet.</li>
   <li>Si activaste otro servicio de dictado en tu propio Mac (desactivado de forma predeterminada), la grabación se envía por Tailscale al servicio de dictado que configuraste, junto con unos 800 caracteres del texto reciente de la sesión como pista para el reconocimiento. El asistente del Mac no guarda el audio ni el texto en el disco ni los registra.</li>
   <li>Si no, el reconocimiento de voz de tu iPhone la transcribe. Si el dispositivo admite el reconocimiento local para ese idioma, el audio se procesa solo en el dispositivo. Si no lo admite, el servicio de reconocimiento de voz de iOS puede enviar el audio al proveedor del sistema para procesarlo según sus términos.</li>
 </ul>
@@ -236,19 +236,19 @@
 <h2 id="es-local">5. Datos guardados en tus dispositivos</h2>
 <ul>
   <li><strong>iPhone:</strong> datos de vinculación (dirección del Mac, nombre de usuario y clave pública del host); la clave privada del iPhone (guardada en el llavero, disponible solo en este dispositivo, sin sincronizar con iCloud y nunca exportada); conversaciones en caché, borradores y adjuntos pendientes; un registro de diagnóstico (códigos de error y tiempos), y los ajustes.</li>
-  <li><strong>Mac:</strong> la carpeta de estado del asistente del Mac (datos de las sesiones; archivos que envías desde tu iPhone, que se eliminan automáticamente a los 14 días, y comentarios que te envías a ti mismo), y las claves públicas del iPhone marcadas en <code>authorized_keys</code> (con copia de seguridad antes de cada cambio). Si activaste el dictado local, también <code>~/Library/Application Support/Kitestring/Dictation/</code> (los modelos de reconocimiento, el texto reconocido, y tu diccionario y tus correcciones; sin grabaciones) y <code>~/Library/Logs/Kitestring/</code> (registros con solo longitudes y tiempos, sin texto). Desactivar el dictado local no los elimina; puedes eliminar los modelos en la ventana «Dictado local» o eliminar tú mismo las dos carpetas.</li>
+  <li><strong>Mac:</strong> la carpeta de estado del asistente del Mac (datos de las sesiones; archivos que envías desde tu iPhone, que se eliminan automáticamente a los 14 días; comentarios que te envías a ti mismo, y, con los avisos en la pantalla bloqueada activados, el registro de tu iPhone; ver la sección 14), y las claves públicas del iPhone marcadas en <code>authorized_keys</code> (con copia de seguridad antes de cada cambio). Si activaste el dictado local, también <code>~/Library/Application Support/Kitestring/Dictation/</code> (los modelos de reconocimiento, el texto reconocido, y tu diccionario y tus correcciones; sin grabaciones) y <code>~/Library/Logs/Kitestring/</code> (registros con solo longitudes y tiempos, sin texto). Desactivar el dictado local no los elimina; puedes eliminar los modelos en la ventana «Dictado local» o eliminar tú mismo las dos carpetas.</li>
 </ul>
-<p>Estos datos permanecen en tus dispositivos, a menos que tú los envíes a otro lugar.</p>
+<p>Estos datos permanecen en tus dispositivos, a menos que tú los envíes a otro lugar (lo que envían los avisos en la pantalla bloqueada se describe en la sección 14).</p>
 
 <h2 id="es-feedback">6. Comentarios y diagnóstico</h2>
 <p>«Comentarios y diagnóstico» en la app envía los comentarios a <strong>tu propio Mac</strong> de forma predeterminada, donde se guardan como un archivo local. No se nos envían.</p>
 <p>Si una versión ofrece un canal de comentarios para el desarrollador, el diagnóstico solo se sube después de que lo aceptes de forma explícita en Ajustes (desactivado de forma predeterminada). Incluye un ID de instalación aleatorio (que se restablece al retirar tu consentimiento), la versión y la compilación de la app, la versión del sistema, el modelo del dispositivo, tu idioma preferido, la versión del asistente del Mac y un registro de eventos (hora, categoría, código de error y duración, además del informe de diagnóstico del sistema después de un cierre inesperado o un bloqueo). Los comentarios que decidas enviar incluyen además su categoría, su texto y los datos de contacto que agregues. <strong>El diagnóstico y los comentarios nunca incluyen contenido de sesiones, salida del terminal, archivos ni grabaciones.</strong></p>
 
 <h2 id="es-permissions">7. Permisos del sistema</h2>
-<p>La app los solicita solo cuando usas la función correspondiente: cámara (para escanear el código de vinculación o tomar una foto para enviarla a tu Mac); micrófono y reconocimiento de voz (para la entrada de voz); Face ID (para desbloquear la app), y red local (para conectarse al puerto SSH de tu Mac).</p>
+<p>La app los solicita solo cuando usas la función correspondiente: cámara (para escanear el código de vinculación o tomar una foto para enviarla a tu Mac); micrófono y reconocimiento de voz (para la entrada de voz); Face ID (para desbloquear la app); red local (para conectarse al puerto SSH de tu Mac), y notificaciones (avisos en la pantalla bloqueada; se pregunta una vez, la primera vez que te conectas a tu Mac).</p>
 
 <h2 id="es-updates">8. Búsqueda de actualizaciones en el Mac</h2>
-<p>Kitestring para Mac lee una lista de actualizaciones de este sitio web para comprobar si hay versiones nuevas. Como en cualquier visita a un sitio web, la solicitud incluye tu dirección IP y la versión de la app; no se adjunta información del sistema. Tú decides si la búsqueda es automática (la app te lo pregunta la segunda vez que la abres). Si no la activas, la solicitud solo se hace cuando eliges «Buscar actualizaciones».</p>
+<p>Kitestring para Mac lee una lista de actualizaciones de este sitio web para comprobar si hay versiones nuevas y, si hay una, descarga la actualización (el mismo archivo que en la página de descarga). Como en cualquier visita a un sitio web, estas solicitudes incluyen tu dirección IP y la versión de la app; no se adjunta información del sistema. De forma predeterminada, las actualizaciones se buscan e instalan automáticamente. Puedes desactivar «Actualizar automáticamente» en la barra de menús; entonces estas solicitudes solo se hacen cuando eliges «Buscar actualizaciones». Cuando pides desde la app del iPhone que el Mac busque actualizaciones, el Mac hace las mismas solicitudes.</p>
 
 <h2 id="es-site">9. Este sitio web</h2>
 <p>Este sitio web es estático y no usa cookies, analítica ni scripts de terceros. Un pequeño script en cada página solo elige el idioma en que se muestra a partir del enlace o de la configuración de idioma de tu navegador; no guarda ni envía nada. El proveedor de alojamiento puede conservar registros de acceso estándar (dirección IP, hora y página solicitada) según su propia política.</p>
