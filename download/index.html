@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title data-zh="下载 Kitestring for Mac" data-es="Descargar Kitestring para Mac">Download Kitestring for Mac</title>
-<meta name="description" data-zh="下载 Kitestring for Mac 0.16.5：免费的 DMG，已签名并经过公证，附 SHA-256 校验值。" data-es="Descarga Kitestring para Mac 0.16.5: DMG gratuito, firmado y notarizado, con su suma de verificación SHA-256." content="Download Kitestring for Mac 0.16.5: free, signed and notarized DMG with its SHA-256 checksum.">
+<meta name="description" data-zh="下载 Kitestring for Mac 0.16.7：免费的 DMG，已签名并经过公证，附 SHA-256 校验值。" data-es="Descarga Kitestring para Mac 0.16.7: DMG gratuito, firmado y notarizado, con su suma de verificación SHA-256." content="Download Kitestring for Mac 0.16.7: free, signed and notarized DMG with its SHA-256 checksum.">
 <link rel="canonical" href="https://lijunhua941-boop.github.io/kitestring-site/download/">
 <link rel="stylesheet" href="../assets/site.css">
 <script>
@@ -73,7 +73,7 @@
   <span class="langs"><a href="#zh" hreflang="zh-Hans" lang="zh-Hans">中文</a><a href="#en" hreflang="en" lang="en">English</a><a href="#es" hreflang="es" lang="es">Español</a></span>
 </div></header>
 <main class="wrap">
-<!-- Release values (0.16.5, https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.5-14/Kitestring-0.16.5-14.dmg, 0384cc5b7cb38cb1dbc7b3f37a654056b44c544d0375dc33827977817cb2221e …) come from the release
+<!-- Release values (0.16.7, https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.7-16/Kitestring-0.16.7-16.dmg, bbca5f5c2a42d22db1a9eaddfa41b4a899cff3d50d9c4851c5cffd7436bd50a8 …) come from the release
      step of scripts/release_mac_app.sh (stage C2); fill_placeholders.sh writes them into _out/. -->
 
 <!-- ===== 简体中文（主稿） ===== -->
@@ -81,12 +81,12 @@
 <nav class="pages"><a href="../#zh">首页</a><a href="#zh">下载</a><a href="../support/#zh">技术支持</a><a href="../privacy/#zh">隐私政策</a></nav>
 <h1>下载 Kitestring for Mac</h1>
 <p class="lead">免费的菜单栏 App：引导你完成 Tailscale、远程登录和助手安装，然后配对 iPhone。DMG 已签名并经过公证。</p>
-<div class="actions"><a class="button" href="https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.5-14/Kitestring-0.16.5-14.dmg">下载 DMG（0.16.5）</a></div>
+<div class="actions"><a class="button" href="https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.7-16/Kitestring-0.16.7-16.dmg">下载 DMG（0.16.7）</a></div>
 <table>
-  <tr><th>版本</th><td>0.16.5（构建 14）</td></tr>
-  <tr><th>发布日期</th><td>2026-11-16</td></tr>
-  <tr><th>文件</th><td><a href="https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.5-14/Kitestring-0.16.5-14.dmg">https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.5-14/Kitestring-0.16.5-14.dmg</a>（56455521 字节）</td></tr>
-  <tr><th>SHA-256</th><td><code>0384cc5b7cb38cb1dbc7b3f37a654056b44c544d0375dc33827977817cb2221e</code></td></tr>
+  <tr><th>版本</th><td>0.16.7（构建 16）</td></tr>
+  <tr><th>发布日期</th><td>2026-11-20</td></tr>
+  <tr><th>文件</th><td><a href="https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.7-16/Kitestring-0.16.7-16.dmg">https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.7-16/Kitestring-0.16.7-16.dmg</a>（56912001 字节）</td></tr>
+  <tr><th>SHA-256</th><td><code>bbca5f5c2a42d22db1a9eaddfa41b4a899cff3d50d9c4851c5cffd7436bd50a8</code></td></tr>
   <tr><th>发布说明</th><td><a href="https://lijunhua941-boop.github.io/kitestring-site/download/">本版更新内容</a></td></tr>
 </table>
 
@@ -114,7 +114,7 @@
 <p class="muted">浏览器下载很慢或总是中断？用上面的「一条命令安装」，它会分段下载并断点续传。</p>
 <h3>用 Homebrew 安装</h3>
 <pre><code>brew install --cask lijunhua941-boop/kitestring/kitestring</code></pre>
-<p>以后用 <code>brew upgrade --cask kitestring</code> 更新，或在 App 里选「检查更新」。</p>
+<p>App 会自己更新（见下面「更新」）；也可以用 <code>brew upgrade --cask kitestring</code>。</p>
 
 <h2>校验下载的文件（可选）</h2>
 <p>在「终端」里运行下面的命令。命令后的文件路径可以直接把 DMG 拖进终端窗口得到。</p>
@@ -128,7 +128,7 @@
 </ol>
 
 <h2>更新</h2>
-<p>App 第二次启动时会询问是否自动检查更新；同意后定期检查，任何时候也可以在菜单栏选「检查更新」。每个更新都带开发者的签名，App 用内置的公钥核对签名后才安装；更新不会打断正在运行的会话。</p>
+<p>App 默认自动检查并自动安装更新：在后台下载，等你没在用它的窗口或菜单时安装并重新打开，不用你做什么；也可以随时在菜单栏选「检查更新」，或在菜单栏里关掉「自动更新」。每个更新都带开发者的签名，App 用内置的公钥核对签名后才安装；更新不会打断正在运行的会话，检查更新时不附带系统信息。</p>
 </section>
 
 <!-- ===== English ===== -->
@@ -136,12 +136,12 @@
 <nav class="pages"><a href="../#en">Home</a><a href="#en">Download</a><a href="../support/#en">Support</a><a href="../privacy/#en">Privacy</a></nav>
 <h1>Download Kitestring for Mac</h1>
 <p class="lead">A free menu bar app that guides you through Tailscale, Remote Login, and installing the helper, and then pairs your iPhone. The DMG is signed and notarized.</p>
-<div class="actions"><a class="button" href="https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.5-14/Kitestring-0.16.5-14.dmg">Download DMG (0.16.5)</a></div>
+<div class="actions"><a class="button" href="https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.7-16/Kitestring-0.16.7-16.dmg">Download DMG (0.16.7)</a></div>
 <table>
-  <tr><th>Version</th><td>0.16.5 (build 14)</td></tr>
-  <tr><th>Released</th><td>2026-11-16</td></tr>
-  <tr><th>File</th><td><a href="https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.5-14/Kitestring-0.16.5-14.dmg">https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.5-14/Kitestring-0.16.5-14.dmg</a> (56455521 bytes)</td></tr>
-  <tr><th>SHA-256</th><td><code>0384cc5b7cb38cb1dbc7b3f37a654056b44c544d0375dc33827977817cb2221e</code></td></tr>
+  <tr><th>Version</th><td>0.16.7 (build 16)</td></tr>
+  <tr><th>Released</th><td>2026-11-20</td></tr>
+  <tr><th>File</th><td><a href="https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.7-16/Kitestring-0.16.7-16.dmg">https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.7-16/Kitestring-0.16.7-16.dmg</a> (56912001 bytes)</td></tr>
+  <tr><th>SHA-256</th><td><code>bbca5f5c2a42d22db1a9eaddfa41b4a899cff3d50d9c4851c5cffd7436bd50a8</code></td></tr>
   <tr><th>Release Notes</th><td><a href="https://lijunhua941-boop.github.io/kitestring-site/download/">What’s new in this version</a></td></tr>
 </table>
 
@@ -169,7 +169,7 @@
 <p class="muted">Is the browser download slow, or does it keep stopping? Use the one-command install above: it downloads in parts and resumes.</p>
 <h3>Install with Homebrew</h3>
 <pre><code>brew install --cask lijunhua941-boop/kitestring/kitestring</code></pre>
-<p>To update later, run <code>brew upgrade --cask kitestring</code> or choose “Check for Updates” in the app.</p>
+<p>The app updates itself (see “Updates” below); you can also run <code>brew upgrade --cask kitestring</code>.</p>
 
 <h2>Verify the Download (Optional)</h2>
 <p>Run these commands in Terminal. To get the file path, drag the DMG into the Terminal window.</p>
@@ -183,7 +183,7 @@
 </ol>
 
 <h2>Updates</h2>
-<p>The second time you open the app, it asks whether to check for updates automatically. If you agree, it checks regularly, and you can choose “Check for Updates” in the menu bar at any time. Every update is signed by the developer, and the app verifies the signature with its built-in public key before installing. Updating doesn’t interrupt running sessions.</p>
+<p>By default, the app checks for updates and installs them automatically: it downloads them in the background and installs and reopens itself when you aren’t using its windows or menu, with nothing for you to do. You can also choose “Check for Updates” in the menu bar at any time, or turn off “Update Automatically” there. Every update is signed by the developer, and the app verifies the signature with its built-in public key before installing. Updating doesn’t interrupt running sessions, and update checks send no system information.</p>
 </section>
 
 <!-- ===== Español ===== -->
@@ -191,12 +191,12 @@
 <nav class="pages"><a href="../#es">Inicio</a><a href="#es">Descargar</a><a href="../support/#es">Soporte</a><a href="../privacy/#es">Privacidad</a></nav>
 <h1>Descargar Kitestring para Mac</h1>
 <p class="lead">Una app gratuita para la barra de menús que te guía por Tailscale, Sesión remota y la instalación del asistente del Mac, y después vincula tu iPhone. El DMG está firmado y notarizado.</p>
-<div class="actions"><a class="button" href="https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.5-14/Kitestring-0.16.5-14.dmg">Descargar DMG (0.16.5)</a></div>
+<div class="actions"><a class="button" href="https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.7-16/Kitestring-0.16.7-16.dmg">Descargar DMG (0.16.7)</a></div>
 <table>
-  <tr><th>Versión</th><td>0.16.5 (compilación 14)</td></tr>
-  <tr><th>Fecha de publicación</th><td>2026-11-16</td></tr>
-  <tr><th>Archivo</th><td><a href="https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.5-14/Kitestring-0.16.5-14.dmg">https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.5-14/Kitestring-0.16.5-14.dmg</a> (56455521 bytes)</td></tr>
-  <tr><th>SHA-256</th><td><code>0384cc5b7cb38cb1dbc7b3f37a654056b44c544d0375dc33827977817cb2221e</code></td></tr>
+  <tr><th>Versión</th><td>0.16.7 (compilación 16)</td></tr>
+  <tr><th>Fecha de publicación</th><td>2026-11-20</td></tr>
+  <tr><th>Archivo</th><td><a href="https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.7-16/Kitestring-0.16.7-16.dmg">https://github.com/lijunhua941-boop/kitestring-site/releases/download/mac-0.16.7-16/Kitestring-0.16.7-16.dmg</a> (56912001 bytes)</td></tr>
+  <tr><th>SHA-256</th><td><code>bbca5f5c2a42d22db1a9eaddfa41b4a899cff3d50d9c4851c5cffd7436bd50a8</code></td></tr>
   <tr><th>Notas de la versión</th><td><a href="https://lijunhua941-boop.github.io/kitestring-site/download/">Novedades de esta versión</a></td></tr>
 </table>
 
@@ -224,7 +224,7 @@
 <p class="muted">¿La descarga del navegador va lenta o se corta? Usa la instalación con un solo comando de arriba: descarga por partes y reanuda.</p>
 <h3>Instalar con Homebrew</h3>
 <pre><code>brew install --cask lijunhua941-boop/kitestring/kitestring</code></pre>
-<p>Para actualizar más adelante, ejecuta <code>brew upgrade --cask kitestring</code> o elige «Buscar actualizaciones» en la app.</p>
+<p>La app se actualiza sola (consulta «Actualizaciones» más abajo); también puedes ejecutar <code>brew upgrade --cask kitestring</code>.</p>
 
 <h2>Verificar la descarga (opcional)</h2>
 <p>Ejecuta estos comandos en Terminal. Para obtener la ruta del archivo, arrastra el DMG a la ventana de Terminal.</p>
@@ -238,7 +238,7 @@
 </ol>
 
 <h2>Actualizaciones</h2>
-<p>La segunda vez que abras la app, te preguntará si quieres que busque actualizaciones automáticamente. Si aceptas, las buscará con regularidad, y siempre puedes elegir «Buscar actualizaciones» en la barra de menús. Cada actualización está firmada por el desarrollador, y la app verifica la firma con su clave pública integrada antes de instalarla. Actualizar no interrumpe las sesiones en curso.</p>
+<p>De forma predeterminada, la app busca e instala las actualizaciones automáticamente: las descarga en segundo plano y se instala y vuelve a abrir cuando no estás usando sus ventanas ni su menú, sin que tengas que hacer nada. También puedes elegir «Buscar actualizaciones» en la barra de menús en cualquier momento, o desactivar ahí «Actualizar automáticamente». Cada actualización está firmada por el desarrollador, y la app verifica la firma con su clave pública integrada antes de instalarla. Actualizar no interrumpe las sesiones en curso, y la búsqueda de actualizaciones no envía información del sistema.</p>
 </section>
 
 </main>
